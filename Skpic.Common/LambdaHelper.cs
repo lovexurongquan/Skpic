@@ -14,7 +14,7 @@ namespace Skpic.Common
         /// </summary>
         /// <param name="expression"></param>
         public LambdaHelper(Expression<Func<T, bool>> expression)
-        {
+        { 
             Expression = expression;
 
             if (expression.Body is BinaryExpression)
