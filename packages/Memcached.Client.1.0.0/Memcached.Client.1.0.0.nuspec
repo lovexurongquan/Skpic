@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+  <metadata minClientVersion="2.0.0">
+    <id>Memcached.Client</id>
+    <version>1.0.0</version>
+    <title>Memcached Client</title>
+    <authors>iceStone</authors>
+    <owners>iceStone</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Memcached Client</description>
+    <summary>Memcached Client</summary>
+    <copyright>Wedn.Net</copyright>
+    <language>zh-CN</language>
+    <dependencies>
+      <dependency id="log4net" version="2.0.3" />
+      <dependency id="ICSharpCode.SharpZipLib.dll" version="0.85.4.369" />
+    </dependencies>
+  </metadata>
+</package>

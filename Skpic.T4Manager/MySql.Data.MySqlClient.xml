@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DbSql>
+  <!--数据库列表-->
+  <sql name="DataBaseListSql">
+    select * from (SELECT schema_name as name  FROM INFORMATION_SCHEMA.SCHEMATA) as derivedtbl_1
+  </sql>
+  <!--表列表-->
+  <sql name="TableObjectSql">
+    select * from (SELECT table_name as name,table_schema as cuser,table_type as type,create_time as dates
+    ,version comments  FROM INFORMATION_SCHEMA.TABLES  where table_type='BASE TABLE') as derivedtbl_1
+  </sql>
+  <!--字段列表,&lt;有传意字符-->
+  <sql name="FieldObjectSql">
+    select c.Column_Name as ColumnName,c.table_name AS TableName,data_type as TypeName,character_maximum_length as length,numeric_precision as preci,
+    numeric_scale as scale,'' IsIdentity,IF(column_key='PRI','Y','N') as isPK,LEFT(is_nullable,1) as cisNull,column_default as defaultVal,
+    column_comment as deText,referenced_table_name rftable,referenced_column_name rfcolumn,c.table_schema DataBaseType
+    from INFORMATION_SCHEMA.COLUMNS c left join INFORMATION_SCHEMA.KEY_COLUMN_USAGE k on c.table_name=k.table_name
+    and c.Column_Name=k.Column_Name where c.table_name='co_order'
+  </sql>
+  <!--过程列表-->
+  <sql name="ProObjectSql">
+    
+  </sql>
+  <!--过程参数列表-->
+  <sql name="ParObjectSql">
+     
+  </sql>
+</DbSql>

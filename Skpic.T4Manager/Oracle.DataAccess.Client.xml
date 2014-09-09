@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DbSql>
+  <!--数据库列表-->
+  <sql name="DataBaseListSql">
+    
+  </sql>
+  <!--表列表-->
+  <sql name="TableObjectSql">
+    select * from(select TNAME name,'dbo' cuser,DECODE(TABTYPE,'TABLE','U',TABTYPE) type,'' dates,tc.comments from tab t,user_tab_comments tc  where TABTYPE='TABLE' AND t.tname=tc.table_name)
+  </sql>
+  <!--字段列表,&lt;有传意字符-->
+  <sql name="FieldObjectSql">
+    SELECT  column_id AS colorder,t.table_name AS TableName,t.column_name AS columnname,
+    data_type AS typename, data_length AS LENGTH,
+    data_precision AS preci, data_scale AS scale, '' AS isidentity,
+    (SELECT DECODE (COUNT (*), 0, 'N', 'Y')
+    FROM user_constraints a, user_cons_columns b
+    WHERE a.constraint_name = b.constraint_name
+    AND a.table_name = t.table_name AND b.column_name = t.column_name
+    AND a.constraint_type = 'P') AS ispk,nullable AS cisnull,
+    data_default AS defaultval, col.comments AS detext,rf.rftable, rf.rfcolumn
+    FROM user_tab_columns t,user_col_comments col,
+    (SELECT fc.column_name, cc.table_name rftable,cc.column_name rfcolumn
+    FROM user_cons_columns fc,user_constraints ft,user_cons_columns cc,user_constraints ct
+    WHERE  ft.constraint_type = 'R'
+    AND fc.table_name = 'CO_ORDER' AND ft.table_name = 'CO_ORDER'
+    AND fc.constraint_name = ft.constraint_name
+    AND ct.constraint_name = ft.r_constraint_name
+    AND ct.constraint_name = cc.constraint_name
+    AND cc.POSITION = fc.POSITION) rf
+    WHERE t.table_name = col.table_name AND t.column_name = col.column_name
+    AND t.column_name = rf.column_name(+) AND t.table_name = 'CO_ORDER' ORDER BY column_id
+  </sql>
+  <!--过程列表-->
+  <sql name="ProObjectSql">
+    
+  </sql>
+  <!--过程参数列表-->
+  <sql name="ParObjectSql">
+     
+  </sql>
+</DbSql>

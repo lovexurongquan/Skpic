@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DbSql>
+  <!--数据库列表-->
+  <sql name="DataBaseListSql">
+    select name FROM master.dbo.sysdatabases WHERE dbid>4 order by name asc
+  </sql>
+  <!--表列表-->
+  <sql name="TableObjectSql">
+    SELECT  name,cuser,type,dates,comments
+    FROM    (SELECT sb.name,sys.sysusers.name AS cuser,sb.xtype AS type,sb.crdate AS dates,
+    CONVERT(VARCHAR(200),ISNULL(ep.value,'')) AS comments
+    FROM   sys.sysobjects AS sb LEFT OUTER JOIN
+    (SELECT major_id,value FROM   sys.extended_properties WHERE  (name='MS_Description') AND (minor_id=0)
+    ) AS ep ON sb.id=ep.major_id
+    INNER JOIN sys.sysusers ON sb.uid=sys.sysusers.uid
+    WHERE  (sb.xtype='U' OR sb.xtype='V') AND sys.sysusers.name='dbo' AND category!=2) AS tt ORDER BY tt.name
+  </sql>
+  <!--字段列表,&lt;有传意字符-->
+  <sql name="FieldObjectSql">
+    select * from (SELECT C.column_id AS colorder, O.name AS TableName, C.name AS ColumnName, CONVERT(varchar(200), ISNULL(PFD.value, N'')) AS deText, T.name AS TypeName,
+    C.max_length AS Length, C.precision AS Preci, C.scale AS Scale, C.is_identity AS IsIdentity, ISNULL(IDX_1.PrimaryKey, 0) AS isPK, C.is_computed AS isComputed,
+    C.is_nullable AS isNull, ISNULL(IDX_1.IndexName, N'') AS IndexName, ISNULL(IDX_1.Sort, N'') AS IndexSort, O.create_date AS Create_Date,
+    O.modify_date AS Modify_Date, ISNULL(D.definition, N'') AS defaultVal, sb.name AS rftable, sc.name AS rfcolumn
+    FROM sys.columns AS C INNER JOIN sys.objects AS O ON C.object_id = O.object_id AND (O.type = 'U' OR
+    O.type = 'V') AND O.is_ms_shipped = 0 INNER JOIN sys.types AS T ON C.user_type_id = T.user_type_id LEFT OUTER JOIN
+    sys.default_constraints AS D ON C.object_id = D.parent_object_id AND C.column_id = D.parent_column_id AND C.default_object_id = D.object_id LEFT OUTER JOIN
+    sys.extended_properties AS PFD ON PFD.class = 1 AND C.object_id = PFD.major_id AND C.column_id = PFD.minor_id LEFT OUTER JOIN
+    sys.extended_properties AS PTB ON PTB.class = 1 AND PTB.minor_id = 0 AND LEFT(PTB.name, 3) != 'MS_' AND C.object_id = PTB.major_id LEFT OUTER JOIN
+    (SELECT     IDXC.object_id, IDXC.column_id, CASE INDEXKEY_PROPERTY(IDXC.[object_id], IDXC.index_id, IDXC.index_column_id, 'IsDescending')
+    WHEN 1 THEN 'DESC' WHEN 0 THEN 'ASC' ELSE '' END AS Sort, IDX.is_primary_key AS PrimaryKey, IDX.name AS IndexName
+    FROM sys.indexes AS IDX INNER JOIN
+    sys.index_columns AS IDXC ON IDX.object_id = IDXC.object_id AND IDX.index_id = IDXC.index_id LEFT OUTER JOIN
+    sys.key_constraints AS KC ON IDX.object_id = KC.parent_object_id AND IDX.index_id = KC.unique_index_id INNER JOIN
+    (SELECT object_id, column_id, MIN(index_id) AS index_id FROM sys.index_columns
+    GROUP BY object_id, column_id) AS IDXCUQ ON IDXC.object_id = IDXCUQ.object_id AND IDXC.column_id = IDXCUQ.column_id AND
+    IDXC.index_id = IDXCUQ.index_id) AS IDX_1 ON C.object_id = IDX_1.object_id AND C.column_id = IDX_1.column_id LEFT OUTER JOIN
+    sys.sysforeignkeys AS h ON O.object_id = h.fkeyid AND h.fkey = C.column_id LEFT OUTER JOIN
+    sys.sysobjects AS sb ON sb.id = h.rkeyid LEFT OUTER JOIN
+    sys.syscolumns AS sc ON sb.id = sc.id AND sc.colorder = h.rkey)   AS tt
+  </sql>
+  <!--过程列表-->
+  <sql name="ProObjectSql">
+    SELECT b.name AS ProName,isnull(a.text,'')text,a.colid,b.crdate
+    FROM    sys.syscomments AS a
+    INNER JOIN sys.sysobjects AS b ON a.id=OBJECT_ID(b.name)
+    WHERE   (b.xtype IN ('P','TR'))
+    ORDER BY ProName
+  </sql>
+  <!--过程参数列表-->
+  <sql name="ParObjectSql">
+    SELECT sys.sysobjects.name AS ProName, sys.syscolumns.name AS ParName, type_name(sys.syscolumns.xusertype) AS TypeName,
+    sys.syscolumns.length, sys.syscolumns.iscomputed, sys.syscolumns.isoutparam, sys.syscolumns.isnullable, sys.syscolumns.prec, sys.syscolumns.scale
+    FROM sys.syscolumns LEFT OUTER JOIN
+    sys.sysobjects ON sys.syscolumns.id = sys.sysobjects.id
+    WHERE (OBJECTPROPERTY(sys.sysobjects.id, N'IsProcedure') = 1)
+    ORDER BY ProName, sys.syscolumns.colid
+  </sql>
+  <!--设置表备注0表名,1备注-->
+  <sql name="SetTableNote">
+    if(SELECT count(*) FROM ::fn_listextendedproperty ('MS_Description', 'user', 'dbo', 'table', '{0}', null, default)) > 0
+      EXECUTE sp_updateextendedproperty N'MS_Description', '{1}', N'user', N'dbo', N'table', N'{0}', NULL, NULL;
+    else
+      EXECUTE sp_addextendedproperty N'MS_Description', '{1}', N'user', N'dbo', N'table', N'{0}', NULL, NULL;
+  </sql>
+  <!--设置字段备注0表名,1字段名,2备注-->
+  <sql name="SetFieldNote">
+    if(SELECT count(*) FROM ::fn_listextendedproperty ('MS_Description', 'user', 'dbo', 'table', '{0}', 'column', default) where objname='{1}') > 0
+      EXECUTE sp_updateextendedproperty N'MS_Description', '{2}', N'SCHEMA', N'dbo', N'table', N'{0}', N'column', N'{1}';
+   else
+      EXECUTE sp_addextendedproperty N'MS_Description', '{2}', N'SCHEMA', N'dbo', N'table', N'{0}', N'column', N'{1}';
+  </sql>
+</DbSql>

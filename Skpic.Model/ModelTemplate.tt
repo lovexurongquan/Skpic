@@ -1,0 +1,99 @@
+﻿<#@ template debug="True" hostspecific="True" language="C#" #>
+<#@ assembly name="$(TargetDir)Skpic.Async.dll" #>
+<#@ assembly name="$(TargetDir)Skpic.Factory.dll" #>
+<#@ assembly name="$(TargetDir)Skpic.T4Manager.dll" #>
+<#@ include file="$(SolutionDir)Skpic.T4Manager\Manager.ttinclude" #>
+<#@ import namespace="Skpic.T4Manager" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ output extension=".cs" encoding="utf-8" #>
+<#
+	//this use with debug, the template debug must be set True.
+    //Debugger.Launch(); Debugger.Break();
+	 
+	//template manager class. connString can set your own.
+    var t4 = new T4Manager(this.Host.TemplateFile,"ConnectionString");
+    
+	//get all table in database.
+    var tableCollection = t4.GetTableCollection();
+	//get all column in database.
+    var columnCollection = t4.GetColumnsCollection();
+	//export multiple file.
+    var manager=Manager.Create(Host,GenerationEnvironment);
+#>
+<#  foreach(var table in tableCollection) 
+    {
+#>
+<#
+	manager.StartNewFile(table.Name +".cs");
+#>
+using System;
+using Skpic.SqlMapperExtensions;
+
+namespace Skpic.Model
+{
+	/// <summary>
+	/// <#= table.Comments #>
+	/// </summary>
+    [Table("<#= table.Name #>")]
+	[Serializable]
+    public class <#= table.Name #>
+    {
+<# 
+		var columns = columnCollection.Where(c => c.TableName == table.Name).OrderBy(c=>c.Colorder);
+		var foreignTable = columnCollection.Where(c => c.TableName == table.Name && c.Rftable != null).OrderBy(c => c.Colorder);
+#>
+		public <#= table.Name #>()
+		{
+			SetDefaultValue();
+		}
+
+		/// <summary>
+        /// set default by database.
+        /// </summary>
+		public void SetDefaultValue()
+		{
+<#			foreach (var column in columns)
+			{
+				var defalutValue = t4.SetDefaultValue(column.DefaultVal, column.ColumnName, column.TypeName);
+                if (defalutValue == "")continue;
+#>			<#= defalutValue #>
+<#			}
+#>		}
+
+<#		foreach (var column in columns)
+		{
+#>
+		/// <summary>
+		/// <#= column.DeText #>
+		/// </summary>
+<#		if (column.IsPk == "True")
+        {#>
+		[Key("<#= column.IsIdentity #>")]
+<#		}
+#>
+<#		if (column.Rfcolumn	!= null)
+		{#>
+		[ForeignKey("<#= column.Rfcolumn #>")]
+<#		}
+		if (column.Rftable	!= null)
+		{#>
+		[ForeignTable("<#= column.Rftable #>")]
+<#		}
+#><#	if (column.IsComputed != "False")
+		{#>
+		[SqlMapperExtensions.Computed]
+<#		}
+#>
+        [Length(<#= column.Length #>)]
+		public <#= t4.GetTypeByDatabase(column.TypeName,column.IsNull) #> <#= column.ColumnName #> { get; set; }
+
+<#
+		}
+#>
+    }
+}
+ <#
+	manager.EndBlock();
+ #>
+<#}#>
+<# manager.Process(true); #>
