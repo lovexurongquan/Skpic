@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Skpic.Common;
+using Skpic.DataAccessLayer;
 using Skpic.Factory;
+using Skpic.IDataAccessLayer;
 using Skpic.Model;
 using Skpic.SqlMapperExtensions;
 
@@ -93,30 +97,30 @@ namespace Skpic.Console
             //    DoctorLoginInfo_Pwd_Temp_Time = DateTime.Now
             //};
 
-            //unitWork.RegistEntity(login1, EntityState.Add);
+            //unitWork.RegistEntity(login1, EntityState.Create);
 
             //var login2 = new DoctorLoginInfo()
             //{
-            //    DoctorLoginInfo_ID = "160269c7-06f2-48b2-9cea-f3d78ce1b707",
+            //    DoctorLoginInfo_ID = "e85ff9d2-84c2-4d51-8287-8e95d443762e",
             //    DoctorInfo_ID = Guid.NewGuid().ToString(),
             //    DoctorLoginInfo_Enable = true,
-            //    DoctorLoginInfo_Pwd = "ssssmmmmms",
-            //    DoctorLoginInfo_LoginName = "sxxmmmmmxx",
+            //    DoctorLoginInfo_Pwd = "e85ff9d2-84c2-4d51-8287-8e95d443762e",
+            //    DoctorLoginInfo_LoginName = "e85ff9d2-84c2-4d51-8287-8e95d443762e",
             //    DoctorLoginInfo_Pwd_Temp = "jsldj",
             //    DoctorLoginInfo_Remark = "jskdfj",
             //    DoctorLoginInfo_CreateTime = DateTime.Now,
             //    DoctorLoginInfo_Pwd_Temp_Time = DateTime.Now
             //};
 
-            //unitWork.RegistEntity(login2, EntityState.Edit);
+            //unitWork.RegistEntity(login2, EntityState.Modified);
 
-            //var login3 = new DoctorLoginInfo()
-            //{
-            //    DoctorLoginInfo_ID = "79e23e66-c56f-4e41-a2d1-dd101b3867dd"
-            //};
+            ////var login3 = new DoctorLoginInfo()
+            ////{
+            ////    DoctorLoginInfo_ID = "79e23e66-c56f-4e41-a2d1-dd101b3867dd"
+            ////};
 
-            //unitWork.RegistEntity(login3, EntityState.Delete);
-            // unitWork.Commit(); 
+            ////unitWork.RegistEntity(login3, EntityState.Delete);
+            //unitWork.Commit();
 
             #endregion
 

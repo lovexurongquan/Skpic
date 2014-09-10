@@ -90,10 +90,10 @@ namespace Skpic.DataAccessLayer
                         }
                         switch (data.State)
                         {
-                            case EntityState.Add:
+                            case EntityState.Create:
                                 _db.Insert(data.Entity, data.EntityType, tran);
                                 break;
-                            case EntityState.Edit:
+                            case EntityState.Modified:
                                 _db.Update(data.Entity, data.EntityType, tran);
                                 break;
                             case EntityState.Delete:
@@ -104,9 +104,10 @@ namespace Skpic.DataAccessLayer
                     tran.Commit();
                     return true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     tran.Rollback();
+                    //todo: this could logging.
                     return false;
                 }
             }

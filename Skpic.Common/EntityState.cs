@@ -18,11 +18,11 @@ namespace Skpic.Common
         /// <summary>
         /// add
         /// </summary>
-        Add,
+        Create,
         /// <summary>
         /// edit
         /// </summary>
-        Edit,
+        Modified,
         /// <summary>
         /// delete
         /// </summary>
