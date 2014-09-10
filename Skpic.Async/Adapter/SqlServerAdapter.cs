@@ -12,9 +12,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using Skpic.Async;
 
-namespace Skpic.SqlMapperExtensions
+namespace Skpic.Async.Adapter
 {
     /// <summary>
     /// sqlserver adapter

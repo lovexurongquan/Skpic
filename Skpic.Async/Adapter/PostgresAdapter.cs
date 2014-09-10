@@ -13,9 +13,8 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Skpic.Async;
 
-namespace Skpic.SqlMapperExtensions
+namespace Skpic.Async.Adapter
 {
     /// <summary>
     /// Postgres adapter

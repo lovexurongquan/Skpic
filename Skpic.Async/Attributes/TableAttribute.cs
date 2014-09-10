@@ -1,7 +1,7 @@
 ﻿/*
  * Added by laoxu 2014-09-10 11:00:00
  * ---------------------------------------------------------------
- * for：attribute for length.
+ * for：attribute for table.
  * ---------------------------------------------------------------
  * version:1.0
  * mail:lovexurongquan@163.com
@@ -9,25 +9,27 @@
 
 using System;
 
-namespace Skpic.SqlMapperExtensions
+namespace Skpic.Async.Attributes
 {
+
     /// <summary>
-    /// column length
+    /// table attribute
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
-    public class LengthAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class)]
+    public class TableAttribute : System.Attribute
     {
         /// <summary>
-        /// column length
+        /// table attribute
         /// </summary>
-        /// <param name="length">column length</param>
-        public LengthAttribute(int length)
+        /// <param name="tableName"></param>
+        public TableAttribute(string tableName)
         {
-            Length = length;
+            Name = tableName;
         }
+
         /// <summary>
-        /// 
+        /// name
         /// </summary>
-        public int Length { get; private set; }
+        public string Name { get;private set; }
     }
 }

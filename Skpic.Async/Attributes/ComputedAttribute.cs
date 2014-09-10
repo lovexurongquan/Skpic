@@ -9,13 +9,13 @@
 
 using System;
 
-namespace Skpic.SqlMapperExtensions
+namespace Skpic.Async.Attributes
 {
     /// <summary>
     /// is sure generate into sql text.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class ComputedAttribute : Attribute
+    public class ComputedAttribute : System.Attribute
     {
 
     }

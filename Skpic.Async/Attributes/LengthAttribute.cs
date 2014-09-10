@@ -1,7 +1,7 @@
 ﻿/*
  * Added by laoxu 2014-09-10 11:00:00
  * ---------------------------------------------------------------
- * for：attribute for key.
+ * for：attribute for length.
  * ---------------------------------------------------------------
  * version:1.0
  * mail:lovexurongquan@163.com
@@ -9,29 +9,25 @@
 
 using System;
 
-namespace Skpic.SqlMapperExtensions
+namespace Skpic.Async.Attributes
 {
-
-    // do not want to depend on data annotations that is not in client profile
     /// <summary>
-    /// key attribute
+    /// column length
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class KeyAttribute : Attribute
+    public class LengthAttribute : System.Attribute
     {
         /// <summary>
-        /// set key is identity
+        /// column length
         /// </summary>
-        public KeyAttribute(string isIdentity)
+        /// <param name="length">column length</param>
+        public LengthAttribute(int length)
         {
-            IsIdentity = isIdentity;
+            Length = length;
         }
-
         /// <summary>
-        /// identity flag.
+        /// 
         /// </summary>
-        public string IsIdentity { get; private set; }
-
+        public int Length { get; private set; }
     }
-
 }

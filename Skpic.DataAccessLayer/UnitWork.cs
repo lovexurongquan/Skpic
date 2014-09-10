@@ -16,7 +16,6 @@ using System.Data;
 using Skpic.Common;
 using Skpic.Factory;
 using Skpic.IDataAccessLayer;
-using Skpic.SqlMapperExtensions;
 
 namespace Skpic.DataAccessLayer
 {

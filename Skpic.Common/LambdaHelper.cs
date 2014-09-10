@@ -160,7 +160,8 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        ///  get unary in expression. Exp: NotEquals, NotContains.
+        ///  get unary in expression. 
+        /// Exp: NotEquals, NotContains.
         /// </summary>
         /// <param name="expression"></param>
         private void GetUnaryExpression(Expression expression)
@@ -171,7 +172,8 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        /// get operators in expression. Exp: LessThan, GreaterThanOrEqual, GreaterThan, LessThanOrEqual, Equal.
+        /// get operators in expression. 
+        /// Exp: LessThan, GreaterThanOrEqual, GreaterThan, LessThanOrEqual, Equal.
         /// </summary>
         /// <param name="expression"></param>
         /// <param name="isNot"></param>
@@ -186,7 +188,8 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        /// get string method in expression. Exp: Equals, StartsWith, EndsWith, Contains.
+        /// get string method in expression. 
+        /// Exp: Equals, StartsWith, EndsWith, Contains.
         /// </summary>
         /// <param name="expression">expression data.</param>
         /// <param name="isNot"></param>
@@ -330,6 +333,9 @@ namespace Skpic.Common
     }
 }
 
+/// <summary>
+/// return param.
+/// </summary>
 public class Param
 {
     public string p0 { get; set; }

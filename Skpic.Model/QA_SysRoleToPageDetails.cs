@@ -9,7 +9,7 @@
  */
 
 using System;
-using Skpic.SqlMapperExtensions;
+using Skpic.Async.Attributes;
 
 namespace Skpic.Model
 {

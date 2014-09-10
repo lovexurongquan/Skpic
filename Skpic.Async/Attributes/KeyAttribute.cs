@@ -1,7 +1,7 @@
 ﻿/*
  * Added by laoxu 2014-09-10 11:00:00
  * ---------------------------------------------------------------
- * for：attribute for foreign table.
+ * for：attribute for key.
  * ---------------------------------------------------------------
  * version:1.0
  * mail:lovexurongquan@163.com
@@ -9,26 +9,29 @@
 
 using System;
 
-namespace Skpic.SqlMapperExtensions
+namespace Skpic.Async.Attributes
 {
+
+    // do not want to depend on data annotations that is not in client profile
     /// <summary>
-    /// foreign table
+    /// key attribute
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class ForeignTableAttribute : Attribute
+    public class KeyAttribute : System.Attribute
     {
         /// <summary>
-        /// foreign table
+        /// set key is identity
         /// </summary>
-        /// <param name="name">foreign table name</param>
-        public ForeignTableAttribute(string name)
+        public KeyAttribute(string isIdentity)
         {
-            Name = name;
+            IsIdentity = isIdentity;
         }
+
         /// <summary>
-        /// foreign table name
+        /// identity flag.
         /// </summary>
-        public string Name { get; private set; }
+        public string IsIdentity { get; private set; }
+
     }
 
 }

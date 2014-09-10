@@ -6,7 +6,6 @@ using Skpic.DataAccessLayer;
 using Skpic.Factory;
 using Skpic.IDataAccessLayer;
 using Skpic.Model;
-using Skpic.SqlMapperExtensions;
 
 namespace Skpic.Console
 {
