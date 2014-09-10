@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+ * Added by laoxu 2014-09-10 11:00:00
+ * ---------------------------------------------------------------
+ * for：attribute for foreign table.
+ * ---------------------------------------------------------------
+ * version:1.0
+ * mail:lovexurongquan@163.com
+ */
+
+using System;
 
 namespace Skpic.SqlMapperExtensions
 {

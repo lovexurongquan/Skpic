@@ -1,3 +1,13 @@
+/*
+ * Added by laoxu 2014-09-10 11:00:00
+ * ---------------------------------------------------------------
+ * for：don't edit this model.
+ * if you edit, it will lose.
+ * ---------------------------------------------------------------
+ * version:1.0
+ * mail:lovexurongquan@163.com
+ */
+
 using System;
 using Skpic.SqlMapperExtensions;
 
@@ -22,13 +32,17 @@ namespace Skpic.Model
 		{
 			Function_ID = "";
 			Function_UpdateUser = "";
+			Function_Order = 1;
+			Function_IsShow = true;
 			Function_SystemType = "";
 			Function_Name = "";
 			Function_Url = "";
 			PageDetails_ParentId = "";
 			PageDetails_ChildId = "";
 			Function_Remark = "";
+			Function_CreateTime = DateTime.Now;
 			Function_CreateUser = "";
+			Function_UpdateTime = DateTime.Now;
 		}
 
 		/// <summary>

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using Skpic.Async;
-using Skpic.Common;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Skpic.Factory;
 using Skpic.Model;
 using Skpic.SqlMapperExtensions;
 
 namespace Skpic.Console
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -41,7 +38,7 @@ namespace Skpic.Console
             //    {
             //        DoctorInfo_ID = Guid.NewGuid().ToString(),
             //        DoctorLoginInfo_ID = "e85ff9d2-84c2-4d51-8287-8e95d443762e",
-                    
+
             //        DoctorLoginInfo_Pwd = "11111123",
             //        DoctorLoginInfo_LoginName = "Administrator",
             //        DoctorLoginInfo_CreateTime = DateTime.Now,
@@ -125,18 +122,18 @@ namespace Skpic.Console
 
             #region TestQueryLambda
 
-            var list = new List<string>()
-            {
-                "29a127cf-8a46-4894-a6e2-2856af22e2ed",
-                "7e46bf7b-90dd-4480-9cea-29cc72239f08",
-                "901dc11d-eff5-4be8-ae57-f5d513e56723",
-                "32dbffdc-925f-41db-99df-fa03cb05de4f"
-            };
+            //var list = new List<string>
+            //{
+            //    "29a127cf-8a46-4894-a6e2-2856af22e2ed",
+            //    "7e46bf7b-90dd-4480-9cea-29cc72239f08",
+            //    "901dc11d-eff5-4be8-ae57-f5d513e56723",
+            //    "32dbffdc-925f-41db-99df-fa03cb05de4f"
+            //};
 
-            using (var conn = DbContextFactory.GetConnection())
-            {
-                var i = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
-            }
+            //using (var conn = DbContextFactory.GetConnection())
+            //{
+            //    var loginCollection = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
+            //}
 
             #endregion
 

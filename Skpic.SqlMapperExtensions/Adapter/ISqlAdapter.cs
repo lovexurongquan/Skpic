@@ -1,3 +1,12 @@
+/*
+ * Added by laoxu 2014-09-10 11:00:00
+ * ---------------------------------------------------------------
+ * for£ºinterface adpter for database.
+ * ---------------------------------------------------------------
+ * version:1.0
+ * mail:lovexurongquan@163.com
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Data;

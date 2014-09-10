@@ -1,3 +1,13 @@
+/*
+ * Added by laoxu 2014-09-10 11:00:00
+ * ---------------------------------------------------------------
+ * for：don't edit this model.
+ * if you edit, it will lose.
+ * ---------------------------------------------------------------
+ * version:1.0
+ * mail:lovexurongquan@163.com
+ */
+
 using System;
 using Skpic.SqlMapperExtensions;
 
@@ -24,6 +34,7 @@ namespace Skpic.Model
 			PageFunction_Name = "";
 			PageFunction_Method = "";
 			PageFunction_Remark = "";
+			PageFunction_CreateTime = DateTime.Now;
 			PageFunction_SystemType = "";
 		}
 

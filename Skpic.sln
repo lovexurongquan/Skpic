@@ -35,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Skpic.Service", "4.Skpic.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Skpic.Web", "5.Skpic.Web", "{7C6783CB-FB85-44C2-B864-33F237D576C8}"
 	ProjectSection(SolutionItems) = preProject
-		C:\Users\荣权\Desktop\ReadMe.txt = C:\Users\荣权\Desktop\ReadMe.txt
+		C:\Users\Administrator\Desktop\ReadMe.txt = C:\Users\Administrator\Desktop\ReadMe.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skpic.DataAccessLayer", "Skpic.DataAccessLayer\Skpic.DataAccessLayer.csproj", "{F4CE2DDD-2F18-41FB-AE9F-5972C969CC8E}"
@@ -43,60 +43,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skpic.IDataAccessLayer", "Skpic.IDataAccessLayer\Skpic.IDataAccessLayer.csproj", "{261DDD40-BE46-404D-A785-28B7A2E58D53}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 13
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://skpic.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Skpic.T4Manager\\Skpic.T4Manager.csproj
-		SccProjectTopLevelParentUniqueName1 = Skpic.sln
-		SccProjectName1 = Skpic.T4Manager
-		SccLocalPath1 = Skpic.T4Manager
-		SccProjectUniqueName2 = Skpic.Model\\Skpic.Model.csproj
-		SccProjectTopLevelParentUniqueName2 = Skpic.sln
-		SccProjectName2 = Skpic.Model
-		SccLocalPath2 = Skpic.Model
-		SccProjectUniqueName3 = Skpic.Async\\Skpic.Async.csproj
-		SccProjectTopLevelParentUniqueName3 = Skpic.sln
-		SccProjectName3 = Skpic.Async
-		SccLocalPath3 = Skpic.Async
-		SccProjectUniqueName4 = Skpic.MongoDBData\\Skpic.MongoDBData.csproj
-		SccProjectTopLevelParentUniqueName4 = Skpic.sln
-		SccProjectName4 = Skpic.MongoDBData
-		SccLocalPath4 = Skpic.MongoDBData
-		SccProjectUniqueName5 = Skpic.Rainbow\\Skpic.Rainbow.csproj
-		SccProjectTopLevelParentUniqueName5 = Skpic.sln
-		SccProjectName5 = Skpic.Rainbow
-		SccLocalPath5 = Skpic.Rainbow
-		SccProjectUniqueName6 = Skpic.SqlBuilder\\Skpic.SqlBuilder.csproj
-		SccProjectTopLevelParentUniqueName6 = Skpic.sln
-		SccProjectName6 = Skpic.SqlBuilder
-		SccLocalPath6 = Skpic.SqlBuilder
-		SccProjectUniqueName7 = Skpic.SqlMapperExtensions\\Skpic.SqlMapperExtensions.csproj
-		SccProjectTopLevelParentUniqueName7 = Skpic.sln
-		SccProjectName7 = Skpic.SqlMapperExtensions
-		SccLocalPath7 = Skpic.SqlMapperExtensions
-		SccProjectUniqueName8 = Skpic.Factory\\Skpic.Factory.csproj
-		SccProjectTopLevelParentUniqueName8 = Skpic.sln
-		SccProjectName8 = Skpic.Factory
-		SccLocalPath8 = Skpic.Factory
-		SccProjectUniqueName9 = Skpic.Console\\Skpic.Console.csproj
-		SccProjectTopLevelParentUniqueName9 = Skpic.sln
-		SccProjectName9 = Skpic.Console
-		SccLocalPath9 = Skpic.Console
-		SccProjectUniqueName10 = Skpic.Common\\Skpic.Common.csproj
-		SccProjectTopLevelParentUniqueName10 = Skpic.sln
-		SccProjectName10 = Skpic.Common
-		SccLocalPath10 = Skpic.Common
-		SccProjectUniqueName11 = Skpic.DataAccessLayer\\Skpic.DataAccessLayer.csproj
-		SccProjectTopLevelParentUniqueName11 = Skpic.sln
-		SccProjectName11 = Skpic.DataAccessLayer
-		SccLocalPath11 = Skpic.DataAccessLayer
-		SccProjectUniqueName12 = Skpic.IDataAccessLayer\\Skpic.IDataAccessLayer.csproj
-		SccProjectTopLevelParentUniqueName12 = Skpic.sln
-		SccProjectName12 = Skpic.IDataAccessLayer
-		SccLocalPath12 = Skpic.IDataAccessLayer
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
