@@ -9,21 +9,20 @@
  */
 
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using Skpic.Async;
-using Skpic.Common;
-using System.Threading;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Reflection.Emit;
+using System.Text;
+using System.Threading;
 using Skpic.Async.Adapter;
 using Skpic.Async.Attributes;
-using System.Reflection.Emit;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
+using Skpic.Common;
 
-namespace Skpic.DataAccessLayer
+namespace Skpic.Async
 {
     /// <summary>
     /// dapper extensions class.
@@ -163,7 +162,7 @@ namespace Skpic.DataAccessLayer
         /// <param name="transaction"></param>
         /// <param name="commandTimeout"></param>
         /// <returns>Entity of T</returns>
-        public static T Get<T>(this IDbConnection connection, dynamic id, Type entityType = null, IDbTransaction transaction = null, int? commandTimeout = null) where T : class
+        public static T Query<T>(this IDbConnection connection, dynamic id, Type entityType = null, IDbTransaction transaction = null, int? commandTimeout = null) where T : class
         {
             var type = entityType ?? typeof(T);
             string sql;
@@ -354,13 +353,15 @@ namespace Skpic.DataAccessLayer
         /// <returns>delete count in database.</returns>
         public static int Delete<T>(this IDbConnection connection, Expression<Func<T, bool>> lambdaWhere, IDbTransaction transaction = null) where T : class
         {
+            var name = GetTableName(typeof(T));
+
             var helper = new LambdaHelper<T>(lambdaWhere);
 
             var where = helper.GetWhereSql();
 
             var param = helper.GetParameters();
 
-            var sql = string.Format("delete from {0} where {1}", helper.GetModelName(), where == "" ? "1=1" : where);
+            var sql = string.Format("delete from {0} where {1}", name, where == "" ? "1=1" : where);
             var result = connection.Execute(sql, param, transaction);
             return result;
         }
@@ -374,13 +375,18 @@ namespace Skpic.DataAccessLayer
         /// <returns></returns>
         public static IEnumerable<T> Query<T>(this IDbConnection connection, Expression<Func<T, bool>> lambdaWhere) where T : class
         {
+            var type = typeof (T);
+            var allProperties = TypePropertiesCache(type).Select(p => p.Name);
+
+            var name = GetTableName(type);
+
             var helper = new LambdaHelper<T>(lambdaWhere);
 
             var where = helper.GetWhereSql();
 
             var param = helper.GetParameters();
 
-            var sql = string.Format("select * from {0} where {1}", helper.GetModelName(), where == "" ? "1=1" : where);
+            var sql = string.Format("select {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
 
             return connection.Query<T>(sql, param);
         }

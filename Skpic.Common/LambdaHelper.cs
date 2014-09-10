@@ -24,9 +24,7 @@ namespace Skpic.Common
         /// </summary>
         /// <param name="expression"></param>
         public LambdaHelper(Expression<Func<T, bool>> expression)
-        { 
-            Expression = expression;
-
+        {
             if (expression.Body is BinaryExpression)
             {
                 SplitExpression(expression.Body as BinaryExpression);
@@ -47,11 +45,6 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        /// expression.
-        /// </summary>
-        private Expression<Func<T, bool>> Expression { get; set; }
-
-        /// <summary>
         /// sql builder.
         /// </summary>
         readonly StringBuilder _sb = new StringBuilder();
@@ -60,15 +53,6 @@ namespace Skpic.Common
         /// param collection.
         /// </summary>
         readonly Dictionary<string, string> _paramCollection = new Dictionary<string, string>();
-
-        /// <summary>
-        /// Get model name.
-        /// </summary>
-        /// <returns></returns>
-        public string GetModelName()
-        {
-            return Expression.Parameters[0].Type.Name;
-        }
 
         /// <summary>
         /// get where sql in expression.

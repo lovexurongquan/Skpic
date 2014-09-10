@@ -13,6 +13,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Skpic.Async;
 using Skpic.Common;
 using Skpic.Factory;
 using Skpic.IDataAccessLayer;

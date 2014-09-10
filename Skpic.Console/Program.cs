@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Skpic.Async;
 using Skpic.Common;
 using Skpic.DataAccessLayer;
 using Skpic.Factory;
@@ -55,19 +56,19 @@ namespace Skpic.Console
 
             #region TestDeleteLambda
 
-            //var list = new List<string>()
-            //{
-            //    "29a127cf-8a46-4894-a6e2-2856af22e2ed",
-            //    "7e46bf7b-90dd-4480-9cea-29cc72239f08",
-            //    "901dc11d-eff5-4be8-ae57-f5d513e56723",
-            //    "32dbffdc-925f-41db-99df-fa03cb05de4f"
-            //};
+            var list = new List<string>()
+            {
+                "e85ff9d2-84c2-4d51-8287-8e95d443762e",
+                "7e46bf7b-90dd-4480-9cea-29cc72239f08",
+                "901dc11d-eff5-4be8-ae57-f5d513e56723",
+                "32dbffdc-925f-41db-99df-fa03cb05de4f"
+            };
 
 
-            //using (var conn = DbContextFactory.GetConnection())
-            //{
-            //    var i = conn.Delete<DoctorLoginInfo>(d => !list.Contains(d.DoctorLoginInfo_ID));
-            //} 
+            using (var conn = DbContextFactory.GetConnection())
+            {
+                var i = conn.Delete<DoctorLoginInfo>(d => !list.Contains(d.DoctorLoginInfo_ID));
+            } 
 
             #endregion
 
@@ -127,10 +128,10 @@ namespace Skpic.Console
 
             //var list = new List<string>
             //{
-            //    "29a127cf-8a46-4894-a6e2-2856af22e2ed",
-            //    "7e46bf7b-90dd-4480-9cea-29cc72239f08",
-            //    "901dc11d-eff5-4be8-ae57-f5d513e56723",
-            //    "32dbffdc-925f-41db-99df-fa03cb05de4f"
+            //    "e85ff9d2-84c2-4d51-8287-8e95d443762e",
+            //    "1d94737e-2f84-4b4c-ae94-c5bee74026d3",
+            //    "68f99765-55f5-4c1a-b2b7-2fef5fb4243d",
+            //    "79767345-12e5-40a5-affe-4ea762fb5e7d"
             //};
 
             //using (var conn = DbContextFactory.GetConnection())
