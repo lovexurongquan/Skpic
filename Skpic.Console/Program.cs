@@ -56,19 +56,19 @@ namespace Skpic.Console
 
             #region TestDeleteLambda
 
-            var list = new List<string>()
-            {
-                "e85ff9d2-84c2-4d51-8287-8e95d443762e",
-                "7e46bf7b-90dd-4480-9cea-29cc72239f08",
-                "901dc11d-eff5-4be8-ae57-f5d513e56723",
-                "32dbffdc-925f-41db-99df-fa03cb05de4f"
-            };
+            //var list = new List<string>()
+            //{
+            //    "e85ff9d2-84c2-4d51-8287-8e95d443762e",
+            //    "7e46bf7b-90dd-4480-9cea-29cc72239f08",
+            //    "901dc11d-eff5-4be8-ae57-f5d513e56723",
+            //    "32dbffdc-925f-41db-99df-fa03cb05de4f"
+            //};
 
 
-            using (var conn = DbContextFactory.GetConnection())
-            {
-                var i = conn.Delete<DoctorLoginInfo>(d => !list.Contains(d.DoctorLoginInfo_ID));
-            } 
+            //using (var conn = DbContextFactory.GetConnection())
+            //{
+            //    var i = conn.Delete<DoctorLoginInfo>(d => !list.Contains(d.DoctorLoginInfo_ID));
+            //} 
 
             #endregion
 
@@ -140,7 +140,6 @@ namespace Skpic.Console
             //}
 
             #endregion
-
 
             //System.Console.ReadKey();
         }
