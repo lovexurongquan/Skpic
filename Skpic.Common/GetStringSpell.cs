@@ -33,7 +33,7 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        /// 把提取的字母变成大写
+        /// 把提取的字母变成小写
         /// </summary>
         /// <param name="text">需要转换的字符串</param>
         /// <returns>转换结果</returns>
