@@ -126,18 +126,28 @@ namespace Skpic.Console
 
             #region TestQueryLambda
 
-            //var list = new List<string>
-            //{
-            //    "e85ff9d2-84c2-4d51-8287-8e95d443762e",
-            //    "1d94737e-2f84-4b4c-ae94-c5bee74026d3",
-            //    "68f99765-55f5-4c1a-b2b7-2fef5fb4243d",
-            //    "79767345-12e5-40a5-affe-4ea762fb5e7d"
-            //};
+            var list = new List<string>
+            {
+                "e85ff9d2-84c2-4d51-8287-8e95d443762e",
+                "1d94737e-2f84-4b4c-ae94-c5bee74026d3",
+                "68f99765-55f5-4c1a-b2b7-2fef5fb4243d",
+                "79767345-12e5-40a5-affe-4ea762fb5e7d"
+            };
 
-            //using (var conn = DbContextFactory.GetConnection())
-            //{
-            //    var loginCollection = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
-            //}
+            using (var conn = DbContextFactory.GetConnection())
+            {
+                //var equal = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID == "e85ff9d2-84c2-4d51-8287-8e95d443762e");
+                //var startsWith = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.StartsWith("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
+                //var endsWith = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.EndsWith("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
+                //var contains = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.Contains("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
+
+                //var containsList1 = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
+
+                //i'll fuck this. no no no.
+                //var containsList2 = conn.Query<DoctorLoginInfo>(d => list.Any(l => l.Equals(d.DoctorLoginInfo_ID)));
+
+                var y = conn.Query<DoctorLoginInfo>(d => d.DoctorInfo_ID.Equals("e85ff9d2-84c2-4d51-8287-8e95d443762e") && d.DoctorLoginInfo_ID == "e85ff9d2-84c2-4d51-8287-8e95d443762e" || d.DoctorLoginInfo_ID.StartsWith("e85ff9d2-84c2-4d51-8287-8e95d443762e") && d.DoctorLoginInfo_CreateTime < DateTime.Now || d.DoctorLoginInfo_Enable == true && !d.DoctorLoginInfo_LoginName.Contains("aaa"));
+            }
 
             #endregion
 

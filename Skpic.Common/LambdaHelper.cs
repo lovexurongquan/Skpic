@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Skpic.Common
 {
@@ -25,18 +26,24 @@ namespace Skpic.Common
         /// <param name="expression"></param>
         public LambdaHelper(Expression<Func<T, bool>> expression)
         {
-            if (expression.Body is BinaryExpression)
-            {
-                SplitExpression(expression.Body as BinaryExpression);
-            }
-            else if (expression.Body is MethodCallExpression)
-            {
-                GetStringMethodExpressions(expression.Body);
-            }
-            else if (expression.Body is UnaryExpression)
-            {
-                GetUnaryExpression(expression.Body);
-            }
+            ChoiseExpression(expression.Body);
+
+            #region Old
+
+            //if (expression.Body is BinaryExpression)
+            //{
+            //    SplitExpression(expression.Body as BinaryExpression);
+            //}
+            //else if (expression.Body is MethodCallExpression)
+            //{
+            //    GetStringMethodExpressions(expression.Body);
+            //}
+            //else if (expression.Body is UnaryExpression)
+            //{
+            //    GetUnaryExpression(expression.Body);
+            //}
+
+            #endregion
 
             if (_paramCollection.Count > 50)
             {
@@ -62,15 +69,15 @@ namespace Skpic.Common
         {
             var where = _sb.ToString()
              .Replace("()", " ")
-             .Replace("  ", " ")
-             .Replace("  ", " ")
              .Replace("and and", "and")
-             .Replace("or or", "or")
-             .Replace("( and (", "((")
-             .Replace("( or (", "((")
-             .Replace("( or (", "((")
-             .Replace(") and )", "))")
-             .Replace(") or )", "))");
+             .Replace("or or", "or");
+
+            where = Regex.Replace(where, @"and\s*\)", ")");
+            where = Regex.Replace(where, @"\(\s*and", "(");
+
+            where = Regex.Replace(where, @"\(\s*or", "(");
+            where = Regex.Replace(where, @"or\s*\)", ")");
+
             return where;
         }
 
@@ -85,6 +92,39 @@ namespace Skpic.Common
         }
 
         /// <summary>
+        /// choise expression type.
+        /// </summary>
+        /// <param name="expression"></param>
+        private void ChoiseExpression(Expression expression)
+        {
+            switch (expression.NodeType)
+            {
+                case ExpressionType.Lambda:
+                case ExpressionType.Not:
+                    GetUnaryExpression(expression);
+                    break;
+                case ExpressionType.Call:
+                    GetStringMethodExpressions(expression);
+                    break;
+                case ExpressionType.OrElse:
+                case ExpressionType.AndAlso:
+
+                    SplitExpression(expression as BinaryExpression);
+                    break;
+                case ExpressionType.Equal:
+                case ExpressionType.NotEqual:
+                case ExpressionType.GreaterThan:
+                case ExpressionType.GreaterThanOrEqual:
+                case ExpressionType.LessThan:
+                case ExpressionType.LessThanOrEqual:
+
+                    GetOperatorsExpressions(expression as BinaryExpression);
+                    break;
+            }
+        }
+
+
+        /// <summary>
         /// split expression with left and right.
         /// </summary>
         /// <param name="binaryExpression">expression body.</param>
@@ -94,10 +134,7 @@ namespace Skpic.Common
             var left = binaryExpression.Left as BinaryExpression;
 
             var right = binaryExpression.Right as BinaryExpression;
-            if (left == null && right == null)
-            {
-                GetOperatorsExpressions(binaryExpression);
-            }
+
             _sb.Append("(");
 
 
@@ -152,7 +189,14 @@ namespace Skpic.Common
         {
             var unExpression = expression as UnaryExpression;
             if (unExpression == null) return;
-            GetStringMethodExpressions(unExpression.Operand, true);
+            if (unExpression.Operand is MethodCallExpression)
+            {
+                GetStringMethodExpressions(unExpression.Operand, true);
+            }
+            else if (unExpression.Operand is BinaryExpression)
+            {
+                GetOperatorsExpressions(unExpression.Operand as BinaryExpression, true);
+            }
         }
 
         /// <summary>
