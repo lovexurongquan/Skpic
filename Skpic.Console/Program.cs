@@ -131,7 +131,7 @@ namespace Skpic.Console
                 "e85ff9d2-84c2-4d51-8287-8e95d443762e",
                 "1d94737e-2f84-4b4c-ae94-c5bee74026d3",
                 "68f99765-55f5-4c1a-b2b7-2fef5fb4243d",
-                "79767345-12e5-40a5-affe-4ea762fb5e7d"
+                "c46bc122-8115-4ddd-a041-518658843e57"
             };
 
             using (var conn = DbContextFactory.GetConnection())
@@ -146,7 +146,7 @@ namespace Skpic.Console
                 //i'll fuck this. no no no.
                 //var containsList2 = conn.Query<DoctorLoginInfo>(d => list.Any(l => l.Equals(d.DoctorLoginInfo_ID)));
 
-                var y = conn.Query<DoctorLoginInfo>(d => d.DoctorInfo_ID.Equals("e85ff9d2-84c2-4d51-8287-8e95d443762e") && d.DoctorLoginInfo_ID == "e85ff9d2-84c2-4d51-8287-8e95d443762e" || d.DoctorLoginInfo_ID.StartsWith("e85ff9d2-84c2-4d51-8287-8e95d443762e") && d.DoctorLoginInfo_CreateTime < DateTime.Now || d.DoctorLoginInfo_Enable == true && !d.DoctorLoginInfo_LoginName.Contains("aaa"));
+                var y = conn.Query<DoctorLoginInfo>(d => d.DoctorInfo_ID.Equals("c46bc122-8115-4ddd-a041-518658843e57"));
             }
 
             #endregion
