@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassHelper.cs" />
     <Compile Include="EncryHelper.cs" />
     <Compile Include="EntityState.cs" />
     <Compile Include="GetStringSpell.cs" />

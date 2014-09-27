@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq.Expressions;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Text;
 using Skpic.Async;
 using Skpic.Common;
 using Skpic.Factory;
@@ -125,23 +130,27 @@ namespace Skpic.Console
 
             #region TestQueryLambda
 
-            var list = new List<string>()
-            {
-                "29a127cf-8a46-4894-a6e2-2856af22e2ed",
-                "7e46bf7b-90dd-4480-9cea-29cc72239f08",
-                "901dc11d-eff5-4be8-ae57-f5d513e56723",
-                "32dbffdc-925f-41db-99df-fa03cb05de4f"
-            };
+            //var list = new List<string>()
+            //{
+            //    "29a127cf-8a46-4894-a6e2-2856af22e2ed",
+            //    "7e46bf7b-90dd-4480-9cea-29cc72239f08",
+            //    "901dc11d-eff5-4be8-ae57-f5d513e56723",
+            //    "32dbffdc-925f-41db-99df-fa03cb05de4f"
+            //};
 
-            using (var conn = DbContextFactory.GetConnection())
-            {
-                var i = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
-            }
+            //using (var conn = DbContextFactory.GetConnection())
+            //{
+            //    var i = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
+            //}
 
             #endregion
 
-
-            //System.Console.ReadKey();
+            var propertyLength = 1000;
+            dynamic dynamicObject = new SimpleDynamic(propertyLength);
+            var b = dynamicObject as IEnumerable;
+            
+            System.Console.Write(dynamicObject.GetValue("P1"));
+            System.Console.ReadKey();
         }
 
     }
