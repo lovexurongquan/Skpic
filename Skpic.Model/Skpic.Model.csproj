@@ -85,10 +85,6 @@
       <Project>{4c6083f8-1217-4d61-b966-8cd1a3029a5b}</Project>
       <Name>Skpic.Factory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Skpic.SqlMapperExtensions\Skpic.SqlMapperExtensions.csproj">
-      <Project>{6F9C0FBB-2F35-4063-8717-C06BFFAA6D34}</Project>
-      <Name>Skpic.SqlMapperExtensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Skpic.T4Manager\Skpic.T4Manager.csproj">
       <Project>{aaa62457-e6d5-4cab-9261-a4f9198b12ab}</Project>
       <Name>Skpic.T4Manager</Name>

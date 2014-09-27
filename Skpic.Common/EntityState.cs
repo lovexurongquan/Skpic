@@ -1,20 +1,30 @@
-﻿namespace Skpic.Common
+﻿/*
+ * Added by laoxu 2014-09-10 11:00:00
+ * ---------------------------------------------------------------
+ * for：entity state. exp:add edit delete.
+ * unit work is used.
+ * ---------------------------------------------------------------
+ * version:1.0
+ * mail:lovexurongquan@163.com
+ */
+
+namespace Skpic.Common
 {
     /// <summary>
-    /// 实体状态
+    /// entity state.
     /// </summary>
     public enum EntityState
     {
         /// <summary>
-        /// 添加
+        /// add
         /// </summary>
-        Add,
+        Create,
         /// <summary>
-        /// 修改
+        /// edit
         /// </summary>
-        Edit,
+        Modified,
         /// <summary>
-        /// 删除
+        /// delete
         /// </summary>
         Delete
     }

@@ -1,9 +1,16 @@
-﻿using System;
+﻿/*
+ * Added by laoxu 2014-09-10 11:00:00
+ * ---------------------------------------------------------------
+ * for：connect database factory.
+ * ---------------------------------------------------------------
+ * version:1.0
+ * mail:lovexurongquan@163.com
+ */
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
-using System.IO;
-using System.Linq;
 
 namespace Skpic.Factory
 {

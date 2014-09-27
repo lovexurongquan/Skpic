@@ -2,19 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using Skpic.Async;
 using Skpic.Common;
+using Skpic.DataAccessLayer;
 using Skpic.Factory;
+using Skpic.IDataAccessLayer;
 using Skpic.Model;
 using Skpic.SqlMapperExtensions;
 
 namespace Skpic.Console
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -46,7 +49,7 @@ namespace Skpic.Console
             //    {
             //        DoctorInfo_ID = Guid.NewGuid().ToString(),
             //        DoctorLoginInfo_ID = "e85ff9d2-84c2-4d51-8287-8e95d443762e",
-                    
+
             //        DoctorLoginInfo_Pwd = "11111123",
             //        DoctorLoginInfo_LoginName = "Administrator",
             //        DoctorLoginInfo_CreateTime = DateTime.Now,
@@ -62,7 +65,7 @@ namespace Skpic.Console
 
             //var list = new List<string>()
             //{
-            //    "29a127cf-8a46-4894-a6e2-2856af22e2ed",
+            //    "e85ff9d2-84c2-4d51-8287-8e95d443762e",
             //    "7e46bf7b-90dd-4480-9cea-29cc72239f08",
             //    "901dc11d-eff5-4be8-ae57-f5d513e56723",
             //    "32dbffdc-925f-41db-99df-fa03cb05de4f"
@@ -101,30 +104,30 @@ namespace Skpic.Console
             //    DoctorLoginInfo_Pwd_Temp_Time = DateTime.Now
             //};
 
-            //unitWork.RegistEntity(login1, EntityState.Add);
+            //unitWork.RegistEntity(login1, EntityState.Create);
 
             //var login2 = new DoctorLoginInfo()
             //{
-            //    DoctorLoginInfo_ID = "160269c7-06f2-48b2-9cea-f3d78ce1b707",
+            //    DoctorLoginInfo_ID = "e85ff9d2-84c2-4d51-8287-8e95d443762e",
             //    DoctorInfo_ID = Guid.NewGuid().ToString(),
             //    DoctorLoginInfo_Enable = true,
-            //    DoctorLoginInfo_Pwd = "ssssmmmmms",
-            //    DoctorLoginInfo_LoginName = "sxxmmmmmxx",
+            //    DoctorLoginInfo_Pwd = "e85ff9d2-84c2-4d51-8287-8e95d443762e",
+            //    DoctorLoginInfo_LoginName = "e85ff9d2-84c2-4d51-8287-8e95d443762e",
             //    DoctorLoginInfo_Pwd_Temp = "jsldj",
             //    DoctorLoginInfo_Remark = "jskdfj",
             //    DoctorLoginInfo_CreateTime = DateTime.Now,
             //    DoctorLoginInfo_Pwd_Temp_Time = DateTime.Now
             //};
 
-            //unitWork.RegistEntity(login2, EntityState.Edit);
+            //unitWork.RegistEntity(login2, EntityState.Modified);
 
-            //var login3 = new DoctorLoginInfo()
-            //{
-            //    DoctorLoginInfo_ID = "79e23e66-c56f-4e41-a2d1-dd101b3867dd"
-            //};
+            ////var login3 = new DoctorLoginInfo()
+            ////{
+            ////    DoctorLoginInfo_ID = "79e23e66-c56f-4e41-a2d1-dd101b3867dd"
+            ////};
 
-            //unitWork.RegistEntity(login3, EntityState.Delete);
-            // unitWork.Commit(); 
+            ////unitWork.RegistEntity(login3, EntityState.Delete);
+            //unitWork.Commit();
 
             #endregion
 
@@ -142,6 +145,16 @@ namespace Skpic.Console
             //{
             //    var i = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
             //}
+                //var endsWith = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.EndsWith("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
+                //var contains = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.Contains("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
+
+                //var containsList1 = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
+
+                //i'll fuck this. no no no.
+                //var containsList2 = conn.Query<DoctorLoginInfo>(d => list.Any(l => l.Equals(d.DoctorLoginInfo_ID)));
+
+                var y = conn.Query<DoctorLoginInfo>(d => d.DoctorInfo_ID.Equals("c46bc122-8115-4ddd-a041-518658843e57"));
+            }
 
             #endregion
 

@@ -47,6 +47,10 @@
     <Compile Include="UnitWork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Skpic.Async\Skpic.Async.csproj">
+      <Project>{BAB57D1A-06F1-45A7-904A-477A478E1A4F}</Project>
+      <Name>Skpic.Async</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Skpic.Common\Skpic.Common.csproj">
       <Project>{89793B52-7CC9-4757-B6BF-6ADB51E503CB}</Project>
       <Name>Skpic.Common</Name>
@@ -58,10 +62,6 @@
     <ProjectReference Include="..\Skpic.IDataAccessLayer\Skpic.IDataAccessLayer.csproj">
       <Project>{261DDD40-BE46-404D-A785-28B7A2E58D53}</Project>
       <Name>Skpic.IDataAccessLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Skpic.SqlMapperExtensions\Skpic.SqlMapperExtensions.csproj">
-      <Project>{6F9C0FBB-2F35-4063-8717-C06BFFAA6D34}</Project>
-      <Name>Skpic.SqlMapperExtensions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

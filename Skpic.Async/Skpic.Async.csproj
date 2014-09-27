@@ -30,7 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;ASYNC</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -52,12 +52,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapter\ISqlAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Adapter\PostgresAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Adapter\SqLiteAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Adapter\SqlServerAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\ComputedAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\ForeignKeyAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\ForeignTableAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\KeyAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\LengthAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\TableAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\WriteAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlMapper.cs" />
     <Compile Include="SqlMapperAsync.cs" />
+    <Compile Include="SqlMapperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Skpic.Common\Skpic.Common.csproj">
+      <Project>{89793B52-7CC9-4757-B6BF-6ADB51E503CB}</Project>
+      <Name>Skpic.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

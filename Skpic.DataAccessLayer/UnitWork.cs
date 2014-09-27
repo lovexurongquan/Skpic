@@ -1,12 +1,22 @@
-﻿
+﻿/*
+ * added by laoxu 2014-9-6 17:00:00
+ * ---------------------------------------------------------------
+ * for: A Unit of Work keeps track of everything you do during a 
+ * business transaction that can affect the database. 
+ * When you're done, it figures out everything that needs to be done 
+ * to alter the database as a result of your work.
+ * ---------------------------------------------------------------
+ * version:1.0
+ * mail:lovexurongquan@163.com
+ **/
 
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Skpic.Async;
 using Skpic.Common;
 using Skpic.Factory;
 using Skpic.IDataAccessLayer;
-using Skpic.SqlMapperExtensions;
 
 namespace Skpic.DataAccessLayer
 {
@@ -80,10 +90,10 @@ namespace Skpic.DataAccessLayer
                         }
                         switch (data.State)
                         {
-                            case EntityState.Add:
+                            case EntityState.Create:
                                 _db.Insert(data.Entity, data.EntityType, tran);
                                 break;
-                            case EntityState.Edit:
+                            case EntityState.Modified:
                                 _db.Update(data.Entity, data.EntityType, tran);
                                 break;
                             case EntityState.Delete:
@@ -94,9 +104,10 @@ namespace Skpic.DataAccessLayer
                     tran.Commit();
                     return true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     tran.Rollback();
+                    //todo: this could logging.
                     return false;
                 }
             }

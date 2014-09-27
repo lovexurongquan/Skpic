@@ -1,4 +1,13 @@
-﻿using System.Text;
+﻿/*
+ * Added by laoxu 2014-09-10 11:00:00
+ * ---------------------------------------------------------------
+ * for：get chinese spell by chinese string.
+ * ---------------------------------------------------------------
+ * version:1.0
+ * mail:lovexurongquan@163.com
+ */
+
+using System.Text;
 
 namespace Skpic.Common
 {
@@ -24,7 +33,7 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        /// 把提取的字母变成大写
+        /// 把提取的字母变成小写
         /// </summary>
         /// <param name="text">需要转换的字符串</param>
         /// <returns>转换结果</returns>

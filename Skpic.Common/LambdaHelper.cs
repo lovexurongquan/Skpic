@@ -1,8 +1,19 @@
-﻿using System;
+﻿/*
+ * Added by laoxu 2014-09-10 11:00:00
+ * ---------------------------------------------------------------
+ * for：lambda helper.
+ * get sql string and param in lambda expression.
+ * ---------------------------------------------------------------
+ * version:1.0
+ * mail:lovexurongquan@163.com
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Skpic.Common
 {
@@ -15,31 +26,30 @@ namespace Skpic.Common
         /// <param name="expression"></param>
         public LambdaHelper(Expression<Func<T, bool>> expression)
         {
-            Expression = expression;
+            ChoiseExpression(expression.Body);
 
-            if (expression.Body is BinaryExpression)
-            {
-                SplitExpression(expression.Body as BinaryExpression);
-            }
-            else if (expression.Body is MethodCallExpression)
-            {
-                GetStringMethodExpressions(expression.Body);
-            }
-            else if (expression.Body is UnaryExpression)
-            {
-                GetUnaryExpression(expression.Body);
-            }
+            #region Old
+
+            //if (expression.Body is BinaryExpression)
+            //{
+            //    SplitExpression(expression.Body as BinaryExpression);
+            //}
+            //else if (expression.Body is MethodCallExpression)
+            //{
+            //    GetStringMethodExpressions(expression.Body);
+            //}
+            //else if (expression.Body is UnaryExpression)
+            //{
+            //    GetUnaryExpression(expression.Body);
+            //}
+
+            #endregion
 
             if (_paramCollection.Count > 50)
             {
                 throw new Exception("param count nust be less than 50.");
             }
         }
-
-        /// <summary>
-        /// expression.
-        /// </summary>
-        private Expression<Func<T, bool>> Expression { get; set; }
 
         /// <summary>
         /// sql builder.
@@ -52,15 +62,6 @@ namespace Skpic.Common
         readonly Dictionary<string, string> _paramCollection = new Dictionary<string, string>();
 
         /// <summary>
-        /// Get model name.
-        /// </summary>
-        /// <returns></returns>
-        public string GetModelName()
-        {
-            return Expression.Parameters[0].Type.Name;
-        }
-
-        /// <summary>
         /// get where sql in expression.
         /// </summary>
         /// <returns></returns>
@@ -68,15 +69,15 @@ namespace Skpic.Common
         {
             var where = _sb.ToString()
              .Replace("()", " ")
-             .Replace("  ", " ")
-             .Replace("  ", " ")
              .Replace("and and", "and")
-             .Replace("or or", "or")
-             .Replace("( and (", "((")
-             .Replace("( or (", "((")
-             .Replace("( or (", "((")
-             .Replace(") and )", "))")
-             .Replace(") or )", "))");
+             .Replace("or or", "or");
+
+            where = Regex.Replace(where, @"and\s*\)", ")");
+            where = Regex.Replace(where, @"\(\s*and", "(");
+
+            where = Regex.Replace(where, @"\(\s*or", "(");
+            where = Regex.Replace(where, @"or\s*\)", ")");
+
             return where;
         }
 
@@ -91,6 +92,39 @@ namespace Skpic.Common
         }
 
         /// <summary>
+        /// choise expression type.
+        /// </summary>
+        /// <param name="expression"></param>
+        private void ChoiseExpression(Expression expression)
+        {
+            switch (expression.NodeType)
+            {
+                case ExpressionType.Lambda:
+                case ExpressionType.Not:
+                    GetUnaryExpression(expression);
+                    break;
+                case ExpressionType.Call:
+                    GetStringMethodExpressions(expression);
+                    break;
+                case ExpressionType.OrElse:
+                case ExpressionType.AndAlso:
+
+                    SplitExpression(expression as BinaryExpression);
+                    break;
+                case ExpressionType.Equal:
+                case ExpressionType.NotEqual:
+                case ExpressionType.GreaterThan:
+                case ExpressionType.GreaterThanOrEqual:
+                case ExpressionType.LessThan:
+                case ExpressionType.LessThanOrEqual:
+
+                    GetOperatorsExpressions(expression as BinaryExpression);
+                    break;
+            }
+        }
+
+
+        /// <summary>
         /// split expression with left and right.
         /// </summary>
         /// <param name="binaryExpression">expression body.</param>
@@ -100,10 +134,7 @@ namespace Skpic.Common
             var left = binaryExpression.Left as BinaryExpression;
 
             var right = binaryExpression.Right as BinaryExpression;
-            if (left == null && right == null)
-            {
-                GetOperatorsExpressions(binaryExpression);
-            }
+
             _sb.Append("(");
 
 
@@ -150,18 +181,27 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        ///  get unary in expression. Exp: NotEquals, NotContains.
+        ///  get unary in expression. 
+        /// Exp: NotEquals, NotContains.
         /// </summary>
         /// <param name="expression"></param>
         private void GetUnaryExpression(Expression expression)
         {
             var unExpression = expression as UnaryExpression;
             if (unExpression == null) return;
-            GetStringMethodExpressions(unExpression.Operand, true);
+            if (unExpression.Operand is MethodCallExpression)
+            {
+                GetStringMethodExpressions(unExpression.Operand, true);
+            }
+            else if (unExpression.Operand is BinaryExpression)
+            {
+                GetOperatorsExpressions(unExpression.Operand as BinaryExpression, true);
+            }
         }
 
         /// <summary>
-        /// get operators in expression. Exp: LessThan, GreaterThanOrEqual, GreaterThan, LessThanOrEqual, Equal.
+        /// get operators in expression. 
+        /// Exp: LessThan, GreaterThanOrEqual, GreaterThan, LessThanOrEqual, Equal.
         /// </summary>
         /// <param name="expression"></param>
         /// <param name="isNot"></param>
@@ -176,7 +216,8 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        /// get string method in expression. Exp: Equals, StartsWith, EndsWith, Contains.
+        /// get string method in expression. 
+        /// Exp: Equals, StartsWith, EndsWith, Contains.
         /// </summary>
         /// <param name="expression">expression data.</param>
         /// <param name="isNot"></param>
@@ -320,6 +361,9 @@ namespace Skpic.Common
     }
 }
 
+/// <summary>
+/// return param.
+/// </summary>
 public class Param
 {
     public string p0 { get; set; }

@@ -1,3 +1,12 @@
+/*
+ * Added by laoxu 2014-09-10 11:00:00
+ * ---------------------------------------------------------------
+ * for£ºall the columns in database.
+ * ---------------------------------------------------------------
+ * version:1.0
+ * mail:lovexurongquan@163.com
+ */
+
 namespace Skpic.T4Manager
 {
     /// <summary>
