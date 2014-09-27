@@ -33,5 +33,34 @@ namespace Skpic.Common
             object result;
             return Properties.TryGetValue(key, out result) ? result.ToString() : null;
         }
+
+        public bool SetValue(string key,object value)
+        {
+            if (!Properties.Keys.Contains(key))
+            {
+                Properties.Add(key, value.ToString());
+            }
+            else{
+                Properties[key] = value;
+            }
+            return true;
+        }
+
+        public override bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            if (!Properties.Keys.Contains(binder.Name))
+            {
+                Properties.Add(binder.Name, value.ToString());
+            }
+            else
+            {
+                Properties[binder.Name] = value;
+            }
+            return true;
+        }
+        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        {
+            return Properties.TryGetValue(binder.Name, out result);
+        }
     }
 }

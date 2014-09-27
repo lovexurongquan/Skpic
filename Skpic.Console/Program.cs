@@ -147,9 +147,15 @@ namespace Skpic.Console
 
             var propertyLength = 1000;
             dynamic dynamicObject = new SimpleDynamic(propertyLength);
-            var b = dynamicObject as IEnumerable;
-            
-            System.Console.Write(dynamicObject.GetValue("P1"));
+            var a = dynamicObject.P1;
+            System.Console.WriteLine("初值="+dynamicObject.GetValue("P1"));
+            dynamicObject.P1 = "456";
+            System.Console.WriteLine("直接赋值="+dynamicObject.GetValue("P1"));
+            var b = dynamicObject.P1;
+            System.Console.WriteLine("再次取值=" + dynamicObject.GetValue("P1"));
+            dynamicObject.SetValue("P1", "789");
+            System.Console.WriteLine("方法赋值=" + dynamicObject.GetValue("P1"));
+            System.Console.WriteLine("方法取值="+dynamicObject.GetValue("P1"));
             System.Console.ReadKey();
         }
 
