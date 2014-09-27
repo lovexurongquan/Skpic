@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Dynamic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
+=======
+using System.Linq;
+>>>>>>> a1b433103f5136b0f7224976456fa6ba733574a9
 using Skpic.Async;
 using Skpic.Common;
 using Skpic.DataAccessLayer;
@@ -16,9 +19,9 @@ using Skpic.Model;
 
 namespace Skpic.Console
 {
-    internal static class Program
+    static class Program
     {
-        private static void Main(string[] args)
+        static void Main(string[] args)
         {
             #region test dapper query
 
@@ -28,7 +31,6 @@ namespace Skpic.Console
             //    var sql = XmlHelper.TableObjectSql;
             //    var x = conn.Query(sql);
             //} 
-
             #endregion
 
             #region test GetTableCollection
@@ -80,13 +82,11 @@ namespace Skpic.Console
             #endregion
 
             #region TestDelete
-
             //using (var conn = DbContextFactory.GetConnection())
             //{
             //    var sql = "delete from doctorlogininfo where DoctorLoginInfo_LoginName = '@a0'";
             //    var x = conn.Execute(sql, new { a0 = "Administrator" });
             //}
-
             #endregion
 
             #region TestUnitWork
@@ -135,6 +135,7 @@ namespace Skpic.Console
 
             #region TestQueryLambda
 
+<<<<<<< HEAD
             //var list = new List<string>()
             //{
             //    "29a127cf-8a46-4894-a6e2-2856af22e2ed",
@@ -147,30 +148,50 @@ namespace Skpic.Console
             //{
             //    var i = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
             //}
-            //var endsWith = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.EndsWith("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
-            //var contains = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.Contains("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
-
-            //var containsList1 = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
-
-            //i'll fuck this. no no no.
-            //var containsList2 = conn.Query<DoctorLoginInfo>(d => list.Any(l => l.Equals(d.DoctorLoginInfo_ID)));
-
-            //var y = conn.Query<DoctorLoginInfo>(d => d.DoctorInfo_ID.Equals("c46bc122-8115-4ddd-a041-518658843e57"));
 
             #endregion
 
             var propertyLength = 1000;
             dynamic dynamicObject = new SimpleDynamic(propertyLength);
             var a = dynamicObject.P1;
-            System.Console.WriteLine("初值=" + dynamicObject.GetValue("P1"));
+            System.Console.WriteLine("初值="+dynamicObject.GetValue("P1"));
             dynamicObject.P1 = "456";
-            System.Console.WriteLine("直接赋值=" + dynamicObject.GetValue("P1"));
+            System.Console.WriteLine("直接赋值="+dynamicObject.GetValue("P1"));
             var b = dynamicObject.P1;
             System.Console.WriteLine("再次取值=" + dynamicObject.GetValue("P1"));
             dynamicObject.SetValue("P1", "789");
             System.Console.WriteLine("方法赋值=" + dynamicObject.GetValue("P1"));
-            System.Console.WriteLine("方法取值=" + dynamicObject.GetValue("P1"));
+            System.Console.WriteLine("方法取值="+dynamicObject.GetValue("P1"));
             System.Console.ReadKey();
+=======
+            var list = new List<string>
+            {
+                "e85ff9d2-84c2-4d51-8287-8e95d443762e",
+                "1d94737e-2f84-4b4c-ae94-c5bee74026d3",
+                "68f99765-55f5-4c1a-b2b7-2fef5fb4243d",
+                "c46bc122-8115-4ddd-a041-518658843e57"
+            };
+
+            using (var conn = DbContextFactory.GetConnection())
+            {
+                //var equal = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID == "e85ff9d2-84c2-4d51-8287-8e95d443762e");
+                //var startsWith = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.StartsWith("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
+                //var endsWith = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.EndsWith("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
+                //var contains = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.Contains("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
+
+                //var containsList1 = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
+
+                //i'll fuck this. no no no.
+                //var containsList2 = conn.Query<DoctorLoginInfo>(d => list.Any(l => l.Equals(d.DoctorLoginInfo_ID)));
+
+                var y = conn.Query<DoctorLoginInfo>(d => d.DoctorInfo_ID.Equals("c46bc122-8115-4ddd-a041-518658843e57"));
+            }
+
+            #endregion
+
+            //System.Console.ReadKey();
+>>>>>>> a1b433103f5136b0f7224976456fa6ba733574a9
         }
+
     }
 }
