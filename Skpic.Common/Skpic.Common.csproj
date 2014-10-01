@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassHelper.cs" />
+    <Compile Include="DynamicGenerator.cs" />
     <Compile Include="EncryHelper.cs" />
     <Compile Include="EntityState.cs" />
     <Compile Include="GetStringSpell.cs" />
