@@ -18,27 +18,27 @@ namespace Skpic.Common
         {
             var count = fieldParam.Count;
 
-            AppDomain myDomain = Thread.GetDomain();
+            var myDomain = Thread.GetDomain();
             var myAsmName = new AssemblyName("ParamVector");
 
-            AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(myAsmName, AssemblyBuilderAccess.Run);
+            var myAsmBuilder = myDomain.DefineDynamicAssembly(myAsmName, AssemblyBuilderAccess.Run);
 
-            ModuleBuilder paramVectorModule = myAsmBuilder.DefineDynamicModule(myAsmName.Name);
+            var paramVectorModule = myAsmBuilder.DefineDynamicModule(myAsmName.Name);
 
-            TypeBuilder paramVector = paramVectorModule.DefineType("ParamVectorModule", TypeAttributes.Public);
+            var paramVector = paramVectorModule.DefineType("ParamVectorModule", TypeAttributes.Public);
 
             //Create a default constructor
-            ConstructorBuilder ivCtorDefault = paramVector.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, Type.EmptyTypes);
-            ILGenerator ctorIlDefault = ivCtorDefault.GetILGenerator();
+            var ivCtorDefault = paramVector.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, Type.EmptyTypes);
+            var ctorIlDefault = ivCtorDefault.GetILGenerator();
 
             ctorIlDefault.Emit(OpCodes.Ldarg_0);
             ctorIlDefault.Emit(OpCodes.Call, typeof(object).GetConstructor(Type.EmptyTypes));
             ctorIlDefault.Emit(OpCodes.Ret);
 
             //Creating an argument constructor by fieldParam
-            ConstructorBuilder ivCtor = paramVector.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, fieldParam.ToArray());
+            var ivCtor = paramVector.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, fieldParam.ToArray());
 
-            ILGenerator ctorIl = ivCtor.GetILGenerator();
+            var ctorIl = ivCtor.GetILGenerator();
 
             for (int i = 0; i < count; i++)
             {
@@ -49,7 +49,7 @@ namespace Skpic.Common
                 ctorIl.Emit(OpCodes.Stfld, field);
                 ctorIl.Emit(OpCodes.Ret);
 
-                PropertyBuilder pbNumber = paramVector.DefineProperty("P" + i, PropertyAttributes.HasDefault, typeof(string), null);
+                var pbNumber = paramVector.DefineProperty("P" + i, PropertyAttributes.HasDefault, typeof(string), null);
 
                 // The property "set" and property "get" methods require a special set of attributes.
                 const MethodAttributes getSetAttr = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;
@@ -57,27 +57,27 @@ namespace Skpic.Common
                 // Define the "get" accessor method for Number. The method returns
                 // an integer and has no arguments. (Note that null could be 
                 // used instead of Types.EmptyTypes)
-                MethodBuilder mbNumberGetAccessor = paramVector.DefineMethod("get_p" + i, getSetAttr, typeof(string), Type.EmptyTypes);
+                var mbNumberGetAccessor = paramVector.DefineMethod("get_p" + i, getSetAttr, typeof(string), Type.EmptyTypes);
 
-                ILGenerator numberGetIL = mbNumberGetAccessor.GetILGenerator();
+                var numberGetIl = mbNumberGetAccessor.GetILGenerator();
                 // For an instance property, argument zero is the instance. Load the 
                 // instance, then load the private field and return, leaving the
                 // field value on the stack.
-                numberGetIL.Emit(OpCodes.Ldarg_0);
-                numberGetIL.Emit(OpCodes.Ldfld, field);
-                numberGetIL.Emit(OpCodes.Ret);
+                numberGetIl.Emit(OpCodes.Ldarg_0);
+                numberGetIl.Emit(OpCodes.Ldfld, field);
+                numberGetIl.Emit(OpCodes.Ret);
 
                 // Define the "set" accessor method for Number, which has no return
                 // type and takes one argument of type int (Int32).
-                MethodBuilder mbNumberSetAccessor = paramVector.DefineMethod("set_p" + i, getSetAttr, null, new Type[] { typeof(string) });
+                var mbNumberSetAccessor = paramVector.DefineMethod("set_p" + i, getSetAttr, null, new[] { typeof(string) });
 
-                ILGenerator numberSetIL = mbNumberSetAccessor.GetILGenerator();
+                var numberSetIl = mbNumberSetAccessor.GetILGenerator();
                 // Load the instance and then the numeric argument, then store the
                 // argument in the field.
-                numberSetIL.Emit(OpCodes.Ldarg_0);
-                numberSetIL.Emit(OpCodes.Ldarg_1);
-                numberSetIL.Emit(OpCodes.Stfld, field);
-                numberSetIL.Emit(OpCodes.Ret);
+                numberSetIl.Emit(OpCodes.Ldarg_0);
+                numberSetIl.Emit(OpCodes.Ldarg_1);
+                numberSetIl.Emit(OpCodes.Stfld, field);
+                numberSetIl.Emit(OpCodes.Ret);
 
                 // Last, map the "get" and "set" accessor methods to the 
                 // PropertyBuilder. The property is now complete. 

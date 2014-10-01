@@ -12,15 +12,15 @@ using System.Text;
 namespace Skpic.Common
 {
     /// <summary>
-    /// 获取汉字首字母类
+    /// Get characters initials class
     /// </summary>
     public static class GetStringSpell
     {
         /// <summary>
-        /// 提取汉字首字母
+        /// Extract characters initials
         /// </summary>
-        /// <param name="strText">需要转换的字</param>
-        /// <returns>转换结果</returns>
+        /// <param name="strText">Need to convert word</param>
+        /// <returns>Conversion results</returns>
         public static string GetChineseSpell(this string strText)
         {
             var len = strText.Length;
@@ -33,30 +33,30 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        /// 把提取的字母变成小写
+        /// The extraction of the letters to lowercase
         /// </summary>
-        /// <param name="text">需要转换的字符串</param>
-        /// <returns>转换结果</returns>
+        /// <param name="text">Need to convert characters</param>
+        /// <returns>Conversion results</returns>
         public static string GetLowerChineseSpell(this string text)
         {
             return GetChineseSpell(text).ToLower();
         }
 
         /// <summary>
-        /// 把提取的字母变成大写
+        /// The extracted into uppercase letters
         /// </summary>
-        /// <param name="text">需要转换的字符串</param>
-        /// <returns>转换结果</returns>
+        /// <param name="text">Need to convert characters</param>
+        /// <returns>Conversion results</returns>
         public static string GetUpperChineseSpell(this string text)
         {
             return GetChineseSpell(text).ToUpper();
         }
 
         /// <summary>
-        /// 获取单个汉字的首拼音
+        /// Get the first single phonetic characters
         /// </summary>
-        /// <param name="myChar">需要转换的字符</param>
-        /// <returns>转换结果</returns>
+        /// <param name="myChar">Need to convert characters</param>
+        /// <returns>Conversion results</returns>
         private static string GetSpell(string myChar)
         {
             var arrCn = Encoding.Default.GetBytes(myChar);
