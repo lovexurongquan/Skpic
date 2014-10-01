@@ -64,9 +64,12 @@ namespace Skpic.Common
         public string GetWhereSql()
         {
             var where = _sb.ToString()
-             .Replace("()", " ")
-             .Replace("and and", "and")
-             .Replace("or or", "or");
+             .Replace("()", " ");
+             //.Replace("and and", "and")
+             //.Replace("or or", "or");
+
+            where = Regex.Replace(where, @"or\s*or", "or");
+            where = Regex.Replace(where, @"and\s*and", "and");
 
             where = Regex.Replace(where, @"and\s*\)", ")");
             where = Regex.Replace(where, @"\(\s*and", "(");

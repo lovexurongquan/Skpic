@@ -145,7 +145,7 @@ namespace Skpic.Console
 
             using (var conn = DbContextFactory.GetConnection())
             {
-                var endsWith = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.EndsWith("901dc11d-eff5-4be8-ae57-f5d513e56723"));
+                var endsWith = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.EndsWith("901dc11d-eff5-4be8-ae57-f5d513e56723") || list.Contains(d.DoctorLoginInfo_ID));
                 var i = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID));
             }
 
