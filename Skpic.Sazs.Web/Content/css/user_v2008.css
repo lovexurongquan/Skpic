@@ -1,0 +1,181 @@
+﻿/* Copyright (c) 2008 GoGoLet.com All rights reserved. */
+
+/* Built by chen wanshen */
+
+/* MSN & Mail: xide314@hotmail.com */
+
+/* ///////////////////////////////////////////// */
+
+/* head ///////////////////////////////////////////// */
+#user_head { width:100%; height:96px; background: url(../img/user-bak.gif) repeat-x; }
+#user_head1 { width:901px;  margin:0 auto; }
+#user_head1 .logo { float:left; width:85%; text-indent:10px;height:96px; line-height:96px; }
+#user_head1 .pack { float:right; width:15%; height:30px; margin:40px 0 0 0; line-height:30px; color:#999999; }
+#user_head1 .pack a { color:#999999; }
+
+/* menu ///////////////////////////////////////////// */
+#index_menu { width:901px; margin:0 auto; }
+#index_menu .left { float:left; width:660px; height:391px; border:1px solid #B1C9D3; text-align:center; padding:1px; } 
+#index_menu .right { float:right; }
+#index_menu .right .over { background:url(../img/user-login-bak2.gif) no-repeat; }
+
+#index_menu .login { float:right; width:224px; height:190px; background:url(../img/user-login-bak.gif) no-repeat; }
+#index_menu .login table { margin:15px auto 0 auto !important; margin:22px auto 0 auto; }
+#index_menu .login table th { font-size:14px; text-align:left; }
+#index_menu .login table th img { margin:0 8px -2px 0; }
+#index_menu .login table th a { float:right; margin:0 3px 0px 0 !important; margin:-6px 3px 0 0; font-size:12px; font-weight:normal; text-decoration: none; }
+#index_menu .login table th a:link    { color: #157C10; }
+#index_menu .login table th a:visited { color: #157C10; }
+#index_menu .login table th a:hover   { color: #F30; text-decoration:underline;}
+#index_menu .login table th a:active  { color: #F30; }
+#index_menu .login table td { padding:0 2px; }
+ 
+/* news ///////////////////////////////////////////// */
+#index_new { width:901px; height:150px; margin:0 auto; background:url(../img/user-down-bak.gif) no-repeat top; }
+#index_new .left { float:left; width:589px; height:140px; }
+#index_new .left_top { float:left; height:30px; line-height:30px; width:100%; }
+#index_new .left_top p { float:left; width:80px; text-indent:18PX; font-weight:bolder; }
+#index_new .left_top a { float:right; width:60px; text-indent:18PX; margin-right:10px; font-size:10px; color:#FF7E00; cursor:pointer; }
+#index_new ul { width:100%; margin:37px 0 0 0 !important; *margin:8px 0 0 0 !important; margin:10px 0 0 0; }
+#index_new li { float:left; width:275px; height:20px; line-height:20px; text-indent:25px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+#index_new .right { float:right; clear:none; height:140px; width:312px; } 
+
+/* news list and store list zcli copy-edit  ///////////////////////////////////////////// */
+
+#index_news { margin:0 auto; padding-top:1px !important; padding-top:5px; width:900px; line-height:30px; text-indent:15px; color:#333333; border:1px solid #CADAE8; background:#EFF4F8 url(../img/news-title.gif) no-repeat 5px; vertical-align:middle; }
+
+#newslist { margin:0 auto; width:900px; height:auto; font-size:11px; border:1px solid #DEE8F1;  color:#157C10;  }
+#newslist li { margin:0 0 0 5px; line-height:28px; text-indent:15px; border-bottom:1px dotted #D2E0EC; background:url(../img/user-down-bt.gif) no-repeat 5px; }
+#newslist li a { font-size:12px; }
+
+#newslist h5 { text-align:center; height:50px; font-size:18px; line-height:50px; color:#333333; border-bottom:1px dotted #D2E0EC; }
+#newslist h6 { text-align:center; font-size:11px; line-height:30px; color:#666666; font-weight:normal; border-bottom:1px dotted #D2E0EC; }
+#newslist h6 a { color:666666; }
+#newslist .nr { display:table; margin:15px 25px; line-height:200%; font-size:14px; color:#333333; border-bottom:1px dotted #D2E0EC; }
+#newslist .nr p { margin:15px auto; }
+#newslist span { display:block; height:80px; line-height:80px; text-align:center; }
+#newslist input { margin:5px 15px 0 15px;}
+
+#index_down { width:904px; height:120px; margin:0 auto; border:1px solid #B1C9D3; background:#F6F6F6; }
+#index_down .left { float:left; width:590px; }
+#index_down .left dl { float:left; clear:none; width:280px; margin:10px 0 0 15px !important; margin:10px 0 0 10px; }
+#index_down .left dt { float:left; width:100%; font-size:14px; font-weight:bolder; }
+#index_down .left dt img { margin:0 5px -3px 0; }
+#index_down .left dd { clear: none; float:left; width:100%; height:25px; line-height:25px; }
+
+#index_down ul { clear:none; float: right; width:280px; margin:10px 0 0 15px !important; margin:10px 0 0 10px; }
+#index_down li { float:left; width:100%; height:20px; line-height:180%; text-indent:15px; background:url(../img/user-down-bt.gif) no-repeat 5px; }
+.page { width:900px; margin:0 auto; height:50; clear:both; }
+.page .page-list { padding-right:1px; }
+.page .page-list a { float:right; display:block; width:auto; height:18px; margin:0 3px; padding:0 6px; line-height:19px; border:1px solid #CCC; }
+.page .page-list strong { float:right; display:block; width:auto; height:18px; margin:0 3px; padding:0 6px; line-height:18px; background:#3A6EA5; border:1px solid #3A6EA5; color:#FFF; cursor:pointer; }
+.page .page-list a:link    { color: #04D; }
+.page .page-list a:visited { color: #04D; }
+.page .page-list a:hover   { color: #FFF; background:#3A6EA5; text-decoration: none; }
+
+/* foot ///////////////////////////////////////////// */
+
+#index_footer { width:900px; height:50px; margin:0 auto; line-height:50px; text-align:center; border-top:1px solid #E5E5E5; }
+
+/* find-password ///////////////////////////////////// */
+
+.find table { margin:0 auto; width:709px; background:url(../img/clew-center-bak.gif) repeat-y; }
+.find td img { margin:15px 10px 0 0; }
+.find td { line-height:40px; font-size:14px; color:#000000; }
+
+#ddv_head { width:100%; height:96px; background: url(../img/user-bak.gif) repeat-x; }
+#ddv_head1 { width:900px; height:30px; margin:0 auto; line-height:30px; }
+#ddv_head1 .logo { float:left; width:50%; text-indent:10px; }
+#ddv_head1 .pack { clear:none; float:right; margin:45px 0 0 -10px; }
+#ddv_head1 .pack li { float:left; margin:0 0 0 15px; height:20px; line-height:20px; color:#075198; }
+#ddv_head1 .pack a { font-weight:bolder; line-height:20px !important; *line-height:24px !important; line-height:24px; }
+#ddv_head1 .pack a:link    { color: #075198; }
+#ddv_head1 .pack a:visited { color: #075198; }
+#ddv_head1 .pack a:hover   { color: #075198; text-decoration: underline; }
+#ddv_head1 .pack a:active  { color: #075198; }
+
+/* ddv_index ///////////////////////////////////////////// */
+#ddv_index_banner { clear:both; position:relative; width:900px; margin:0 auto; height:228px; }
+#ddv_index_banner img { position:absolute; top:0; left:0; z-index:1; }
+
+#ddv_index_banner a { position:absolute; top:136px; left:31px; z-index:100; padding:12px 0 0 60px; width:180px; height:59px; line-height:24px; background:url(../img/ddv_xiazai.gif) no-repeat center; cursor:pointer; }
+#ddv_index_banner strong { font-size:14px; }
+
+#ddv_index_main { width:900px; margin:0 auto; }
+#ddv_index_main .left { float:left; width:645px; height:299px; display:table; border:1px solid #BBD9EE; }
+#ddv_index_main .right { float:right; width:240px; height:auto; display:table; }
+#ddv_index_main h4 { height:28px; line-height:28px; border-bottom:1px solid #BBD9EE; font-size:12px; font-weight:bolder; color:#00368F; background: url(../img/ddv_inde_bak.gif) repeat; }
+#ddv_index_main h4 img { float:left; margin:7px 8px 0 11px; }
+#ddv_index_main dl { float:left; width:620px; margin: 15px 0 0 11px !important; margin: 15px 0 0 6px; border-bottom:1px solid #E1E1E1; }
+#ddv_index_main dt { float:left; width:100%; height:25px; line-height:25px; font-size:12px; font-weight:bolder; }
+#ddv_index_main dd { float:left; width:100%; }
+
+#ddv_index_main .pic { float:left; width:241px; height:55px; }
+#ddv_index_main .stor { float:left; width:241px; border:1px solid #BBD9EE; }
+#ddv_index_main .stor ul { float:left; width:220px; margin:10px 0 0 10px !important; margin:10px 0 0 5px; }
+#ddv_index_main .stor li { float:left;overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width: 100%; height:25px; line-height:25px; text-indent:15px; border-bottom:1px dashed #CDE3F3; background:url(../img/user-down-bt.gif) no-repeat 5px; }
+
+
+/* 下载 //////////////////// */
+
+#ddv_index_main .left2 { float:left; width:645px; height:203px; display:table; border:1px solid #BBD9EE;}
+#ddv_index_main .left2 .down { width:645px; height:174px; background:url(../img/ddv_down_bg.jpg) no-repeat; }
+#ddv_index_main .left2 .down a { display:block; position:relative; top:60px; left:60px; z-index:10; width:123px; height:32px; line-height:28px !important; *line-height:30px !important; line-height:30px; text-indent:25px; font-size:14px; font-weight:bold; color:#1C6400; text-decoration:underline;  background:url(../img/ddv_down-btn.gif) no-repeat; }
+#ddv_index_main .left2 .down p { display:block; position:relative; top:70px; left:60px; z-index:10; color:#FFFFFF; }
+#ddv_index_main .left2 .down .title { display:block; position:relative; top:50px; left:60px; z-index:50; color:#FFFFFF; font-weight:bold; font-size:14px; }
+
+/* ddv_help ///////////////////////////////////////////// */
+#ddv_help_mian { width:900px; margin:0 auto; }
+#ddv_help_mian .left { float:left; width:230px; } 
+#ddv_help_mian .right { float:right; width:660px; }
+#ddv_help_mian .left ul { float:left; width:200px; }
+#ddv_help_mian .left li { float:left; margin:0 0 8px 0; width:200px; height:25px; line-height:25px; text-align:center; border:1px solid #CAE1FF; background:#F4FBFF; }
+#ddv_help_mian .left li a { display:block; width:200px; height:25px; }
+#ddv_help_mian .left li a:link    { color: #000; background:#F4FBFF; }
+#ddv_help_mian .left li a:visited { color: #000; background:#F4FBFF; }
+#ddv_help_mian .left li a:hover   { color: #06C; text-decoration: none; background:#F5F5F5; font-weight:bold; }
+#ddv_help_mian .left li a:active  { color: #06C; background:#F5F5F5; font-weight:bold; }
+
+.ddv_help_table { margin:0 auto; }
+.ddv_help_table th { text-align:left; height:35px; line-height:35px; border-top:1px solid #CAE1FF; background:#F4FBFF; }
+.ddv_help_table th img { float:left; margin:9px 8px 0 15px; }
+.ddv_help_table td { padding:15px 10px 20px 10px; border-bottom:1px solid #EFEFEF; }
+.ddv_help_table p { text-indent:25px; }
+.ddv_help_head { height:26px; width:670px; border-top:1px solid #83BEE9; }
+.ddv_help_head h3 { height:26px; width:670px; background:#F2FBFF; font-size:14px; color:#165098; }
+.ddv_help_head h3 p { display:block; height:22px; width:60px; padding:4px 20px 0 20px !important; padding:8px 20px 0 20px; background:#83BEE9; text-align:center; }
+.ddv_help_nr { width:650px; background:#F4FBFF; font-size:12px; line-height:200%; padding:10px; color:#000; }
+.ddv_help_nr p { text-indent:26px; }
+.ddv_help_nr a { text-decoration:underline; }
+.ddv_help_nr a:link    { color: #0033CC; }
+.ddv_help_nr a:visited { color: #0033CC; }
+.ddv_help_nr a:hover   { color: #FF6600; text-decoration: underline; }
+.ddv_help_nr a:active  { color: #FF6600; }
+
+#ddv_help_mian .right h5 { width:100%; height:30px; text-align:right; margin:8px 10px 35px auto; }
+
+
+/* foot ///////////////////////////////////////////// */
+
+#ddv_footer { width:900px; height:50px; margin:0 auto; line-height:50px; text-align:center; border-top:1px solid #E5E5E5; }
+
+/* reg */
+.reg-table { margin:0 auto; }
+.reg-table th { border-top:1px solid #CAE1FF; text-indent:24px; background:#F4FBFF; font-size:14px; height:30px; text-align:left; }
+.reg-table td { padding:0 5px; line-height:30px; }
+.reg-table textarea { border:1px solid #86A1C0; }
+.kuang { border:1px solid #B1C9D3; } 
+
+.form_click { width:850px; margin:0 auto; }
+.form_click_over { background: #E8FDFF; }
+
+#caja { display:none; }
+/* login ///////////////////////////////////////////// */
+.login_enter { position:absolute; width:552px; height:310px; top:50%; left:50%; margin:-155px 0 0 -276px; background:url(../img/login_bak.gif) no-repeat top; }
+.login_enter table { float:right; margin:30px auto 0 auto; }
+.login_enter table th { font-size:18px; font-weight:bolder; text-align:left; color:#425C68; vertical-align:top}
+.login_enter table td { height:35px; line-height:35px; }
+.login_input { height:15px !important; *height:20px !important; height:20px; padding:5px !important; *padding:3px !important; padding:2px; line-height:20px; border:1px solid #86A1C0; }
+.login_button{ width:130px; height:37px; line-height:37px;; font-size:16px; color:#344F26; border:none; background:url(../img/login_bt.gif) no-repeat; font-weight:bolder; }
+.login_foot { clear:both; float:right; margin:25px 3px 0 0; color:#AEC4CB; }
