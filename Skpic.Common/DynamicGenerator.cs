@@ -8,7 +8,6 @@ namespace Skpic.Common
 {
     public class DynamicGenerator
     {
-
         /// <summary>
         /// dynamic object
         /// </summary>
@@ -55,12 +54,12 @@ namespace Skpic.Common
                 const MethodAttributes getSetAttr = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;
 
                 // Define the "get" accessor method for Number. The method returns
-                // an integer and has no arguments. (Note that null could be 
+                // an integer and has no arguments. (Note that null could be
                 // used instead of Types.EmptyTypes)
                 var mbNumberGetAccessor = paramVector.DefineMethod("get_p" + i, getSetAttr, typeof(string), Type.EmptyTypes);
 
                 var numberGetIl = mbNumberGetAccessor.GetILGenerator();
-                // For an instance property, argument zero is the instance. Load the 
+                // For an instance property, argument zero is the instance. Load the
                 // instance, then load the private field and return, leaving the
                 // field value on the stack.
                 numberGetIl.Emit(OpCodes.Ldarg_0);
@@ -79,11 +78,10 @@ namespace Skpic.Common
                 numberSetIl.Emit(OpCodes.Stfld, field);
                 numberSetIl.Emit(OpCodes.Ret);
 
-                // Last, map the "get" and "set" accessor methods to the 
-                // PropertyBuilder. The property is now complete. 
+                // Last, map the "get" and "set" accessor methods to the
+                // PropertyBuilder. The property is now complete.
                 pbNumber.SetGetMethod(mbNumberGetAccessor);
                 pbNumber.SetSetMethod(mbNumberSetAccessor);
-
             }
 
             return paramVector.CreateType();

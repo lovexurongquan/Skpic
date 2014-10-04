@@ -17,6 +17,5 @@ namespace Skpic.Async.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public class ComputedAttribute : System.Attribute
     {
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Skpic.Async;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
@@ -7,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
-using Skpic.Async;
 
 namespace Skpic.Rainbow
 {
@@ -18,7 +18,7 @@ namespace Skpic.Rainbow
     public abstract class Database<TDatabase> : IDisposable where TDatabase : Database<TDatabase>, new()
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TId"></typeparam>
@@ -29,7 +29,7 @@ namespace Skpic.Rainbow
             internal string LikelyTableName;
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <param name="database"></param>
             /// <param name="likelyTableName"></param>
@@ -40,7 +40,7 @@ namespace Skpic.Rainbow
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string TableName
             {
@@ -101,7 +101,7 @@ namespace Skpic.Rainbow
             }
 
             /// <summary>
-            /// Grab a record with a particular Id from the DB 
+            /// Grab a record with a particular Id from the DB
             /// </summary>
             /// <param name="id"></param>
             /// <returns></returns>
@@ -128,7 +128,7 @@ namespace Skpic.Rainbow
                 return Database.Query<T>("select * from " + TableName);
             }
 
-            static ConcurrentDictionary<Type, List<string>> paramNameCache = new ConcurrentDictionary<Type, List<string>>();
+            private static ConcurrentDictionary<Type, List<string>> paramNameCache = new ConcurrentDictionary<Type, List<string>>();
 
             internal static List<string> GetParamNames(object o)
             {
@@ -145,10 +145,10 @@ namespace Skpic.Rainbow
                     {
                         var attribs = prop.GetCustomAttributes(typeof(IgnorePropertyAttribute), true);
                         var attr = attribs.FirstOrDefault() as IgnorePropertyAttribute;
-                        if (attr==null || (!attr.Value))
+                        if (attr == null || (!attr.Value))
                         {
                             paramNames.Add(prop.Name);
-                        }                        
+                        }
                     }
                     paramNameCache[o.GetType()] = paramNames;
                 }
@@ -156,28 +156,29 @@ namespace Skpic.Rainbow
             }
         }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		public class Table<T> : Table<T, int> {
-			/// <summary>
-			/// 
-			/// </summary>
-			/// <param name="database"></param>
-			/// <param name="likelyTableName"></param>
-			public Table(Database<TDatabase> database, string likelyTableName)
-				: base(database, likelyTableName)
-			{
-			}
-		}
+        /// <summary>
+        ///
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public class Table<T> : Table<T, int>
+        {
+            /// <summary>
+            ///
+            /// </summary>
+            /// <param name="database"></param>
+            /// <param name="likelyTableName"></param>
+            public Table(Database<TDatabase> database, string likelyTableName)
+                : base(database, likelyTableName)
+            {
+            }
+        }
 
-        DbConnection _connection;
-        int _commandTimeout;
-        DbTransaction _transaction;
+        private DbConnection _connection;
+        private int _commandTimeout;
+        private DbTransaction _transaction;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="connection"></param>
         /// <param name="commandTimeout"></param>
@@ -236,7 +237,7 @@ namespace Skpic.Rainbow
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="tableType"></param>
         /// <returns></returns>
@@ -258,30 +259,23 @@ namespace Skpic.Rainbow
             {
                 il.Emit(OpCodes.Ldarg_0);
                 // [db]
-
                 il.Emit(OpCodes.Ldstr, setter.Item3);
                 // [db, likelyname]
-
                 il.Emit(OpCodes.Newobj, setter.Item2);
                 // [table]
-
                 if (setter.Item2.DeclaringType != null)
                 {
                     var table = il.DeclareLocal(setter.Item2.DeclaringType);
 
                     il.Emit(OpCodes.Stloc, table);
                     // []
-
                     il.Emit(OpCodes.Ldarg_0);
                     // [db]
-
                     il.Emit(OpCodes.Castclass, setter.Item4);
                     // [db cast to container]
-
                     il.Emit(OpCodes.Ldloc, table);
                 }
                 // [db cast to container, table]
-
                 il.Emit(OpCodes.Callvirt, setter.Item1);
                 // []
             }
@@ -290,7 +284,8 @@ namespace Skpic.Rainbow
             return (Action<TDatabase>)dm.CreateDelegate(typeof(Action<TDatabase>));
         }
 
-        static ConcurrentDictionary<Type, string> tableNameMap = new ConcurrentDictionary<Type, string>();
+        private static ConcurrentDictionary<Type, string> tableNameMap = new ConcurrentDictionary<Type, string>();
+
         private string DetermineTableName<T>(string likelyTableName)
         {
             string name;
@@ -315,7 +310,7 @@ namespace Skpic.Rainbow
             name = name.Replace("[", "");
             name = name.Replace("]", "");
 
-            if(name.Contains("."))
+            if (name.Contains("."))
             {
                 var parts = name.Split('.');
                 if (parts.Count() == 2)
@@ -357,7 +352,7 @@ namespace Skpic.Rainbow
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="map"></param>
@@ -376,7 +371,7 @@ namespace Skpic.Rainbow
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="map"></param>
@@ -396,7 +391,7 @@ namespace Skpic.Rainbow
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="map"></param>
@@ -417,7 +412,7 @@ namespace Skpic.Rainbow
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="map"></param>
@@ -439,7 +434,7 @@ namespace Skpic.Rainbow
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="param"></param>
@@ -451,7 +446,7 @@ namespace Skpic.Rainbow
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="param"></param>
@@ -463,7 +458,6 @@ namespace Skpic.Rainbow
         {
             return SqlMapper.QueryMultiple(_connection, sql, param, transaction, commandTimeout, commandType);
         }
-
 
         public void Dispose()
         {

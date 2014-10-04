@@ -1,19 +1,19 @@
-﻿using System;
+﻿using Skpic.Async;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Skpic.Async;
 
 namespace Skpic.Rainbow
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static class Snapshotter
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="obj"></param>
         /// <typeparam name="T"></typeparam>
@@ -24,18 +24,18 @@ namespace Skpic.Rainbow
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public class Snapshot<T>
         {
-            static Func<T, T> _cloner;
-            static Func<T, T, List<Change>> _differ;
-            readonly T _memberWiseClone;
-            readonly T _trackedObject;
+            private static Func<T, T> _cloner;
+            private static Func<T, T, List<Change>> _differ;
+            private readonly T _memberWiseClone;
+            private readonly T _trackedObject;
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <param name="original"></param>
             public Snapshot(T original)
@@ -45,7 +45,7 @@ namespace Skpic.Rainbow
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public class Change
             {
@@ -53,6 +53,7 @@ namespace Skpic.Rainbow
                 /// name
                 /// </summary>
                 public string Name { get; set; }
+
                 /// <summary>
                 /// new value
                 /// </summary>
@@ -60,14 +61,13 @@ namespace Skpic.Rainbow
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <returns></returns>
             public DynamicParameters Diff()
             {
                 return Diff(_memberWiseClone, _trackedObject);
             }
-
 
             private static T Clone(T myObject)
             {
@@ -86,8 +86,7 @@ namespace Skpic.Rainbow
                 return dm;
             }
 
-
-            static IEnumerable<PropertyInfo> RelevantProperties()
+            private static IEnumerable<PropertyInfo> RelevantProperties()
             {
                 return typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public)
                     .Where(p =>
@@ -99,7 +98,6 @@ namespace Skpic.Rainbow
                         ).ToList();
             }
 
-
             private static bool AreEqual<TU>(TU first, TU second)
             {
                 if (first == null && second == null) return true;
@@ -109,7 +107,6 @@ namespace Skpic.Rainbow
 
             private static Func<T, T, List<Change>> GenerateDiffer()
             {
-
                 var dm = new DynamicMethod("DoDiff", typeof(List<Change>), new[] { typeof(T), typeof(T) }, true);
 
                 var il = dm.GetILGenerator();
@@ -133,10 +130,8 @@ namespace Skpic.Rainbow
                     // [original prop val, current]
                     il.Emit(OpCodes.Callvirt, prop.GetGetMethod());
                     // [original prop val, current prop val]
-
                     il.Emit(OpCodes.Dup);
                     // [original prop val, current prop val, current prop val]
-
                     if (prop.PropertyType != typeof(string))
                     {
                         il.Emit(OpCodes.Box, prop.PropertyType);
@@ -145,43 +140,33 @@ namespace Skpic.Rainbow
 
                     il.Emit(OpCodes.Stloc_2);
                     // [original prop val, current prop val]
-
                     il.EmitCall(OpCodes.Call, typeof(Snapshot<T>).GetMethod("AreEqual", BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(new[] { prop.PropertyType }), null);
-                    // [result] 
-
+                    // [result]
                     Label skip = il.DefineLabel();
                     il.Emit(OpCodes.Brtrue_S, skip);
                     // []
-
                     il.Emit(OpCodes.Newobj, typeof(Change).GetConstructor(Type.EmptyTypes));
                     // [change]
                     il.Emit(OpCodes.Dup);
                     // [change,change]
-
                     il.Emit(OpCodes.Stloc_1);
                     // [change]
-
                     il.Emit(OpCodes.Ldstr, prop.Name);
                     // [change, name]
                     il.Emit(OpCodes.Callvirt, typeof(Change).GetMethod("set_Name"));
                     // []
-
                     il.Emit(OpCodes.Ldloc_1);
                     // [change]
-
                     il.Emit(OpCodes.Ldloc_2);
                     // [change, boxed]
-
                     il.Emit(OpCodes.Callvirt, typeof(Change).GetMethod("set_NewValue"));
                     // []
-
                     il.Emit(OpCodes.Ldloc_0);
                     // [change list]
                     il.Emit(OpCodes.Ldloc_1);
                     // [change list, change]
                     il.Emit(OpCodes.Callvirt, typeof(List<Change>).GetMethod("Add"));
                     // []
-
                     il.MarkLabel(skip);
                 }
 
@@ -191,7 +176,6 @@ namespace Skpic.Rainbow
 
                 return (Func<T, T, List<Change>>)dm.CreateDelegate(typeof(Func<T, T, List<Change>>));
             }
-
 
             // adapted from http://stackoverflow.com/a/966466/17174
             private static Func<T, T> GenerateCloner()
@@ -230,4 +214,3 @@ namespace Skpic.Rainbow
         }
     }
 }
-

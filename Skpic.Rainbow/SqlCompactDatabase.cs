@@ -5,19 +5,19 @@ using System.Linq;
 namespace Skpic.Rainbow
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="TDatabase"></typeparam>
     public abstract class SqlCompactDatabase<TDatabase> : Database<TDatabase> where TDatabase : Database<TDatabase>, new()
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public class SqlCompactTable<T> : Table<T>
         {
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <param name="database"></param>
             /// <param name="likelyTableName"></param>
@@ -51,7 +51,7 @@ namespace Skpic.Rainbow
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="connection"></param>
         /// <returns></returns>
@@ -60,7 +60,7 @@ namespace Skpic.Rainbow
             var db = new TDatabase();
             db.InitDatabase(connection, 0);
             return db;
-        }        
+        }
 
         internal override Action<TDatabase> CreateTableConstructorForTable()
         {

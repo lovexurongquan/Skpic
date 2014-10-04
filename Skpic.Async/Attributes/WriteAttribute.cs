@@ -11,25 +11,24 @@ using System;
 
 namespace Skpic.Async.Attributes
 {
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class WriteAttribute : System.Attribute
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="write"></param>
         public WriteAttribute(bool write)
         {
             Write = write;
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool Write { get; private set; }
     }
-
 }

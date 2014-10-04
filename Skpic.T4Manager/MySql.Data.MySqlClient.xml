@@ -19,10 +19,8 @@
   </sql>
   <!--过程列表-->
   <sql name="ProObjectSql">
-    
   </sql>
   <!--过程参数列表-->
   <sql name="ParObjectSql">
-     
   </sql>
 </DbSql>

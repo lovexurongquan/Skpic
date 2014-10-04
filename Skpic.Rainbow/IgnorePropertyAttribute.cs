@@ -3,7 +3,7 @@
 namespace Skpic.Rainbow
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class IgnorePropertyAttribute : Attribute
@@ -18,7 +18,7 @@ namespace Skpic.Rainbow
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool Value { get; set; }
     }

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Skpic.MongoDBData
+﻿namespace Skpic.MongoDBData
 {
     public class MongoDBBase
     {
-        public MongoDBBase ()
+        public MongoDBBase()
         {
             //var config = new MongoConfigurationBuilder();
 
@@ -25,7 +19,6 @@ namespace Skpic.MongoDBData
             //// TO HERE
 
             //config.ConnectionString("Server=192.168.72.132:27017");
-            
         }
     }
 }

@@ -89,6 +89,5 @@ namespace Skpic.Common
             }
             return Encoding.ASCII.GetBytes(key);
         }
- 
     }
 }

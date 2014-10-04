@@ -7,11 +7,11 @@
  * mail:lovexurongquan@163.com
  */
 
+using Skpic.Async;
+using Skpic.Factory;
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using Skpic.Async;
-using Skpic.Factory;
 
 namespace Skpic.T4Manager
 {
@@ -90,14 +90,17 @@ namespace Skpic.T4Manager
                 case "smallint":
                 case "mediumint":
                     return GetTypeIsNull("int", isNullable);
+
                 case "bit":
                     return GetTypeIsNull("bool", isNullable);
+
                 case "date":
                 case "time":
                 case "datetime":
                 case "smalldatetime":
                 case "timestamp":
                     return GetTypeIsNull("DateTime", isNullable);
+
                 case "float":
                 case "number":
                 case "decimal":
@@ -105,6 +108,7 @@ namespace Skpic.T4Manager
                 case "numeric":
                 case "smallmoney":
                     return GetTypeIsNull("decimal", isNullable);
+
                 case "raw":
                 case "binary":
                 case "image":
@@ -112,12 +116,13 @@ namespace Skpic.T4Manager
                 case "bfile":
                 case "blob":
                     return "byte[]";
+
                 case "double":
                     return GetTypeIsNull("double", isNullable);
+
                 default:
                     return "string";
             }
-
         }
 
         /// <summary>
@@ -142,6 +147,7 @@ namespace Skpic.T4Manager
                         return columnName + " = false;";
                     }
                     return "";
+
                 case "date":
                 case "time":
                 case "datetime":
@@ -158,6 +164,7 @@ namespace Skpic.T4Manager
                         return columnName + " = new DateTime(" + result.Year + "," + result.Month + "," + result.Day + ");";
                     }
                     return "";
+
                 case "int":
                 case "bigint":
                 case "tinyint":
@@ -178,6 +185,7 @@ namespace Skpic.T4Manager
                         return columnName + " = " + s + ";";
                     }
                     return "";
+
                 case "raw":
                 case "binary":
                 case "image":
@@ -185,6 +193,7 @@ namespace Skpic.T4Manager
                 case "bfile":
                 case "blob":
                     return "";
+
                 default:
                     return columnName + " = \"" + s + "\";";
             }

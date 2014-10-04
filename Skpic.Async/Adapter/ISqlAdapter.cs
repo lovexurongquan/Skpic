@@ -20,7 +20,7 @@ namespace Skpic.Async.Adapter
     public interface ISqlAdapter
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="connection"></param>
         /// <param name="transaction"></param>

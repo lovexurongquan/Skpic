@@ -11,7 +11,6 @@ using System;
 
 namespace Skpic.Async.Attributes
 {
-
     // do not want to depend on data annotations that is not in client profile
     /// <summary>
     /// key attribute
@@ -31,7 +30,5 @@ namespace Skpic.Async.Attributes
         /// identity flag.
         /// </summary>
         public string IsIdentity { get; private set; }
-
     }
-
 }

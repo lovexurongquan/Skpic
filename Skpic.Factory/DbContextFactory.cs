@@ -15,15 +15,15 @@ using System.Data.Common;
 namespace Skpic.Factory
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static class DbContextFactory
     {
         private static DbProviderFactory _df;
 
-        /// <summary>  
+        /// <summary>
         /// Get a open connection by connection string and provider in config.
-        /// </summary>  
+        /// </summary>
         public static IDbConnection GetConnection(string connectionName = "ConnectionString")
         {
             // get connection string in config.

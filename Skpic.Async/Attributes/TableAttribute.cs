@@ -11,7 +11,6 @@ using System;
 
 namespace Skpic.Async.Attributes
 {
-
     /// <summary>
     /// table attribute
     /// </summary>
@@ -30,6 +29,6 @@ namespace Skpic.Async.Attributes
         /// <summary>
         /// name
         /// </summary>
-        public string Name { get;private set; }
+        public string Name { get; private set; }
     }
 }

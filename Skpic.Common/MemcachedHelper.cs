@@ -7,9 +7,9 @@
  * mail:lovexurongquan@163.com
  */
 
+using Memcached.Client;
 using System;
 using System.Configuration;
-using Memcached.Client;
 
 namespace Skpic.Common
 {
@@ -39,7 +39,6 @@ namespace Skpic.Common
             //string[] servers = { "192.168.1.100:11211", "192.168.1.15:11211" };
             //<add key="memcached" value="192.168.1.100:11211,192.168.1.15:11211"/>
             string[] services = ConfigurationManager.AppSettings["memcached"].Split(',');
-
 
             SockIOPool pool = SockIOPool.GetInstance("test");
             pool.SetServers(services);
@@ -107,7 +106,7 @@ namespace Skpic.Common
             return _mc.Add(key, value, hashCode);
         }
 
-        #endregion
+        #endregion Add
 
         #region Set
 
@@ -121,6 +120,7 @@ namespace Skpic.Common
         {
             return _mc.Set(key, value);
         }
+
         /// <summary>
         /// Direct write the new value, if the key is to replace the value exists.
         /// </summary>
@@ -158,7 +158,7 @@ namespace Skpic.Common
             return _mc.Set(key, value, hashCode);
         }
 
-        #endregion
+        #endregion Set
 
         #region Replace
 
@@ -172,6 +172,7 @@ namespace Skpic.Common
         {
             return _mc.Replace(key, value);
         }
+
         /// <summary>
         /// When the key the same time replace the value.
         /// </summary>
@@ -209,7 +210,7 @@ namespace Skpic.Common
             return _mc.Replace(key, value, hashCode);
         }
 
-        #endregion
+        #endregion Replace
 
         #region Get
 
@@ -246,7 +247,7 @@ namespace Skpic.Common
             return _mc.Get(key, hashCode);
         }
 
-        #endregion
+        #endregion Get
 
         #region Delete
 
@@ -283,6 +284,6 @@ namespace Skpic.Common
             return _mc.Delete(key, hashCode, expiry);
         }
 
-        #endregion
+        #endregion Delete
     }
 }

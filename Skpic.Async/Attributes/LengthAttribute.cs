@@ -25,8 +25,9 @@ namespace Skpic.Async.Attributes
         {
             Length = length;
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int Length { get; private set; }
     }

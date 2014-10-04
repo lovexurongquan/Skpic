@@ -102,13 +102,11 @@ namespace Skpic.Async
                         reader = null; // to prevent it being disposed before the caller gets to see it
                         return deferred;
                     }
-
                 }
                 finally
                 {
                     using (reader) { } // dispose if non-null
                     if (wasClosed) cnn.Close();
-
                 }
             }
         }
@@ -142,12 +140,14 @@ namespace Skpic.Async
         {
             public readonly DbCommand Command;
             public readonly Task<int> Task;
+
             public AsyncExecState(DbCommand command, Task<int> task)
             {
                 this.Command = command;
                 this.Task = task;
             }
         }
+
         private static async Task<int> ExecuteMultiImplAsync(IDbConnection cnn, CommandDefinition command, IEnumerable multiExec)
         {
             bool isFirst = true;
@@ -242,6 +242,7 @@ namespace Skpic.Async
             }
             return total;
         }
+
         private static async Task<int> ExecuteImplAsync(IDbConnection cnn, CommandDefinition command, object param)
         {
             var identity = new Identity(command.CommandText, command.CommandType, cnn, null, param == null ? null : param.GetType(), null);
@@ -480,7 +481,8 @@ this IDbConnection cnn, string sql, dynamic param = null, IDbTransaction transac
 
         partial class GridReader
         {
-            CancellationToken cancel;
+            private CancellationToken cancel;
+
             internal GridReader(IDbCommand command, IDataReader reader, Identity identity, CancellationToken cancel)
                 : this(command, reader, identity)
             {
@@ -503,6 +505,7 @@ this IDbConnection cnn, string sql, dynamic param = null, IDbTransaction transac
                 if (type == null) throw new ArgumentNullException("type");
                 return ReadAsyncImpl<object>(type, buffered);
             }
+
             /// <summary>
             /// Read the next grid of results
             /// </summary>
@@ -625,7 +628,6 @@ this IDbConnection cnn, string sql, dynamic param = null, IDbTransaction transac
             }
         }
 
-
         /// <summary>
         /// Execute parameterized SQL and return an <see cref="IDataReader"/>
         /// </summary>
@@ -691,7 +693,6 @@ this IDbConnection cnn, string sql, dynamic param = null, IDbTransaction transac
             }
         }
 
-
         /// <summary>
         /// Execute parameterized SQL that selects a single value
         /// </summary>
@@ -741,6 +742,7 @@ this IDbConnection cnn, string sql, dynamic param = null, IDbTransaction transac
         {
             return ExecuteScalarImplAsync<T>(cnn, command);
         }
+
         private async static Task<T> ExecuteScalarImplAsync<T>(IDbConnection cnn, CommandDefinition command)
         {
             Action<IDbCommand, object> paramReader = null;

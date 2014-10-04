@@ -1,13 +1,16 @@
 ﻿/*
  * Added by laoxu 2014-09-10 11:00:00
  * ---------------------------------------------------------------
- * for：dapper extensions. 
+ * for：dapper extensions.
  * include insert update delete and about lambda expression method.
  * ---------------------------------------------------------------
  * version:1.0
  * mail:lovexurongquan@163.com
  */
 
+using Skpic.Async.Adapter;
+using Skpic.Async.Attributes;
+using Skpic.Common;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -18,9 +21,6 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading;
-using Skpic.Async.Adapter;
-using Skpic.Async.Attributes;
-using Skpic.Common;
 
 namespace Skpic.Async
 {
@@ -30,12 +30,12 @@ namespace Skpic.Async
     public static class SqlMapperExtensions
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public interface IProxy
         {
             /// <summary>
-            /// 
+            ///
             /// </summary>
             bool IsDirty { get; set; }
         }
@@ -115,7 +115,7 @@ namespace Skpic.Async
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="pi"></param>
         /// <returns></returns>
@@ -141,7 +141,7 @@ namespace Skpic.Async
                 if (type.IsInterface && name.StartsWith("I"))
                     name = name.Substring(1);
 
-                //NOTE: This as dynamic trick should be able to handle both our own Table-attribute as well as the one in EntityFramework 
+                //NOTE: This as dynamic trick should be able to handle both our own Table-attribute as well as the one in EntityFramework
                 var tableattr = type.GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name == "TableAttribute") as dynamic;
                 if (tableattr != null)
                     name = tableattr.Name;
@@ -151,9 +151,9 @@ namespace Skpic.Async
         }
 
         /// <summary>
-        /// Returns a single entity by a single id from table "Ts". T must be of interface type. 
+        /// Returns a single entity by a single id from table "Ts". T must be of interface type.
         /// Id must be marked with [Key] attribute.
-        /// Created entity is tracked/intercepted for changes and used by the Update() extension. 
+        /// Created entity is tracked/intercepted for changes and used by the Update() extension.
         /// </summary>
         /// <typeparam name="T">Interface type to create and populate</typeparam>
         /// <param name="connection">Open SqlConnection</param>
@@ -178,8 +178,8 @@ namespace Skpic.Async
 
                 var name = GetTableName(type);
 
-                // TODO: pluralizer 
-                // TODO: query information schema and only select fields that are both in information schema and underlying class / interface 
+                // TODO: pluralizer
+                // TODO: query information schema and only select fields that are both in information schema and underlying class / interface
                 sql = "select * from " + name + " where " + onlyKey.Name + " = @id";
                 GetQueries[type.TypeHandle] = sql;
             }
@@ -342,7 +342,6 @@ namespace Skpic.Async
             return deleted > 0;
         }
 
-
         /// <summary>
         /// delete by lambda
         /// </summary>
@@ -375,7 +374,7 @@ namespace Skpic.Async
         /// <returns></returns>
         public static IEnumerable<T> Query<T>(this IDbConnection connection, Expression<Func<T, bool>> lambdaWhere) where T : class
         {
-            var type = typeof (T);
+            var type = typeof(T);
             var allProperties = TypePropertiesCache(type).Select(p => p.Name);
 
             var name = GetTableName(type);
@@ -409,9 +408,8 @@ namespace Skpic.Async
             return deleted > 0;
         }
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="connection"></param>
         /// <returns></returns>
@@ -423,7 +421,7 @@ namespace Skpic.Async
             return AdapterDictionary[name];
         }
 
-        class ProxyGenerator
+        private class ProxyGenerator
         {
             private static readonly Dictionary<Type, object> TypeCache = new Dictionary<Type, object>();
 
@@ -441,7 +439,6 @@ namespace Skpic.Async
                 //  otherwise there is a pretty dangerous case where internal actions will not update dirty tracking
                 throw new NotImplementedException();
             }
-
 
             public static T GetInterfaceProxy<T>()
             {
@@ -525,7 +522,7 @@ namespace Skpic.Async
 
             private static void CreateProperty<T>(TypeBuilder typeBuilder, string propertyName, Type propType, MethodInfo setIsDirtyMethod, bool isIdentity)
             {
-                //Define the field and the property 
+                //Define the field and the property
                 var field = typeBuilder.DefineField("_" + propertyName, propType, FieldAttributes.Private);
                 var property = typeBuilder.DefineProperty(propertyName,
                                                System.Reflection.PropertyAttributes.None,
@@ -580,7 +577,6 @@ namespace Skpic.Async
                 typeBuilder.DefineMethodOverride(currGetPropMthdBldr, getMethod);
                 typeBuilder.DefineMethodOverride(currSetPropMthdBldr, setMethod);
             }
-
         }
     }
 }

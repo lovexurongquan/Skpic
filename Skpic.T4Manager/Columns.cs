@@ -78,7 +78,7 @@ namespace Skpic.T4Manager
         /// the index name with this column.
         /// </summary>
         public string IndexName { get; set; }
-        
+
         /// <summary>
         /// the index sort.
         /// </summary>

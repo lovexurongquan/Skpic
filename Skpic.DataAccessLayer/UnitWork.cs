@@ -1,22 +1,22 @@
 ﻿/*
  * added by laoxu 2014-9-6 17:00:00
  * ---------------------------------------------------------------
- * for: A Unit of Work keeps track of everything you do during a 
- * business transaction that can affect the database. 
- * When you're done, it figures out everything that needs to be done 
+ * for: A Unit of Work keeps track of everything you do during a
+ * business transaction that can affect the database.
+ * When you're done, it figures out everything that needs to be done
  * to alter the database as a result of your work.
  * ---------------------------------------------------------------
  * version:1.0
  * mail:lovexurongquan@163.com
  **/
 
-using System;
-using System.Collections.Generic;
-using System.Data;
 using Skpic.Async;
 using Skpic.Common;
 using Skpic.Factory;
 using Skpic.IDataAccessLayer;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace Skpic.DataAccessLayer
 {
@@ -93,9 +93,11 @@ namespace Skpic.DataAccessLayer
                             case EntityState.Create:
                                 _db.Insert(data.Entity, data.EntityType, tran);
                                 break;
+
                             case EntityState.Modified:
                                 _db.Update(data.Entity, data.EntityType, tran);
                                 break;
+
                             case EntityState.Delete:
                                 _db.Delete(data.Entity, data.EntityType, tran);
                                 break;
@@ -123,7 +125,7 @@ namespace Skpic.DataAccessLayer
 
         /// <summary>
         /// Regist the entity's to the Queue
-        /// when the commit method called,all the Queue's 
+        /// when the commit method called,all the Queue's
         /// entity will be mapped to sql
         /// </summary>
         /// <typeparam name="T">the type of entity</typeparam>
@@ -136,6 +138,6 @@ namespace Skpic.DataAccessLayer
             _storeQueue.Enqueue(data);
         }
 
-        #endregion
+        #endregion Unit and others
     }
 }

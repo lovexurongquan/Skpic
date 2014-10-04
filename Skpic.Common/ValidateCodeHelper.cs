@@ -43,7 +43,6 @@ namespace Skpic.Common
             Graphics graph = Graphics.FromImage(bmp);
             graph.FillRectangle(new SolidBrush(Color.FromArgb(nRed, nGreen, nBlue)), 0, 0, nBmpWidth, nBmpHeight);
 
-
             // 3. Draw interference lines, using some slightly darker than the background color
             const int nLines = 3;
             var sb = new SolidBrush(Color.FromArgb(nRed - 17, nGreen - 17, nBlue - 17));
@@ -95,6 +94,5 @@ namespace Skpic.Common
 
             return byteReturn;
         }
- 
     }
 }

@@ -21,7 +21,7 @@ namespace Skpic.Common
     public class LambdaHelper<T> where T : class
     {
         /// <summary>
-        /// lambda expression helper. 
+        /// lambda expression helper.
         /// get param in lambda expression.
         /// </summary>
         /// <param name="expression"></param>
@@ -44,18 +44,18 @@ namespace Skpic.Common
             //    GetUnaryExpression(expression.Body);
             //}
 
-            #endregion
+            #endregion Old
         }
 
         /// <summary>
         /// sql builder.
         /// </summary>
-        readonly StringBuilder _sb = new StringBuilder();
+        private readonly StringBuilder _sb = new StringBuilder();
 
         /// <summary>
         /// param collection.
         /// </summary>
-        readonly Dictionary<string, string> _paramCollection = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _paramCollection = new Dictionary<string, string>();
 
         /// <summary>
         /// get where sql in expression.
@@ -65,8 +65,8 @@ namespace Skpic.Common
         {
             var where = _sb.ToString()
              .Replace("()", " ");
-             //.Replace("and and", "and")
-             //.Replace("or or", "or");
+            //.Replace("and and", "and")
+            //.Replace("or or", "or");
 
             where = Regex.Replace(where, @"or\s*or", "or");
             where = Regex.Replace(where, @"and\s*and", "and");
@@ -112,14 +112,17 @@ namespace Skpic.Common
                 case ExpressionType.Not:
                     GetUnaryExpression(expression);
                     break;
+
                 case ExpressionType.Call:
                     GetStringMethodExpressions(expression);
                     break;
+
                 case ExpressionType.OrElse:
                 case ExpressionType.AndAlso:
 
                     SplitExpression(expression as BinaryExpression);
                     break;
+
                 case ExpressionType.Equal:
                 case ExpressionType.NotEqual:
                 case ExpressionType.GreaterThan:
@@ -132,20 +135,17 @@ namespace Skpic.Common
             }
         }
 
-
         /// <summary>
         /// split expression with left and right.
         /// </summary>
         /// <param name="binaryExpression">expression body.</param>
         private void SplitExpression(BinaryExpression binaryExpression)
         {
-
             var left = binaryExpression.Left as BinaryExpression;
 
             var right = binaryExpression.Right as BinaryExpression;
 
             _sb.Append("(");
-
 
             if (left == null)
             {
@@ -173,7 +173,6 @@ namespace Skpic.Common
                 GetUnaryExpression(binaryExpression.Right);
 
                 GetStringMethodExpressions(binaryExpression.Right);
-
             }
             else
             {
@@ -190,7 +189,7 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        ///  get unary in expression. 
+        ///  get unary in expression.
         /// Exp: NotEquals, NotContains.
         /// </summary>
         /// <param name="expression"></param>
@@ -209,7 +208,7 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        /// get operators in expression. 
+        /// get operators in expression.
         /// Exp: LessThan, GreaterThanOrEqual, GreaterThan, LessThanOrEqual, Equal.
         /// </summary>
         /// <param name="expression"></param>
@@ -225,7 +224,7 @@ namespace Skpic.Common
         }
 
         /// <summary>
-        /// get string method in expression. 
+        /// get string method in expression.
         /// Exp: Equals, StartsWith, EndsWith, Contains.
         /// </summary>
         /// <param name="expression">expression data.</param>
@@ -290,7 +289,6 @@ namespace Skpic.Common
         /// <param name="isNot">is not?</param>
         private void SetLambdaParameters(string name, string methodName, string value, bool isNot = false)
         {
-
             methodName = isNot ? ChoiseOperators("Not" + methodName, ref value) : ChoiseOperators(methodName, ref value);
 
             _sb.Append(name + methodName + "@p" + _paramCollection.Count + " ");
@@ -308,6 +306,7 @@ namespace Skpic.Common
             {
                 case "AndAlso":
                     return " and ";
+
                 case "OrElse":
                     return " or ";
             }
@@ -327,41 +326,56 @@ namespace Skpic.Common
                 case "Equals":
                 case "Equal":
                     return " = ";
+
                 case "NotEqual":
                 case "NotEquals":
                     return " <> ";
+
                 case "StartsWith":
                     value = value + "%";
                     return " like ";
+
                 case "NotStartsWith":
                     value = value + "%";
                     return " not like ";
+
                 case "EndsWith":
                     value = "%" + value;
                     return " like ";
+
                 case "NotEndsWith":
                     value = "%" + value;
                     return " not like ";
+
                 case "Contains":
                     value = "%" + value + "%";
                     return " like ";
+
                 case "NotContains":
                     value = "%" + value + "%";
                     return " not like ";
+
                 case "LessThan":
                     return " < ";
+
                 case "NotLessThan":
                     return " >= ";
+
                 case "LessThanOrEqual":
                     return " <= ";
+
                 case "NotLessThanOrEqual":
                     return " > ";
+
                 case "GreaterThan":
                     return " > ";
+
                 case "NotGreaterThan":
                     return " <= ";
+
                 case "GreaterThanOrEqual":
                     return " >= ";
+
                 case "NotGreaterThanOrEqual":
                     return " < ";
             }

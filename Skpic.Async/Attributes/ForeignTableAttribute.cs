@@ -25,10 +25,10 @@ namespace Skpic.Async.Attributes
         {
             Name = name;
         }
+
         /// <summary>
         /// foreign table name
         /// </summary>
         public string Name { get; private set; }
     }
-
 }

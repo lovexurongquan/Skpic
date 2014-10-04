@@ -25,10 +25,10 @@ namespace Skpic.Async.Attributes
         {
             Name = name;
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Name { get; private set; }
     }
-
 }

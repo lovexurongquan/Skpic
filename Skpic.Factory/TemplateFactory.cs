@@ -18,20 +18,20 @@ using System.Linq;
 namespace Skpic.Factory
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static class TemplateFactory
     {
         private static DbProviderFactory _df;
 
-        /// <summary>  
+        /// <summary>
         /// Get a open connection by connection string and provider in config.
-        /// </summary>  
+        /// </summary>
         public static IDbConnection GetConnection(string templateFilePath, string connectionName = "ConnectionString")
         {
             // get connection string in config.
-            var connectionString = GetConnectionString(templateFilePath,connectionName);
-            var providerName = GetProviderName(templateFilePath,connectionName);
+            var connectionString = GetConnectionString(templateFilePath, connectionName);
+            var providerName = GetProviderName(templateFilePath, connectionName);
             if (connectionString == null || providerName == null)
             {
                 throw new Exception();
@@ -55,7 +55,7 @@ namespace Skpic.Factory
         /// <param name="templateFilePath">the tt template file path.</param>
         /// <param name="connectionName">connection name in config.</param>
         /// <returns></returns>
-        public static string GetConnectionString(string templateFilePath,string connectionName = "ConnectionString")
+        public static string GetConnectionString(string templateFilePath, string connectionName = "ConnectionString")
         {
             string directoryName = Path.GetDirectoryName(templateFilePath);
 
@@ -65,7 +65,7 @@ namespace Skpic.Factory
             {
                 ExeConfigFilename = str
             }, ConfigurationUserLevel.None);
-            
+
             var connectionString = ((ConnectionStringsSection)configuration.GetSection("connectionStrings")).ConnectionStrings[connectionName].ConnectionString;
 
             return connectionString;
@@ -88,13 +88,9 @@ namespace Skpic.Factory
                 ExeConfigFilename = str
             }, ConfigurationUserLevel.None);
 
-
             var connectionString = ((ConnectionStringsSection)configuration.GetSection("connectionStrings")).ConnectionStrings[connectionName].ProviderName;
 
             return connectionString;
         }
-
-        
-
     }
 }

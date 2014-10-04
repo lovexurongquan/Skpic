@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using Skpic.Async;
-using Skpic.Common;
-using Skpic.DataAccessLayer;
+﻿using Skpic.Async;
 using Skpic.Factory;
-using Skpic.IDataAccessLayer;
 using Skpic.Model;
+using System.Collections.Generic;
 
 namespace Skpic.Console
 {
@@ -27,9 +16,9 @@ namespace Skpic.Console
             //    var XmlHelper = new XmlHelper(DataBaseFactory.GetProviderName("OracleConnString"));
             //    var sql = XmlHelper.TableObjectSql;
             //    var x = conn.Query(sql);
-            //} 
+            //}
 
-            #endregion
+            #endregion test dapper query
 
             #region test GetTableCollection
 
@@ -39,7 +28,7 @@ namespace Skpic.Console
 
             //var columnsCollection = t4.GetColumnsCollection();
 
-            #endregion
+            #endregion test GetTableCollection
 
             #region TestConnection
 
@@ -59,7 +48,7 @@ namespace Skpic.Console
             //    System.Console.WriteLine(login.DoctorLoginInfo_ID);
             //}
 
-            #endregion
+            #endregion TestConnection
 
             #region TestDeleteLambda
 
@@ -71,13 +60,12 @@ namespace Skpic.Console
             //    "32dbffdc-925f-41db-99df-fa03cb05de4f"
             //};
 
-
             //using (var conn = DbContextFactory.GetConnection())
             //{
             //    var i = conn.Delete<DoctorLoginInfo>(d => !list.Contains(d.DoctorLoginInfo_ID));
-            //} 
+            //}
 
-            #endregion
+            #endregion TestDeleteLambda
 
             #region TestDelete
 
@@ -87,7 +75,7 @@ namespace Skpic.Console
             //    var x = conn.Execute(sql, new { a0 = "Administrator" });
             //}
 
-            #endregion
+            #endregion TestDelete
 
             #region TestUnitWork
 
@@ -131,7 +119,7 @@ namespace Skpic.Console
             ////unitWork.RegistEntity(login3, EntityState.Delete);
             //unitWork.Commit();
 
-            #endregion
+            #endregion TestUnitWork
 
             #region TestQueryLambda
 
@@ -158,7 +146,7 @@ namespace Skpic.Console
 
             //var y = conn.Query<DoctorLoginInfo>(d => d.DoctorInfo_ID.Equals("c46bc122-8115-4ddd-a041-518658843e57"));
 
-            #endregion
+            #endregion TestQueryLambda
 
             #region TestDynamic
 
@@ -173,9 +161,9 @@ namespace Skpic.Console
             //System.Console.WriteLine("再次取值=" + dynamicObject.GetValue("P1"));
             //dynamicObject.SetValue("P1", "789");
             //System.Console.WriteLine("方法赋值=" + dynamicObject.GetValue("P1"));
-            //System.Console.WriteLine("方法取值=" + dynamicObject.GetValue("P1")); 
+            //System.Console.WriteLine("方法取值=" + dynamicObject.GetValue("P1"));
 
-            #endregion
+            #endregion TestDynamic
 
             System.Console.ReadKey();
         }

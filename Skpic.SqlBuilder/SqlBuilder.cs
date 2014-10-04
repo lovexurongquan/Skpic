@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Skpic.Async;
+using System.Collections.Generic;
 using System.Linq;
-using Skpic.Async;
 
 namespace Skpic.SqlBuilder
 {
@@ -9,20 +9,21 @@ namespace Skpic.SqlBuilder
     /// </summary>
     public class SqlBuilder
     {
-        readonly Dictionary<string, Clauses> _data = new Dictionary<string, Clauses>();
-        int _seq;
+        private readonly Dictionary<string, Clauses> _data = new Dictionary<string, Clauses>();
+        private int _seq;
 
-        class Clause
+        private class Clause
         {
             public string Sql { get; set; }
+
             public object Parameters { get; set; }
         }
 
-        class Clauses : List<Clause>
+        private class Clauses : List<Clause>
         {
-            readonly string _joiner;
-            readonly string _prefix;
-            readonly string _postfix;
+            private readonly string _joiner;
+            private readonly string _prefix;
+            private readonly string _postfix;
 
             public Clauses(string joiner, string prefix = "", string postfix = "")
             {
@@ -42,14 +43,14 @@ namespace Skpic.SqlBuilder
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public class Template
         {
-            readonly string _sql;
-            readonly SqlBuilder _builder;
-            readonly object _initParams;
-            int _dataSeq = -1; // Unresolved
+            private readonly string _sql;
+            private readonly SqlBuilder _builder;
+            private readonly object _initParams;
+            private int _dataSeq = -1; // Unresolved
 
             /// <summary>
             /// Template default constructor.
@@ -64,10 +65,10 @@ namespace Skpic.SqlBuilder
                 _builder = builder;
             }
 
-            static readonly System.Text.RegularExpressions.Regex Regex =
+            private static readonly System.Text.RegularExpressions.Regex Regex =
                 new System.Text.RegularExpressions.Regex(@"\/\*\*.+\*\*\/", System.Text.RegularExpressions.RegexOptions.Compiled | System.Text.RegularExpressions.RegexOptions.Multiline);
 
-            void ResolveSql()
+            private void ResolveSql()
             {
                 if (_dataSeq == _builder._seq) return;
                 var p = new DynamicParameters(_initParams);
@@ -86,21 +87,22 @@ namespace Skpic.SqlBuilder
                 _dataSeq = _builder._seq;
             }
 
-            string _rawSql;
-            object _parameters;
+            private string _rawSql;
+            private object _parameters;
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public string RawSql { get { ResolveSql(); return _rawSql; } }
+
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public object Parameters { get { ResolveSql(); return _parameters; } }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
@@ -110,7 +112,7 @@ namespace Skpic.SqlBuilder
             return new Template(this, sql, parameters);
         }
 
-        void AddClause(string name, string sql, object parameters, string joiner, string prefix = "", string postfix = "")
+        private void AddClause(string name, string sql, object parameters, string joiner, string prefix = "", string postfix = "")
         {
             Clauses clauses;
             if (!_data.TryGetValue(name, out clauses))
