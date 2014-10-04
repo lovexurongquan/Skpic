@@ -1,0 +1,49 @@
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0 }
+body, button, input, select, textarea { font:12px/20px tahoma, arial, 'Hiragino Sans GB', \5b8b\4f53, sans-serif; color:#666;}
+h1, h2, h3, h4, h5, h6 { font-size:100% }
+address, cite, dfn, em, var { font-style:normal }
+code, kbd, pre, samp { font-family:courier new, courier, monospace }
+small { font-size:12px }
+ul, ol { list-style:none }
+a { text-decoration:none }
+a:hover { text-decoration:underline }
+sup { vertical-align:text-top }
+sub { vertical-align:text-bottom }
+fieldset, img { border:0 }
+button, input, select, textarea { font-size:100% }
+table { border-collapse:collapse; border-spacing:0; }
+html { zoom:expression(function(ele) {
+ ele.style.zoom = "1";
+ document.execCommand("BackgroundImageCache", false, true);
+}
+(this))
+}
+body{ background:#f1f1f1;}
+.clearfix:after { content:"."; display:block; clear:both; visibility:hidden; line-height:0; height:0 }
+.content,.menuList,.schedule{ margin:0 auto; width:950px; clear:both;}
+.menuList dl{ float:left; margin-top:10px;}
+.menuList dt{ float:left; width:120px; font-weight:bold; font-size:14px;}
+.menuList dd{ float:left; width:830px;}
+.menuList dd a{margin-right:30px; margin-bottom:10px; white-space:nowrap; }
+.content table tr .one{ font-weight:bold; width:90px; padding:2px 5px; text-align:center; background:#ddd;}
+.content table tr th{ font-weight:normal; text-align:left; padding:5px 10px; line-height:22px;}
+.content table td{ padding:5px 10px; line-height:22px;}
+.content table{ width:948px; margin:10px 0; border:1px solid #ccc;}
+.content table tr,.content table tr th,.content table td{ border:1px solid #ccc; background:#f1f1f1;}
+.content table td.wid80,.content table th.wid80{ border:0;}
+.content table td.wid80{ border-bottom:1px solid #ccc;}
+
+.content .infoCate table tr th,.content .safeinfoCate table tr th{ font-weight:bold;}
+.infoTab ul li,.safeinfoTab ul li{ float:left;}
+.infoTab ul,.safeinfoTab ul{ clear:both; height:30px; overflow:hidden; display:block; border-bottom:1px solid #ccc}
+.infoTab ul li,.safeinfoTab ul li{ width:100px; height:30px; background:#999; color:#fff; font-weight:bold; line-height:30px; text-align:center; font-size:14px; margin-right:20px; cursor:pointer;}
+.infoTab ul li.hover,.safeinfoTab ul li.hover{ background:#060; text-decoration:none;}
+.daliy{ height:70px; margin-bottom:10px; overflow:hidden; clear:both; }
+.daliy textarea{ height:50px; padding:5px; border:1px solid #ccc; width:800px;float:left; background:#fff;}
+.daliy input{ width:80px; height:30px; margin-left:10px; float:left; display:inline; margin-top:30px;}
+.none{ display:none;}
+.content h1{ font-size:16px; border-bottom:2px solid #999; line-height:50px;}
+.safeinfoCate table tr th,.infoCate table tr th{ background:#ddd; text-align:center;}
+.safeinfoCate table tr td,.infoCate table tr td{ background:#f1f1f1; text-align:center;word-break: break-all;}
+.orderinfo table tr a.l-btn span.l-btn-left,.orderinfo table tr a.l-btn{ background-image:none;}
+.content .orderinfo a.teaveliframe{background:url(../../Cake/ico/ico8-8.png) no-repeat left center; padding-left:10px;}

@@ -1,0 +1,15 @@
+﻿/* Copyright (c) 2008 GoGoLet.com All rights reserved. */
+
+/* Built by chen wanshen */
+
+/* MSN & Mail: xide314@hotmail.com */
+
+/* ///////////////////////////////////////////// */
+
+@import url(public_v2008.css);
+@import url(main_v2008.css);
+@import url(user_v2008.css);
+.login_enter { position:absolute; width:552px; height:310px; top:50%; left:50%; margin:-155px 0 0 -276px; background:url(../img/passport_login_bak.gif) no-repeat top; }
+.login_enter a { text-decoration: underline; }
+.login_button{ width:130px; height:37px; line-height:37px;; font-size:16px; color:#344F26; background:url(../img/login_bt.gif) no-repeat; font-weight:bolder; border:0; }
+.logout_foot { position:relative; left:0px; top:102px;  clear:both; float:right; margin:25px 3px 0 0; color:#AEC4CB; }

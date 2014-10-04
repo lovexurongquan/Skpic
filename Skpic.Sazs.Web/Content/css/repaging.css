@@ -1,0 +1,103 @@
+﻿.boxform th {
+    background: none repeat scroll 0 0 #F5F9FA;
+    border-bottom: 1px solid #F5F9FA;
+    border-right: 1px solid #CCE0E6;
+    line-height: 12px;
+    padding-right: 5px;
+    text-align: right;
+}
+.boxform td {
+    border-bottom: 1px dotted #D7D7D7;
+    height: 40px;
+    padding: 0 0 0 8px;
+    text-align: left;
+    vertical-align: middle;
+}
+.gotopage
+{
+    width: 30px;
+}
+.rePage
+{
+}
+.rePage li
+{
+    float: left;
+    line-height: 35px;
+    vertical-align: middle;
+    list-style-type: none;
+    text-align: center;
+}
+
+.PageNum a
+{
+    border: 1px solid #CCCCCC;
+    display: inline-block;
+    height: 18px;
+    line-height: 19px;
+    margin: 0 1px;
+    padding: 0 5px;
+    width: auto;
+    text-decoration: none;
+}
+
+    .PageNum a:hover
+    {
+        color: #FFFFFF;
+        background: #3A6EA5;
+    }
+
+.PageNum strong
+{
+    border: 1px solid #3A6EA5;
+    display: inline-block;
+    height: 18px;
+    line-height: 19px;
+    margin: 0 1px;
+    padding: 0 5px;
+    width: auto;
+    color: #FFFFFF;
+    cursor: pointer;
+    background: none repeat scroll 0 0 #3A6EA5;
+}
+
+#DoAndShow
+{
+    width: 350px;
+    clear: both;
+    position: absolute;
+    right: 135px;
+    background-color: #f9f9f9;
+    display: none;
+    border: 1px solid #D7D7D7;
+}
+
+    #DoAndShow td
+    {
+        padding: 2px 10px 2px 5px;
+        border-bottom: 1px solid #D7D7D7;
+        border-right: 1px dotted #D7D7D7;
+    }
+
+    #DoAndShow th
+    {
+        width: 80px;
+        text-align: right;
+        padding-right: 5px;
+        border-bottom: 1px solid #D7D7D7;
+        border-right: 1px dotted #D7D7D7;
+    }
+#WebShow
+{
+    width: 550px;
+    clear: both;
+    position: absolute;
+    right: 135px;
+    background-color: #f9f9f9;
+    display: none;
+    border: 1px solid #D7D7D7;
+}
+.tableTitle
+{
+    background-color: #D7D7D7;
+}
