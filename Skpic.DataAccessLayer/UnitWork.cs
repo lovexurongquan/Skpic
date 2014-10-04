@@ -57,7 +57,7 @@ namespace Skpic.DataAccessLayer
         /// <summary>
         /// use this connection string to connect database.
         /// </summary>
-        private string ConnectionStringName { get; set; }
+        public string ConnectionStringName { get; set; }
 
         /// <summary>
         /// a private database entity default null

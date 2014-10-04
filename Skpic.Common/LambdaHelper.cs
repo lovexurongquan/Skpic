@@ -47,6 +47,13 @@ namespace Skpic.Common
             #endregion Old
         }
 
+        public LambdaHelper(params Expression<Func<T, dynamic>>[] orderArray)
+        {
+
+        }
+
+        #region Where expression
+
         /// <summary>
         /// sql builder.
         /// </summary>
@@ -294,6 +301,14 @@ namespace Skpic.Common
             _sb.Append(name + methodName + "@p" + _paramCollection.Count + " ");
             _paramCollection.Add("p" + _paramCollection.Count, value);
         }
+
+        #endregion
+
+        #region Order expression
+
+
+
+        #endregion
 
         /// <summary>
         /// get logical.

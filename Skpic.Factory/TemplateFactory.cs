@@ -88,9 +88,9 @@ namespace Skpic.Factory
                 ExeConfigFilename = str
             }, ConfigurationUserLevel.None);
 
-            var connectionString = ((ConnectionStringsSection)configuration.GetSection("connectionStrings")).ConnectionStrings[connectionName].ProviderName;
+            var providerName = ((ConnectionStringsSection)configuration.GetSection("connectionStrings")).ConnectionStrings[connectionName].ProviderName;
 
-            return connectionString;
+            return providerName;
         }
     }
 }

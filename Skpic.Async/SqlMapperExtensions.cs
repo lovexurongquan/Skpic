@@ -162,9 +162,12 @@ namespace Skpic.Async
         /// <param name="transaction"></param>
         /// <param name="commandTimeout"></param>
         /// <returns>Entity of T</returns>
-        public static T Query<T>(this IDbConnection connection, dynamic id, Type entityType = null, IDbTransaction transaction = null, int? commandTimeout = null) where T : class
+        public static T QueryByKey<T>(this IDbConnection connection, dynamic id, Type entityType = null, IDbTransaction transaction = null, int? commandTimeout = null) where T : class
         {
             var type = entityType ?? typeof(T);
+
+            var allProperties = TypePropertiesCache(type).Select(p => p.Name);
+
             string sql;
             if (!GetQueries.TryGetValue(type.TypeHandle, out sql))
             {
@@ -178,9 +181,7 @@ namespace Skpic.Async
 
                 var name = GetTableName(type);
 
-                // TODO: pluralizer
-                // TODO: query information schema and only select fields that are both in information schema and underlying class / interface
-                sql = "select * from " + name + " where " + onlyKey.Name + " = @id";
+                sql = string.Format("select {0} from {1} where {2} = @id", string.Join(",", allProperties), name, onlyKey.Name);
                 GetQueries[type.TypeHandle] = sql;
             }
 
@@ -388,6 +389,54 @@ namespace Skpic.Async
             var sql = string.Format("select {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
 
             return connection.Query<T>(sql, param);
+        }
+
+        /// <summary>
+        /// query by lambda.
+        /// </summary>
+        /// <param name="connection">open connection.</param>
+        /// <param name="lambdaWhere">query condition.</param>
+        /// <param name="lambdaOrder">order by condition.</param>
+        /// <param name="pageIndex">page index.</param>
+        /// <param name="pageSize">page size.</param>
+        /// <param name="total">total.</param>
+        /// <typeparam name="T">query model.</typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> QueryByPage<T>(this IDbConnection connection, Expression<Func<T, bool>> lambdaWhere, Expression<Func<T, dynamic>> lambdaOrder, int pageIndex, int pageSize, out int total) where T : class
+        {
+            var type = typeof(T);
+            var allProperties = TypePropertiesCache(type).Select(p => p.Name);
+
+            var name = GetTableName(type);
+
+            var helper = new LambdaHelper<T>(lambdaWhere);
+
+            var where = helper.GetWhereSql();
+
+            var param = helper.GetParameters();
+
+            var sql = string.Format("select {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
+
+            total = Convert.ToInt32(connection.ExecuteScalar(sql.ChangeTotalText(),param));
+
+            var result = connection.Query<T>(sql, param);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get inquiry total sentence.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        private static string ChangeTotalText(this string sql)
+        {
+            return string.Format("SELECT COUNT(1) FROM ({0}) AS T ", sql);
+        }
+
+        private static string ChangePageText(this string sql,int pageIndex,int pageSize,int total)
+        {
+            return sql;
         }
 
         /// <summary>
