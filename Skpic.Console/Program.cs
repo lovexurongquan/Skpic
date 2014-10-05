@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using Skpic.Async;
 using Skpic.Factory;
@@ -178,15 +179,19 @@ namespace Skpic.Console
 
             #endregion
 
-            TestOrder<DoctorLoginInfo>(login => login.DoctorInfo_ID, login => login.DoctorLoginInfo_Pwd);
+            TestOrder<DoctorLoginInfo>(login => login.DoctorInfo_ID);
+
+            //new List<string>().OrderByDescending()
 
             System.Console.ReadKey();
         }
 
-        public static void TestOrder<T>(params Expression<Func<T,dynamic>>[] orderArray )where T:class
+        public static void TestOrder<T>(Expression<Func<T,dynamic>> order )where T:class
         {
-
-            var x = orderArray;
+            var body = order.Body as MemberExpression;
+            var b = body.Member.Name;
+            var d = b;
+            //var x = orderArray;
         }
     }
 

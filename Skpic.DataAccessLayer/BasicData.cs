@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using Skpic.Async;
 using Skpic.Factory;
 using Skpic.IDataAccessLayer;
@@ -23,8 +24,10 @@ namespace Skpic.DataAccessLayer
         public BasicData(string connStringName = "ConnectionString")
             : base(connStringName)
         {
-
+            _sqlBuilder=new StringBuilder();
         }
+
+        private StringBuilder _sqlBuilder;
 
         /// <summary>
         /// query by primary key.

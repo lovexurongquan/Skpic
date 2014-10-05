@@ -47,9 +47,11 @@ namespace Skpic.Common
             #endregion Old
         }
 
-        public LambdaHelper(params Expression<Func<T, dynamic>>[] orderArray)
+        public LambdaHelper(Expression<Func<T, dynamic>> order,bool isDesc)
         {
-
+            var body = order.Body as MemberExpression;
+            if (body != null) _orderName = body.Member.Name;
+            _isDesc = isDesc;
         }
 
         #region Where expression
@@ -57,7 +59,7 @@ namespace Skpic.Common
         /// <summary>
         /// sql builder.
         /// </summary>
-        private readonly StringBuilder _sb = new StringBuilder();
+        private readonly StringBuilder _sqlBuilder = new StringBuilder();
 
         /// <summary>
         /// param collection.
@@ -70,7 +72,7 @@ namespace Skpic.Common
         /// <returns></returns>
         public string GetWhereSql()
         {
-            var where = _sb.ToString()
+            var where = _sqlBuilder.ToString()
              .Replace("()", " ");
             //.Replace("and and", "and")
             //.Replace("or or", "or");
@@ -152,7 +154,7 @@ namespace Skpic.Common
 
             var right = binaryExpression.Right as BinaryExpression;
 
-            _sb.Append("(");
+            _sqlBuilder.Append("(");
 
             if (left == null)
             {
@@ -160,14 +162,14 @@ namespace Skpic.Common
 
                 GetUnaryExpression(binaryExpression.Left);
 
-                _sb.Append(GetLogical(binaryExpression.NodeType.ToString()));
+                _sqlBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
             }
             else
             {
                 GetOperatorsExpressions(left);
                 if (right != null)
                 {
-                    _sb.Append(GetLogical(binaryExpression.NodeType.ToString()));
+                    _sqlBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
                 }
 
                 SplitExpression(left);
@@ -175,7 +177,7 @@ namespace Skpic.Common
 
             if (right == null)
             {
-                _sb.Append(GetLogical(binaryExpression.NodeType.ToString()));
+                _sqlBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
 
                 GetUnaryExpression(binaryExpression.Right);
 
@@ -185,14 +187,14 @@ namespace Skpic.Common
             {
                 if (left != null)
                 {
-                    _sb.Append(GetLogical(binaryExpression.NodeType.ToString()));
+                    _sqlBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
                 }
 
                 GetOperatorsExpressions(right);
 
                 SplitExpression(right);
             }
-            _sb.Append(")");
+            _sqlBuilder.Append(")");
         }
 
         /// <summary>
@@ -282,7 +284,7 @@ namespace Skpic.Common
                 list.Add("@p" + _paramCollection.Count);
                 _paramCollection.Add("p" + _paramCollection.Count, value);
             }
-            _sb.Append(isNot
+            _sqlBuilder.Append(isNot
                 ? string.Format("{0} not {1} ({2})", name, methodName.ToLower(), string.Join(",", list))
                 : string.Format("{0} {1} ({2})", name, methodName.ToLower(), string.Join(",", list)));
         }
@@ -298,7 +300,7 @@ namespace Skpic.Common
         {
             methodName = isNot ? ChoiseOperators("Not" + methodName, ref value) : ChoiseOperators(methodName, ref value);
 
-            _sb.Append(name + methodName + "@p" + _paramCollection.Count + " ");
+            _sqlBuilder.Append(name + methodName + "@p" + _paramCollection.Count + " ");
             _paramCollection.Add("p" + _paramCollection.Count, value);
         }
 
@@ -306,7 +308,24 @@ namespace Skpic.Common
 
         #region Order expression
 
+        /// <summary>
+        /// order name
+        /// </summary>
+        private readonly string _orderName;
 
+        /// <summary>
+        /// is desc
+        /// </summary>
+        private readonly bool _isDesc;
+
+        /// <summary>
+        /// Get sorted statement.
+        /// </summary>
+        /// <returns></returns>
+        public string GetOrderSql()
+        {
+            return string.Format(_isDesc ? " ORDER BY {0} DESC " : " ORDER BY {0} ASC ", _orderName);
+        }
 
         #endregion
 
