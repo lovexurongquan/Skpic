@@ -150,68 +150,7 @@ namespace Skpic.Async
             return name;
         }
 
-        /// <summary>
-        /// Returns a single entity by a single id from table "Ts". T must be of interface type.
-        /// Id must be marked with [Key] attribute.
-        /// Created entity is tracked/intercepted for changes and used by the Update() extension.
-        /// </summary>
-        /// <typeparam name="T">Interface type to create and populate</typeparam>
-        /// <param name="connection">Open SqlConnection</param>
-        /// <param name="id">Id of the entity to get, must be marked with [Key] attribute</param>
-        /// <param name="entityType">entity type.</param>
-        /// <param name="transaction"></param>
-        /// <param name="commandTimeout"></param>
-        /// <returns>Entity of T</returns>
-        public static T QueryByKey<T>(this IDbConnection connection, dynamic id, Type entityType = null, IDbTransaction transaction = null, int? commandTimeout = null) where T : class
-        {
-            var type = entityType ?? typeof(T);
-
-            var allProperties = TypePropertiesCache(type).Select(p => p.Name);
-
-            string sql;
-            if (!GetQueries.TryGetValue(type.TypeHandle, out sql))
-            {
-                var keys = KeyPropertiesCache(type).ToList();
-                if (keys.Count() > 1)
-                    throw new DataException("Get<T> only supports an entity with a single [Key] property");
-                if (!keys.Any())
-                    throw new DataException("Get<T> only supports en entity with a [Key] property");
-
-                var onlyKey = keys.First();
-
-                var name = GetTableName(type);
-
-                sql = string.Format("select {0} from {1} where {2} = @id", string.Join(",", allProperties), name, onlyKey.Name);
-                GetQueries[type.TypeHandle] = sql;
-            }
-
-            var dynParms = new DynamicParameters();
-            dynParms.Add("@id", id);
-            T obj;
-
-            if (type.IsInterface)
-            {
-                var res = connection.Query(sql, dynParms).FirstOrDefault() as IDictionary<string, object>;
-
-                if (res == null)
-                    return null;
-
-                obj = ProxyGenerator.GetInterfaceProxy<T>();
-
-                foreach (var property in TypePropertiesCache(type))
-                {
-                    var val = res[property.Name];
-                    property.SetValue(obj, val, null);
-                }
-
-                ((IProxy)obj).IsDirty = false;   //reset change tracking and return
-            }
-            else
-            {
-                obj = connection.Query<T>(sql, dynParms, transaction, commandTimeout: commandTimeout).FirstOrDefault();
-            }
-            return obj;
-        }
+        #region Insert Update Delete
 
         /// <summary>
         /// Inserts an entity into table "Ts" and returns identity id.
@@ -230,7 +169,7 @@ namespace Skpic.Async
 
             var sbColumnList = new StringBuilder(null);
             var allProperties = TypePropertiesCache(type);
-            var keyProperties = KeyPropertiesCache(type).Where(p => p.GetCustomAttributes(true).Any(a => a is KeyAttribute && ((KeyAttribute)a).IsIdentity == "True")).ToList();
+            var keyProperties = KeyPropertiesCache(type).Where(p => p.GetCustomAttributes(true).Any(a => a is KeyAttribute && ((KeyAttribute)a).IsIdentity .Equals("True"))).ToList();
             var computedProperties = ComputedPropertiesCache(type);
             var allPropertiesExceptKeyAndComputed = allProperties.Except(keyProperties.Union(computedProperties)).ToList();
 
@@ -367,79 +306,6 @@ namespace Skpic.Async
         }
 
         /// <summary>
-        /// query by lambda.
-        /// </summary>
-        /// <param name="connection">open connection.</param>
-        /// <param name="lambdaWhere">query condition.</param>
-        /// <typeparam name="T">query model.</typeparam>
-        /// <returns></returns>
-        public static IEnumerable<T> Query<T>(this IDbConnection connection, Expression<Func<T, bool>> lambdaWhere) where T : class
-        {
-            var type = typeof(T);
-            var allProperties = TypePropertiesCache(type).Select(p => p.Name);
-
-            var name = GetTableName(type);
-
-            var helper = new LambdaHelper<T>(lambdaWhere);
-
-            var where = helper.GetWhereSql();
-
-            var param = helper.GetParameters();
-
-            var sql = string.Format("select {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
-
-            return connection.Query<T>(sql, param);
-        }
-
-        /// <summary>
-        /// query by lambda.
-        /// </summary>
-        /// <param name="connection">open connection.</param>
-        /// <param name="lambdaWhere">query condition.</param>
-        /// <param name="lambdaOrder">order by condition.</param>
-        /// <param name="pageIndex">page index.</param>
-        /// <param name="pageSize">page size.</param>
-        /// <param name="total">total.</param>
-        /// <typeparam name="T">query model.</typeparam>
-        /// <returns></returns>
-        public static IEnumerable<T> QueryByPage<T>(this IDbConnection connection, Expression<Func<T, bool>> lambdaWhere, Expression<Func<T, dynamic>> lambdaOrder, int pageIndex, int pageSize, out int total) where T : class
-        {
-            var type = typeof(T);
-            var allProperties = TypePropertiesCache(type).Select(p => p.Name);
-
-            var name = GetTableName(type);
-
-            var helper = new LambdaHelper<T>(lambdaWhere);
-
-            var where = helper.GetWhereSql();
-
-            var param = helper.GetParameters();
-
-            var sql = string.Format("select {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
-
-            total = Convert.ToInt32(connection.ExecuteScalar(sql.ChangeTotalText(),param));
-
-            var result = connection.Query<T>(sql, param);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Get inquiry total sentence.
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        private static string ChangeTotalText(this string sql)
-        {
-            return string.Format("SELECT COUNT(1) FROM ({0}) AS T ", sql);
-        }
-
-        private static string ChangePageText(this string sql,int pageIndex,int pageSize,int total)
-        {
-            return sql;
-        }
-
-        /// <summary>
         /// Delete all entities in the table related to the type T.
         /// </summary>
         /// <typeparam name="T">Type of entity</typeparam>
@@ -456,6 +322,172 @@ namespace Skpic.Async
             var deleted = connection.Execute(statement, null, transaction, commandTimeout);
             return deleted > 0;
         }
+
+        #endregion
+
+        #region Query
+
+        /// <summary>
+        /// Returns a single entity by a single id from table "Ts". T must be of interface type.
+        /// Id must be marked with [Key] attribute.
+        /// Created entity is tracked/intercepted for changes and used by the Update() extension.
+        /// </summary>
+        /// <typeparam name="T">Interface type to create and populate</typeparam>
+        /// <param name="connection">Open SqlConnection</param>
+        /// <param name="id">Id of the entity to get, must be marked with [Key] attribute</param>
+        /// <param name="transaction"></param>
+        /// <param name="commandTimeout"></param>
+        /// <returns>Entity of T</returns>
+        public static T Single<T>(this IDbConnection connection, dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) where T : class
+        {
+            var type = typeof(T);
+
+            var allProperties = TypePropertiesCache(type).Select(p => p.Name);
+
+            string sql;
+            if (!GetQueries.TryGetValue(type.TypeHandle, out sql))
+            {
+                var keys = KeyPropertiesCache(type).ToList();
+                if (keys.Count() > 1)
+                    throw new DataException("Get<T> only supports an entity with a single [Key] property");
+                if (!keys.Any())
+                    throw new DataException("Get<T> only supports en entity with a [Key] property");
+
+                var onlyKey = keys.First();
+
+                var name = GetTableName(type);
+
+                sql = string.Format("select {0} from {1} where {2} = @id", string.Join(",", allProperties), name, onlyKey.Name);
+                GetQueries[type.TypeHandle] = sql;
+            }
+
+            var dynParms = new DynamicParameters();
+            dynParms.Add("@id", id);
+            T obj;
+
+            if (type.IsInterface)
+            {
+                var res = connection.Query(sql, dynParms).FirstOrDefault() as IDictionary<string, object>;
+
+                if (res == null)
+                    return null;
+
+                obj = ProxyGenerator.GetInterfaceProxy<T>();
+
+                foreach (var property in TypePropertiesCache(type))
+                {
+                    var val = res[property.Name];
+                    property.SetValue(obj, val, null);
+                }
+
+                ((IProxy)obj).IsDirty = false;   //reset change tracking and return
+            }
+            else
+            {
+                obj = connection.Query<T>(sql, dynParms, transaction, commandTimeout: commandTimeout).FirstOrDefault();
+            }
+            return obj;
+        }
+        
+        /// <summary>
+        /// query by lambda.
+        /// </summary>
+        /// <param name="connection">open connection.</param>
+        /// <param name="predicate">query condition.</param>
+        /// <typeparam name="T">query model.</typeparam>
+        /// <returns></returns>
+        public static T Single<T>(this IDbConnection connection, Expression<Func<T, bool>> predicate) where T : class
+        {
+            var type = typeof(T);
+            var allProperties = TypePropertiesCache(type).Select(p => p.Name);
+
+            var name = GetTableName(type);
+
+            var helper = new LambdaHelper<T>(predicate);
+
+            var where = helper.GetWhereSql();
+
+            var param = helper.GetParameters();
+
+            var sql = string.Format("select top 1 {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
+
+            return connection.Query<T>(sql, param).FirstOrDefault();
+        }
+        
+        /// <summary>
+        /// query by lambda.
+        /// </summary>
+        /// <param name="connection">open connection.</param>
+        /// <param name="predicate">query condition.</param>
+        /// <typeparam name="T">query model.</typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> Query<T>(this IDbConnection connection, Expression<Func<T, bool>> predicate) where T : class
+        {
+            var type = typeof(T);
+            var allProperties = TypePropertiesCache(type).Select(p => p.Name);
+
+            var name = GetTableName(type);
+
+            var helper = new LambdaHelper<T>(predicate);
+
+            var where = helper.GetWhereSql();
+
+            var param = helper.GetParameters();
+
+            var sql = string.Format("select {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
+
+            return connection.Query<T>(sql, param);
+        }
+
+        /// <summary>
+        /// query by lambda.
+        /// </summary>
+        /// <param name="connection">open connection.</param>
+        /// <param name="predicate">query condition.</param>
+        /// <param name="lambdaOrder">order by condition.</param>
+        /// <param name="pageIndex">page index.</param>
+        /// <param name="pageSize">page size.</param>
+        /// <param name="total">total.</param>
+        /// <typeparam name="T">query model.</typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> QueryByPage<T>(this IDbConnection connection, Expression<Func<T, bool>> predicate, Expression<Func<T, dynamic>> lambdaOrder, int pageIndex, int pageSize, out int total) where T : class
+        {
+            var type = typeof(T);
+            var allProperties = TypePropertiesCache(type).Select(p => p.Name);
+
+            var name = GetTableName(type);
+
+            var helper = new LambdaHelper<T>(predicate);
+
+            var where = helper.GetWhereSql();
+
+            var param = helper.GetParameters();
+
+            var sql = string.Format("select {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
+
+            total = Convert.ToInt32(connection.ExecuteScalar(sql.ChangeTotalText(), param));
+
+            var result = connection.Query<T>(sql, param);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get inquiry total sentence.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        private static string ChangeTotalText(this string sql)
+        {
+            return string.Format("SELECT COUNT(1) FROM ({0}) AS T ", sql);
+        }
+
+        private static string ChangePageText(this string sql, int pageIndex, int pageSize, int total)
+        {
+            return sql;
+        }
+
+        #endregion
 
         /// <summary>
         ///
