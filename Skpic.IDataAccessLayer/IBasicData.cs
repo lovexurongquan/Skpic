@@ -16,7 +16,6 @@ namespace Skpic.IDataAccessLayer
 {
     public interface IBasicData<TSource> : IUnitWork
     {
-
         /// <summary>
         /// query by primary key.
         /// </summary>
@@ -53,7 +52,7 @@ namespace Skpic.IDataAccessLayer
         /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <returns></returns>
-        IBasicData<TSource> OrderBy< TKey>(Expression<Func<TSource, TKey>> keySelector);
+        IBasicData<TSource> OrderBy<TKey>(Expression<Func<TSource, TKey>> keySelector);
 
         /// <summary>
         /// Sorts the elements of a sequence in descending order according to a key.
@@ -62,7 +61,7 @@ namespace Skpic.IDataAccessLayer
         /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <returns></returns>
-        IBasicData<TSource> OrderByDescending< TKey>(Expression<Func<TSource, TKey>> keySelector);
+        IBasicData<TSource> OrderByDescending<TKey>(Expression<Func<TSource, TKey>> keySelector);
 
         /// <summary>
         /// Groups the elements of a sequence according to a specified key selector function.

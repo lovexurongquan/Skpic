@@ -24,34 +24,12 @@ namespace Skpic.Common
         /// lambda expression helper.
         /// get param in lambda expression.
         /// </summary>
-        /// <param name="expression"></param>
-        public LambdaHelper(Expression<Func<T, bool>> expression)
+        public LambdaHelper()
         {
-            ChoiseExpression(expression.Body);
-
-            #region Old
-
-            //if (expression.Body is BinaryExpression)
-            //{
-            //    SplitExpression(expression.Body as BinaryExpression);
-            //}
-            //else if (expression.Body is MethodCallExpression)
-            //{
-            //    GetStringMethodExpressions(expression.Body);
-            //}
-            //else if (expression.Body is UnaryExpression)
-            //{
-            //    GetUnaryExpression(expression.Body);
-            //}
-
-            #endregion Old
-        }
-
-        public LambdaHelper(Expression<Func<T, dynamic>> order,bool isDesc)
-        {
-            var body = order.Body as MemberExpression;
-            if (body != null) _orderName = body.Member.Name;
-            _isDesc = isDesc;
+            _paramCollection = new Dictionary<string, string>();
+            _whereBuilder = new StringBuilder();
+            _orderBuilder = new StringBuilder();
+            _groupBuilder = new StringBuilder();
         }
 
         #region Where expression
@@ -59,12 +37,25 @@ namespace Skpic.Common
         /// <summary>
         /// sql builder.
         /// </summary>
-        private readonly StringBuilder _sqlBuilder = new StringBuilder();
+        private readonly StringBuilder _whereBuilder;
 
         /// <summary>
         /// param collection.
         /// </summary>
-        private readonly Dictionary<string, string> _paramCollection = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _paramCollection;
+
+        /// <summary>
+        /// Initialization expression, if you gender sql by expression, you must use this to initialization.
+        /// </summary>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        public void Init(Expression<Func<T, bool>> predicate)
+        {
+            if (_whereBuilder.Length > 0)
+            {
+                _whereBuilder.Append(" AND ");
+            }
+            ChoiseExpression(predicate.Body);
+        }
 
         /// <summary>
         /// get where sql in expression.
@@ -72,7 +63,7 @@ namespace Skpic.Common
         /// <returns></returns>
         public string GetWhereSql()
         {
-            var where = _sqlBuilder.ToString()
+            var where = _whereBuilder.ToString()
              .Replace("()", " ");
             //.Replace("and and", "and")
             //.Replace("or or", "or");
@@ -107,6 +98,15 @@ namespace Skpic.Common
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// get parameter in expression. return all dictionary.
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, string> GetParameterDict()
+        {
+            return _paramCollection;
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Skpic.Common
 
             var right = binaryExpression.Right as BinaryExpression;
 
-            _sqlBuilder.Append("(");
+            _whereBuilder.Append("(");
 
             if (left == null)
             {
@@ -162,14 +162,14 @@ namespace Skpic.Common
 
                 GetUnaryExpression(binaryExpression.Left);
 
-                _sqlBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
+                _whereBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
             }
             else
             {
                 GetOperatorsExpressions(left);
                 if (right != null)
                 {
-                    _sqlBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
+                    _whereBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
                 }
 
                 SplitExpression(left);
@@ -177,7 +177,7 @@ namespace Skpic.Common
 
             if (right == null)
             {
-                _sqlBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
+                _whereBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
 
                 GetUnaryExpression(binaryExpression.Right);
 
@@ -187,14 +187,14 @@ namespace Skpic.Common
             {
                 if (left != null)
                 {
-                    _sqlBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
+                    _whereBuilder.Append(GetLogical(binaryExpression.NodeType.ToString()));
                 }
 
                 GetOperatorsExpressions(right);
 
                 SplitExpression(right);
             }
-            _sqlBuilder.Append(")");
+            _whereBuilder.Append(")");
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Skpic.Common
                 list.Add("@p" + _paramCollection.Count);
                 _paramCollection.Add("p" + _paramCollection.Count, value);
             }
-            _sqlBuilder.Append(isNot
+            _whereBuilder.Append(isNot
                 ? string.Format("{0} not {1} ({2})", name, methodName.ToLower(), string.Join(",", list))
                 : string.Format("{0} {1} ({2})", name, methodName.ToLower(), string.Join(",", list)));
         }
@@ -300,7 +300,7 @@ namespace Skpic.Common
         {
             methodName = isNot ? ChoiseOperators("Not" + methodName, ref value) : ChoiseOperators(methodName, ref value);
 
-            _sqlBuilder.Append(name + methodName + "@p" + _paramCollection.Count + " ");
+            _whereBuilder.Append(name + methodName + "@p" + _paramCollection.Count + " ");
             _paramCollection.Add("p" + _paramCollection.Count, value);
         }
 
@@ -311,12 +311,33 @@ namespace Skpic.Common
         /// <summary>
         /// order name
         /// </summary>
-        private readonly string _orderName;
+        private readonly StringBuilder _orderBuilder;
 
         /// <summary>
         /// is desc
         /// </summary>
-        private readonly bool _isDesc;
+        private bool _isDesc;
+
+        /// <summary>
+        /// Initialization expression, if you gender sql by expression, you must use this to initialization.
+        /// </summary>
+        /// <param name="keySelector">A function to extract a key from an element.</param>
+        /// <param name="isDesc">true or false desc.</param>
+        public void Init<TKey>(Expression<Func<T, TKey>> keySelector, bool isDesc)
+        {
+            var body = keySelector.Body as MemberExpression;
+            if (body != null)
+                if (_orderBuilder.Length > 0)
+                {
+                    _orderBuilder.AppendFormat(_isDesc ? " , {0} DESC " : " , {0} ASC ", body.Member.Name);
+                }
+                else
+                {
+                    _orderBuilder.AppendFormat(_isDesc ? " ORDER BY {0} DESC " : " ORDER BY {0} ASC ", body.Member.Name);
+                }
+
+            _isDesc = isDesc;
+        }
 
         /// <summary>
         /// Get sorted statement.
@@ -324,7 +345,36 @@ namespace Skpic.Common
         /// <returns></returns>
         public string GetOrderSql()
         {
-            return string.Format(_isDesc ? " ORDER BY {0} DESC " : " ORDER BY {0} ASC ", _orderName);
+            return _orderBuilder.ToString();
+        }
+
+        #endregion
+
+        #region Group expression
+
+        /// <summary>
+        /// order name
+        /// </summary>
+        private readonly StringBuilder _groupBuilder;
+
+        /// <summary>
+        /// Initialization expression, if you gender sql by expression, you must use this to initialization.
+        /// </summary>
+        /// <param name="keySelector">A function to extract a key from an element.</param>
+        public void Init<TKey>(Expression<Func<T, TKey>> keySelector)
+        {
+            var body = keySelector.Body as MemberExpression;
+            if (body != null)
+                _groupBuilder.AppendFormat(_groupBuilder.Length > 0 ? " , {0} " : " GROUP BY {0} ", body.Member.Name);
+        }
+
+        /// <summary>
+        /// Get sorted statement.
+        /// </summary>
+        /// <returns></returns>
+        public string GetGroupSql()
+        {
+            return _groupBuilder.ToString();
         }
 
         #endregion

@@ -294,8 +294,8 @@ namespace Skpic.Async
         {
             var name = GetTableName(typeof(T));
 
-            var helper = new LambdaHelper<T>(lambdaWhere);
-
+            var helper = new LambdaHelper<T>();
+            helper.Init(lambdaWhere);
             var where = helper.GetWhereSql();
 
             var param = helper.GetParameters();
@@ -403,8 +403,8 @@ namespace Skpic.Async
 
             var name = GetTableName(type);
 
-            var helper = new LambdaHelper<T>(predicate);
-
+            var helper = new LambdaHelper<T>();
+            helper.Init(predicate);
             var where = helper.GetWhereSql();
 
             var param = helper.GetParameters();
@@ -428,8 +428,8 @@ namespace Skpic.Async
 
             var name = GetTableName(type);
 
-            var helper = new LambdaHelper<T>(predicate);
-
+            var helper = new LambdaHelper<T>();
+            helper.Init(predicate);
             var where = helper.GetWhereSql();
 
             var param = helper.GetParameters();
@@ -457,8 +457,8 @@ namespace Skpic.Async
 
             var name = GetTableName(type);
 
-            var helper = new LambdaHelper<T>(predicate);
-
+            var helper = new LambdaHelper<T>();
+            helper.Init(predicate);
             var where = helper.GetWhereSql();
 
             var param = helper.GetParameters();

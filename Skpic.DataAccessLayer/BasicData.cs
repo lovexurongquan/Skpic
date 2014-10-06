@@ -10,9 +10,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Text;
 using Skpic.Async;
+using Skpic.Common;
 using Skpic.Factory;
 using Skpic.IDataAccessLayer;
 
@@ -23,11 +25,26 @@ namespace Skpic.DataAccessLayer
         public BasicData(string connStringName = "ConnectionString")
             : base(connStringName)
         {
-            _sqlBuilder=new StringBuilder();
+            _sqlDictionary = new Dictionary<SqlType, string>();
+            _paramDictionary = new Dictionary<string, string>();
+            _helper=new LambdaHelper<TSource>();
         }
 
-        private StringBuilder _sqlBuilder;
+        /// <summary>
+        /// sql builder.
+        /// </summary>
+        public readonly Dictionary<SqlType, string> _sqlDictionary;
+        //private StringBuilder whereBuilder;
 
+        /// <summary>
+        /// param collection.
+        /// </summary>
+        private Dictionary<string, string> _paramDictionary;
+
+        /// <summary>
+        /// lambda helper.
+        /// </summary>
+        private readonly LambdaHelper<TSource> _helper;
         /// <summary>
         /// query by primary key.
         /// </summary>
@@ -67,6 +84,14 @@ namespace Skpic.DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// query model by expression.
+        /// </summary>
+        /// <returns></returns>
+        public TSource Single()
+        {
+            return null;
+        }
 
         /// <summary>
         /// Filters a sequence of values based on a predicate.
@@ -76,7 +101,20 @@ namespace Skpic.DataAccessLayer
         /// <returns></returns>
         public IBasicData<TSource> Where(Expression<Func<TSource, bool>> predicate)
         {
-            throw new NotImplementedException();
+            _helper.Init(predicate);
+            var whereSql = _helper.GetWhereSql();
+
+            _paramDictionary = _helper.GetParameterDict();
+            if (_sqlDictionary.ContainsKey(SqlType.Where))
+            {
+                _sqlDictionary[SqlType.Where] = whereSql;
+            }
+            else
+            {
+                _sqlDictionary.Add(SqlType.Where, whereSql);
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -88,7 +126,17 @@ namespace Skpic.DataAccessLayer
         /// <returns></returns>
         public IBasicData<TSource> OrderBy<TKey>(Expression<Func<TSource, TKey>> keySelector)
         {
-            throw new NotImplementedException();
+            _helper.Init(keySelector, false);
+            if (_sqlDictionary.ContainsKey(SqlType.Order))
+            {
+                _sqlDictionary[SqlType.Order] = _helper.GetOrderSql();
+            }
+            else
+            {
+                _sqlDictionary.Add(SqlType.Order, _helper.GetOrderSql());
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -100,7 +148,17 @@ namespace Skpic.DataAccessLayer
         /// <returns></returns>
         public IBasicData<TSource> OrderByDescending<TKey>(Expression<Func<TSource, TKey>> keySelector)
         {
-            throw new NotImplementedException();
+            _helper.Init(keySelector, true);
+            if (_sqlDictionary.ContainsKey(SqlType.Order))
+            {
+                _sqlDictionary[SqlType.Order] = _helper.GetOrderSql();
+            }
+            else
+            {
+                _sqlDictionary.Add(SqlType.Order, _helper.GetOrderSql());
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -112,7 +170,17 @@ namespace Skpic.DataAccessLayer
         /// <returns></returns>
         public IBasicData<TSource> GroupBy<TKey>(Expression<Func<TSource, TKey>> keySelector)
         {
-            throw new NotImplementedException();
+            _helper.Init(keySelector);
+            if (_sqlDictionary.ContainsKey(SqlType.Group))
+            {
+                _sqlDictionary[SqlType.Group] = _helper.GetGroupSql();
+            }
+            else
+            {
+                _sqlDictionary.Add(SqlType.Group, _helper.GetGroupSql());
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -122,7 +190,8 @@ namespace Skpic.DataAccessLayer
         /// <returns></returns>
         public IBasicData<TSource> Skip(int count)
         {
-            throw new NotImplementedException();
+            _sqlDictionary.Add(SqlType.Skip, count.ToString(CultureInfo.InvariantCulture));
+            return this;
         }
 
         /// <summary>
@@ -132,7 +201,8 @@ namespace Skpic.DataAccessLayer
         /// <returns></returns>
         public IBasicData<TSource> Take(int count)
         {
-            throw new NotImplementedException();
+            _sqlDictionary.Add(SqlType.Take, count.ToString(CultureInfo.InvariantCulture));
+            return this;
         }
 
         /// <summary>
@@ -144,7 +214,8 @@ namespace Skpic.DataAccessLayer
         /// <returns></returns>
         public IBasicData<TSource> Distinct<TKey>(Expression<Func<TSource, TKey>> keySelector)
         {
-            throw new NotImplementedException();
+            _sqlDictionary.Add(SqlType.Distinct, SqlType.Distinct.ToString());
+            return this;
         }
 
         /// <summary>
@@ -156,6 +227,8 @@ namespace Skpic.DataAccessLayer
         /// <returns></returns>
         public IEnumerable<TResult> Select<TResult>(Expression<Func<TSource, TResult>> selector)
         {
+            var sqlBuilder = new StringBuilder();
+
             throw new NotImplementedException();
         }
 

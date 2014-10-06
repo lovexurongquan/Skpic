@@ -128,19 +128,19 @@ namespace Skpic.Console
 
             #region TestQueryLambda
 
-            var list = new List<string>()
-            {
-                "29a127cf-8a46-4894-a6e2-2856af22e2ed",
-                "7e46bf7b-90dd-4480-9cea-29cc72239f08",
-                "901dc11d-eff5-4be8-ae57-f5d513e56723",
-                "32dbffdc-925f-41db-99df-fa03cb05de4f"
-            };
+            //var list = new List<string>()
+            //{
+            //    "29a127cf-8a46-4894-a6e2-2856af22e2ed",
+            //    "7e46bf7b-90dd-4480-9cea-29cc72239f08",
+            //    "901dc11d-eff5-4be8-ae57-f5d513e56723",
+            //    "32dbffdc-925f-41db-99df-fa03cb05de4f"
+            //};
 
-            using (var conn = DbContextFactory.GetConnection())
-            {
-                var endsWith = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.EndsWith("901dc11d-eff5-4be8-ae57-f5d513e56723") || list.Contains(d.DoctorLoginInfo_ID)).GroupBy(g=>g.DoctorLoginInfo_Pwd);
-                var i = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID)).OrderBy(d => d.DoctorLoginInfo_Pwd);
-            }
+            //using (var conn = DbContextFactory.GetConnection())
+            //{
+            //    var endsWith = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.EndsWith("901dc11d-eff5-4be8-ae57-f5d513e56723") || list.Contains(d.DoctorLoginInfo_ID)).GroupBy(g => g.DoctorLoginInfo_Pwd);
+            //    var i = conn.Query<DoctorLoginInfo>(d => list.Contains(d.DoctorLoginInfo_ID)).OrderBy(d => d.DoctorLoginInfo_Pwd);
+            //}
 
             //var contains = conn.Query<DoctorLoginInfo>(d => d.DoctorLoginInfo_ID.Contains("e85ff9d2-84c2-4d51-8287-8e95d443762e"));
 
@@ -181,7 +181,23 @@ namespace Skpic.Console
 
             #endregion
 
+            #region TestBasicData
+
             IBasicData<DoctorLoginInfo> basicData = new BasicData<DoctorLoginInfo>();
+
+            var ss = basicData.Where(d => d.DoctorInfo_ID == "xxxx")
+                  .Where(d => d.DoctorLoginInfo_LoginName == "aaaa")
+                  .OrderBy(d => d.DoctorLoginInfo_ID)
+                  .OrderBy(d => d.DoctorLoginInfo_ID)
+                  .OrderBy(d => d.DoctorLoginInfo_Remark)
+                  .GroupBy(d => d.DoctorLoginInfo_Pwd)
+                  .GroupBy(d => d.DoctorLoginInfo_ID)
+                  .Skip(1)
+                  .Take(10)
+                  .Distinct(k => new { k.DoctorLoginInfo_Pwd, k.DoctorLoginInfo_Pwd_Temp, k.DoctorLoginInfo_ID });
+            System.Console.WriteLine(ss); 
+
+            #endregion
 
             System.Console.ReadKey();
         }
