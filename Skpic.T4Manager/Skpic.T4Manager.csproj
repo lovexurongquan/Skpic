@@ -75,6 +75,10 @@
       <Project>{bab57d1a-06f1-45a7-904a-477a478e1a4f}</Project>
       <Name>Skpic.Async</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Skpic.Common\Skpic.Common.csproj">
+      <Project>{89793b52-7cc9-4757-b6bf-6adb51e503cb}</Project>
+      <Name>Skpic.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Skpic.Factory\Skpic.Factory.csproj">
       <Project>{4c6083f8-1217-4d61-b966-8cd1a3029a5b}</Project>
       <Name>Skpic.Factory</Name>

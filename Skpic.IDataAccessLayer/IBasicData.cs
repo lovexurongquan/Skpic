@@ -90,10 +90,15 @@ namespace Skpic.IDataAccessLayer
         ///  Returns distinct elements from a sequence by using the default equality comparer to compare values.
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of source.</typeparam>
-        /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
-        /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <returns></returns>
-        IBasicData<TSource> Distinct<TKey>(Expression<Func<TSource, TKey>> keySelector);
+        IBasicData<TSource> Distinct();
+
+        /// <summary>
+        /// Projects each element of a sequence into a new form.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of source.</typeparam>
+        /// <returns></returns>
+        IEnumerable<TSource> Select();
 
         /// <summary>
         /// Projects each element of a sequence into a new form.
@@ -102,7 +107,7 @@ namespace Skpic.IDataAccessLayer
         /// <typeparam name="TResult">The type of the value returned by selector.</typeparam>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns></returns>
-        IEnumerable<TResult> Select<TResult>(Expression<Func<TSource, TResult>> selector);
+        IEnumerable<TResult> Select<TResult>(Expression<Func<TSource, TResult>> selector) where TResult : class;
 
         /// <summary>
         /// Determines whether a sequence contains any elements.

@@ -69,6 +69,7 @@
     <Compile Include="Enum\EntityState.cs" />
     <Compile Include="Enum\SqlType.cs" />
     <Compile Include="GetStringSpell.cs" />
+    <Compile Include="IGrouping.cs" />
     <Compile Include="LambdaHelper.cs" />
     <Compile Include="MemcachedHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

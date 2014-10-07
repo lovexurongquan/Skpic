@@ -27,13 +27,13 @@ namespace Skpic.DataAccessLayer
         {
             _sqlDictionary = new Dictionary<SqlType, string>();
             _paramDictionary = new Dictionary<string, string>();
-            _helper=new LambdaHelper<TSource>();
+            _helper = new LambdaHelper<TSource>();
         }
 
         /// <summary>
         /// sql builder.
         /// </summary>
-        public readonly Dictionary<SqlType, string> _sqlDictionary;
+        private readonly Dictionary<SqlType, string> _sqlDictionary;
         //private StringBuilder whereBuilder;
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Skpic.DataAccessLayer
         /// <returns></returns>
         public IBasicData<TSource> GroupBy<TKey>(Expression<Func<TSource, TKey>> keySelector)
         {
-            _helper.Init(keySelector);
+            _helper.Init(keySelector, SqlType.Group);
             if (_sqlDictionary.ContainsKey(SqlType.Group))
             {
                 _sqlDictionary[SqlType.Group] = _helper.GetGroupSql();
@@ -209,10 +209,8 @@ namespace Skpic.DataAccessLayer
         ///  Returns distinct elements from a sequence by using the default equality comparer to compare values.
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of source.</typeparam>
-        /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
-        /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <returns></returns>
-        public IBasicData<TSource> Distinct<TKey>(Expression<Func<TSource, TKey>> keySelector)
+        public IBasicData<TSource> Distinct()
         {
             _sqlDictionary.Add(SqlType.Distinct, SqlType.Distinct.ToString());
             return this;
@@ -222,14 +220,42 @@ namespace Skpic.DataAccessLayer
         /// Projects each element of a sequence into a new form.
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of source.</typeparam>
-        /// <typeparam name="TResult">The type of the value returned by selector.</typeparam>
-        /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns></returns>
-        public IEnumerable<TResult> Select<TResult>(Expression<Func<TSource, TResult>> selector)
+        public IEnumerable<TSource> Select()
         {
-            var sqlBuilder = new StringBuilder();
+            if (_sqlDictionary.ContainsKey(SqlType.Group))
+            {
+                throw new Exception("Please select the corresponding keys in the specified group after.");
+            }
+            using (var con = DbContextFactory.GetConnection(ConnectionStringName))
+            {
+                return con.Query<TSource>(_sqlDictionary, _paramDictionary);
+            }
+        }
 
-            throw new NotImplementedException();
+        /// <summary>
+        /// Projects each element of a sequence into a new form.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of source.</typeparam>
+        /// <typeparam name="TResult">The type of the value returned by selector.</typeparam>
+        /// <param name="keySelector">A transform function to apply to each element.</param>
+        /// <returns></returns>
+        public IEnumerable<TResult> Select<TResult>(Expression<Func<TSource, TResult>> keySelector) where TResult : class 
+        {
+            _helper.Init(keySelector, SqlType.Select);
+            if (_sqlDictionary.ContainsKey(SqlType.Select))
+            {
+                _sqlDictionary[SqlType.Select] = _helper.GetSelectSql();
+            }
+            else
+            {
+                _sqlDictionary.Add(SqlType.Select, _helper.GetSelectSql());
+            }
+
+            using (var con = DbContextFactory.GetConnection(ConnectionStringName))
+            {
+                return con.Query<TResult>(_sqlDictionary, _paramDictionary);
+            }
         }
 
         /// <summary>
@@ -259,5 +285,6 @@ namespace Skpic.DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
     }
 }

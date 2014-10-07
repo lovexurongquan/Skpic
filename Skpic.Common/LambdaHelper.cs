@@ -30,6 +30,7 @@ namespace Skpic.Common
             _whereBuilder = new StringBuilder();
             _orderBuilder = new StringBuilder();
             _groupBuilder = new StringBuilder();
+            _selectBuilder = new StringBuilder();
         }
 
         #region Where expression
@@ -84,20 +85,20 @@ namespace Skpic.Common
         /// get parameter in expression.
         /// </summary>
         /// <returns></returns>
-        public object GetParameters()
+        public Dictionary<string, string> GetParameters()
         {
-            var list = _paramCollection.Select(param => typeof(string)).ToList();
-            var dynamicObject = DynamicGenerator.DynamicObject(list);
+            //var list = _paramCollection.Select(param => typeof(string)).ToList();
+            //var dynamicObject = DynamicGenerator.DynamicObject(list);
 
-            object result = Activator.CreateInstance(dynamicObject);
+            //object result = Activator.CreateInstance(dynamicObject);
 
-            for (int i = 0; i < _paramCollection.Count; i++)
-            {
-                PropertyInfo pi = dynamicObject.GetProperty("P" + i);
-                pi.SetValue(result, _paramCollection["p" + i], null);
-            }
+            //for (int i = 0; i < _paramCollection.Count; i++)
+            //{
+            //    PropertyInfo pi = dynamicObject.GetProperty("P" + i);
+            //    pi.SetValue(result, _paramCollection["p" + i], null);
+            //}
 
-            return result;
+            return _paramCollection;
         }
 
         /// <summary>
@@ -314,29 +315,23 @@ namespace Skpic.Common
         private readonly StringBuilder _orderBuilder;
 
         /// <summary>
-        /// is desc
-        /// </summary>
-        private bool _isDesc;
-
-        /// <summary>
         /// Initialization expression, if you gender sql by expression, you must use this to initialization.
         /// </summary>
+        /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <param name="isDesc">true or false desc.</param>
         public void Init<TKey>(Expression<Func<T, TKey>> keySelector, bool isDesc)
         {
             var body = keySelector.Body as MemberExpression;
-            if (body != null)
-                if (_orderBuilder.Length > 0)
-                {
-                    _orderBuilder.AppendFormat(_isDesc ? " , {0} DESC " : " , {0} ASC ", body.Member.Name);
-                }
-                else
-                {
-                    _orderBuilder.AppendFormat(_isDesc ? " ORDER BY {0} DESC " : " ORDER BY {0} ASC ", body.Member.Name);
-                }
-
-            _isDesc = isDesc;
+            if (body == null) return;
+            if (_orderBuilder.Length > 0)
+            {
+                _orderBuilder.AppendFormat(isDesc ? " , {0} DESC " : " , {0} ASC ", body.Member.Name);
+            }
+            else
+            {
+                _orderBuilder.AppendFormat(isDesc ? " {0} DESC " : " {0} ASC ", body.Member.Name);
+            }
         }
 
         /// <summary>
@@ -350,22 +345,40 @@ namespace Skpic.Common
 
         #endregion
 
-        #region Group expression
+        #region Group,Select,Distinct expression
 
         /// <summary>
-        /// order name
+        /// group builder.
         /// </summary>
         private readonly StringBuilder _groupBuilder;
 
         /// <summary>
+        /// group builder.
+        /// </summary>
+        private readonly StringBuilder _selectBuilder;
+
+        /// <summary>
         /// Initialization expression, if you gender sql by expression, you must use this to initialization.
         /// </summary>
+        /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract a key from an element.</param>
-        public void Init<TKey>(Expression<Func<T, TKey>> keySelector)
+        /// <param name="type">enum of SqlType.</param>
+        public void Init<TKey>(Expression<Func<T, TKey>> keySelector, SqlType type)
         {
-            var body = keySelector.Body as MemberExpression;
-            if (body != null)
-                _groupBuilder.AppendFormat(_groupBuilder.Length > 0 ? " , {0} " : " GROUP BY {0} ", body.Member.Name);
+            string selectorColumn;
+            switch (type)
+            {
+                case SqlType.Select:
+                    selectorColumn = GetSelectorColumn(keySelector);
+                    if (string.IsNullOrEmpty(selectorColumn)) return;
+                    _selectBuilder.AppendFormat(_selectBuilder.Length > 0 ? " , {0} " : " {0} ", selectorColumn);
+                    break;
+                case SqlType.Group:
+                    selectorColumn = GetSelectorColumn(keySelector);
+                    if (string.IsNullOrEmpty(selectorColumn)) return;
+                    _groupBuilder.AppendFormat(_groupBuilder.Length > 0 ? " , {0} " : " {0} ", selectorColumn);
+                    break;
+            }
         }
 
         /// <summary>
@@ -377,7 +390,38 @@ namespace Skpic.Common
             return _groupBuilder.ToString();
         }
 
+        /// <summary>
+        /// Get select statement.
+        /// </summary>
+        /// <returns></returns>
+        public string GetSelectSql()
+        {
+            return _selectBuilder.ToString();
+        }
+
         #endregion
+
+        /// <summary>
+        /// Get the name of a collection of selected columns.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
+        /// <param name="keySelector">A function to extract a key from an element.</param>
+        /// <returns></returns>
+        private string GetSelectorColumn<TKey>(Expression<Func<T, TKey>> keySelector)
+        {
+            var memberBody = keySelector.Body as MemberExpression;
+            if (memberBody != null)
+            {
+                //_groupBuilder.AppendFormat(_groupBuilder.Length > 0 ? " , {0} " : " GROUP BY {0} ", memberBody.Member.Name);
+                return memberBody.Member.Name;
+            }
+
+            var newBody = keySelector.Body as NewExpression;
+            if (newBody == null) return null;
+            var memberNameCollection = newBody.Arguments.Select(argument => ((MemberExpression)argument).Member.Name);
+            //_groupBuilder.AppendFormat(_groupBuilder.Length > 0 ? " , {0} " : " GROUP BY {0} ", string.Join(",", memberNameCollection));
+            return string.Join(",", memberNameCollection);
+        }
 
         /// <summary>
         /// get logical.

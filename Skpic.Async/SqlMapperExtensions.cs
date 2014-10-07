@@ -101,7 +101,7 @@ namespace Skpic.Async
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        private static IEnumerable<PropertyInfo> TypePropertiesCache(Type type)
+        public static IEnumerable<PropertyInfo> TypePropertiesCache(Type type)
         {
             IEnumerable<PropertyInfo> pis;
             if (TypeProperties.TryGetValue(type.TypeHandle, out pis))
@@ -169,7 +169,7 @@ namespace Skpic.Async
 
             var sbColumnList = new StringBuilder(null);
             var allProperties = TypePropertiesCache(type);
-            var keyProperties = KeyPropertiesCache(type).Where(p => p.GetCustomAttributes(true).Any(a => a is KeyAttribute && ((KeyAttribute)a).IsIdentity .Equals("True"))).ToList();
+            var keyProperties = KeyPropertiesCache(type).Where(p => p.GetCustomAttributes(true).Any(a => a is KeyAttribute && ((KeyAttribute)a).IsIdentity.Equals("True"))).ToList();
             var computedProperties = ComputedPropertiesCache(type);
             var allPropertiesExceptKeyAndComputed = allProperties.Except(keyProperties.Union(computedProperties)).ToList();
 
@@ -298,7 +298,7 @@ namespace Skpic.Async
             helper.Init(lambdaWhere);
             var where = helper.GetWhereSql();
 
-            var param = helper.GetParameters();
+            var param = ProcessingParameters(helper.GetParameters());
 
             var sql = string.Format("delete from {0} where {1}", name, where == "" ? "1=1" : where);
             var result = connection.Execute(sql, param, transaction);
@@ -388,7 +388,7 @@ namespace Skpic.Async
             }
             return obj;
         }
-        
+
         /// <summary>
         /// query by lambda.
         /// </summary>
@@ -407,13 +407,13 @@ namespace Skpic.Async
             helper.Init(predicate);
             var where = helper.GetWhereSql();
 
-            var param = helper.GetParameters();
+            var param = ProcessingParameters(helper.GetParameters());
 
             var sql = string.Format("select top 1 {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
 
             return connection.Query<T>(sql, param).FirstOrDefault();
         }
-        
+
         /// <summary>
         /// query by lambda.
         /// </summary>
@@ -432,9 +432,46 @@ namespace Skpic.Async
             helper.Init(predicate);
             var where = helper.GetWhereSql();
 
-            var param = helper.GetParameters();
+            var param = ProcessingParameters(helper.GetParameters());
 
             var sql = string.Format("select {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
+
+            return connection.Query<T>(sql, param);
+        }
+
+        /// <summary>
+        /// query by dictionary.
+        /// </summary>
+        /// <typeparam name="T">result model.</typeparam>
+        /// <param name="connection">open connection.</param>
+        /// <param name="sqlDictionary">all sql dictionary.</param>
+        /// <param name="paramDictionary">param dictionary.</param>
+        /// <returns></returns>
+        public static IEnumerable<T> Query<T>(this IDbConnection connection, Dictionary<SqlType, string> sqlDictionary, Dictionary<string, string> paramDictionary) where T : class
+        {
+            var sqlBuilder = new StringBuilder("SELECT");
+            var type = typeof(T);
+            var name = GetTableName(type);
+
+            sqlBuilder.Append(sqlDictionary.ContainsKey(SqlType.Distinct) ? " DISTINCT " : "");
+            sqlBuilder.Append(sqlDictionary.ContainsKey(SqlType.Select)
+                    ? sqlDictionary[SqlType.Select]
+                    : string.Join(",", TypePropertiesCache(type).Select(p => p.Name)));
+            sqlBuilder.AppendFormat(" FROM {0}", name);
+            sqlBuilder.AppendFormat(" WHERE {0}", sqlDictionary.ContainsKey(SqlType.Where) ? sqlDictionary[SqlType.Where] : "1=1");
+
+            if (sqlDictionary.ContainsKey(SqlType.Group))
+            {
+                sqlBuilder.AppendFormat(" GROUP BY {0}", sqlDictionary[SqlType.Group]);
+            }
+            if (sqlDictionary.ContainsKey(SqlType.Order))
+            {
+                sqlBuilder.AppendFormat(" ORDER BY {0}", sqlDictionary[SqlType.Order]);
+            }
+
+            var param = ProcessingParameters(paramDictionary);
+
+            var sql = sqlBuilder.ToString();
 
             return connection.Query<T>(sql, param);
         }
@@ -461,7 +498,7 @@ namespace Skpic.Async
             helper.Init(predicate);
             var where = helper.GetWhereSql();
 
-            var param = helper.GetParameters();
+            var param = ProcessingParameters(helper.GetParameters());
 
             var sql = string.Format("select {0} from {1} where {2}", string.Join(",", allProperties), name, where == "" ? "1=1" : where);
 
@@ -486,6 +523,27 @@ namespace Skpic.Async
         {
             return sql;
         }
+
+        /// <summary>
+        /// get parameter in expression.
+        /// </summary>
+        /// <returns></returns>
+        private static object ProcessingParameters(IReadOnlyDictionary<string, string> paramDictionary)
+        {
+            var list = paramDictionary.Select(param => typeof(string)).ToList();
+            var dynamicObject = DynamicGenerator.DynamicObject(list);
+
+            var result = Activator.CreateInstance(dynamicObject);
+
+            for (var i = 0; i < paramDictionary.Count; i++)
+            {
+                var pi = dynamicObject.GetProperty("P" + i);
+                pi.SetValue(result, paramDictionary["p" + i], null);
+            }
+
+            return result;
+        }
+
 
         #endregion
 

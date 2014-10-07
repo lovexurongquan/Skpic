@@ -7,6 +7,7 @@
         Group,
         Skip,
         Take,
-        Distinct
+        Distinct,
+        Select
     }
 }
