@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using Skpic.Async;
+using Skpic.Common;
 using Skpic.DataAccessLayer;
 using Skpic.Factory;
 using Skpic.IDataAccessLayer;
@@ -183,22 +184,23 @@ namespace Skpic.Console
 
             #region TestBasicData
 
-            IQuerytor<DoctorLoginInfo> basicData = new BasicData<DoctorLoginInfo>();
+            IQueryator<DoctorLoginInfo> basicData = new Queryator<DoctorLoginInfo>();
 
             var ss = basicData
                 .Where(d => true)
                 .Where(d => d.DoctorInfo_ID == "xxxx")
                 .Where(d => d.DoctorLoginInfo_LoginName == "aaaa")
                 .OrderBy(d => d.DoctorLoginInfo_ID)
-                .OrderBy(d => d.DoctorLoginInfo_Remark)
-                .OrderByDescending(d => d.DoctorLoginInfo_CreateTime)
-                //.GroupBy(d => new { d.DoctorLoginInfo_Pwd, d.DoctorLoginInfo_LoginName, d.DoctorLoginInfo_Pwd_Temp_Time })
-                //.GroupBy(d => d.DoctorLoginInfo_Remark)
+                .GroupBy(d => new { d.DoctorLoginInfo_Pwd, d.DoctorLoginInfo_LoginName, d.DoctorLoginInfo_Pwd_Temp_Time })
+                .GroupBy(d => d.Count())
                 .Skip(1)
                 .Take(10)
                 .Distinct().Select(d=>d.DoctorLoginInfo_Pwd);
             System.Console.WriteLine(ss);
 
+            IQueryable<string> s=new EnumerableQuery<string>();
+            IGrouping<string, string>;
+                s.GroupBy(m => m);
             #endregion
 
             System.Console.ReadKey();
