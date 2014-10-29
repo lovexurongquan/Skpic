@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IBasicData.cs" />
+    <Compile Include="IQuerytor.cs" />
     <Compile Include="IUnitWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

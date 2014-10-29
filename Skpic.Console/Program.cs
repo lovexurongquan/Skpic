@@ -183,7 +183,7 @@ namespace Skpic.Console
 
             #region TestBasicData
 
-            IBasicData<DoctorLoginInfo> basicData = new BasicData<DoctorLoginInfo>();
+            IQuerytor<DoctorLoginInfo> basicData = new BasicData<DoctorLoginInfo>();
 
             var ss = basicData
                 .Where(d => true)
