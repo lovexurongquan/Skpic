@@ -7,6 +7,7 @@
  * mail:lovexurongquan@163.com
  */
 
+using System.Text.RegularExpressions;
 using Skpic.Async;
 using Skpic.Factory;
 using System;
@@ -81,7 +82,7 @@ namespace Skpic.T4Manager
         public string GetTypeByDatabase(string type, string isNull)
         {
             var isNullable = Convert.ToBoolean(isNull);
-            switch (type.ToLower())
+            switch (Regex.Replace(type.ToLower(),"\\(.+\\)",""))
             {
                 case "int":
                 case "bigint":
@@ -135,7 +136,7 @@ namespace Skpic.T4Manager
         public string SetDefaultValue(string defaultValue, string columnName, string type)
         {
             var s = defaultValue.Replace("(", "").Replace(")", "").Trim(new[] { '\'' });
-            switch (type.ToLower())
+            switch (Regex.Replace(type.ToLower(), "\\(.+\\)", ""))
             {
                 case "bit":
                     if (s.Length > 0)
@@ -153,7 +154,7 @@ namespace Skpic.T4Manager
                 case "datetime":
                 case "smalldatetime":
                 case "timestamp":
-                    if (s.Contains("getdate"))
+                    if (s.Contains("getdate") || s.Contains("sysdate"))
                     {
                         return columnName + " = DateTime.Now;";
                     }

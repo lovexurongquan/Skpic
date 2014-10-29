@@ -22,13 +22,12 @@
     (SELECT fc.column_name, cc.table_name rftable,cc.column_name rfcolumn
     FROM user_cons_columns fc,user_constraints ft,user_cons_columns cc,user_constraints ct
     WHERE  ft.constraint_type = 'R'
-    AND fc.table_name = 'CO_ORDER' AND ft.table_name = 'CO_ORDER'
     AND fc.constraint_name = ft.constraint_name
     AND ct.constraint_name = ft.r_constraint_name
     AND ct.constraint_name = cc.constraint_name
     AND cc.POSITION = fc.POSITION) rf
     WHERE t.table_name = col.table_name AND t.column_name = col.column_name
-    AND t.column_name = rf.column_name(+) AND t.table_name = 'CO_ORDER' ORDER BY column_id
+    AND t.column_name = rf.column_name(+) ORDER BY column_id
   </sql>
   <!--过程列表-->
   <sql name="ProObjectSql">

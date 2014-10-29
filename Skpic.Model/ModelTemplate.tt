@@ -8,13 +8,14 @@
 <#@ output extension=".cs" encoding="utf-8" #>
 <#
 	//this use with debug, the template debug must be set True.
-    //Debugger.Launch(); Debugger.Break();
+   Debugger.Launch(); 
 	 
 	//template manager class. connString can set your own.
-    var t4 = new T4Manager(this.Host.TemplateFile,"ConnectionString");
+    var t4 = new T4Manager(this.Host.TemplateFile,"OracleConnString");
     
 	//get all table in database.
     var tableCollection = t4.GetTableCollection();
+	
 	//get all column in database.
     var columnCollection = t4.GetColumnsCollection();
 	//export multiple file.
@@ -42,7 +43,7 @@ using Skpic.Async.Attributes;
 namespace Skpic.Model
 {
 	/// <summary>
-	/// <#= table.Comments #>
+	/// <#= table.Comments??"" #>
 	/// </summary>
     [Table("<#= table.Name #>")]
 	[Serializable]
@@ -50,6 +51,8 @@ namespace Skpic.Model
     {
 <# 
 		var columns = columnCollection.Where(c => c.TableName == table.Name).OrderBy(c=>c.Colorder);
+
+		//Debugger.Break();
 		var foreignTable = columnCollection.Where(c => c.TableName == table.Name && c.Rftable != null).OrderBy(c => c.Colorder);
 #>
 		public <#= table.Name #>()
@@ -64,7 +67,8 @@ namespace Skpic.Model
 		{
 <#			foreach (var column in columns)
 			{
-				var defalutValue = t4.SetDefaultValue(column.DefaultVal, column.ColumnName, column.TypeName);
+				//Debugger.Break();
+				var defalutValue = t4.SetDefaultValue(column.DefaultVal??"", column.ColumnName, column.TypeName);
                 if (defalutValue == "")continue;
 #>			<#= defalutValue #>
 <#			}
@@ -74,11 +78,11 @@ namespace Skpic.Model
 		{
 #>
 		/// <summary>
-		/// <#= column.DeText #>
+		/// <#= column.DeText??"" #>
 		/// </summary>
 <#		if (column.IsPk == "True")
         {#>
-		[Key("<#= column.IsIdentity #>")]
+		[Key("<#= column.IsIdentity??"" #>")]
 <#		}
 #>
 <#		if (column.Rfcolumn	!= null)
@@ -89,7 +93,8 @@ namespace Skpic.Model
 		{#>
 		[ForeignTable("<#= column.Rftable #>")]
 <#		}
-#><#	if (column.IsComputed != "False")
+		//Debugger.Break();
+#><#	if (column.IsComputed != null && column.IsComputed != "False")
 		{#>
 		[SqlMapperExtensions.Computed]
 <#		}
