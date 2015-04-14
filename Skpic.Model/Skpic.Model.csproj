@@ -49,36 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DoctorLoginInfo.cs">
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModelTemplate.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QA_Function.cs">
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="QA_HomeSetting.cs">
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="QA_PageDetails.cs">
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="QA_PageFunction.cs">
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="QA_SysRoleToPageDetails.cs">
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="QA_UserToPageDetails.cs">
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SysRole.cs">
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Skpic.Async\Skpic.Async.csproj">

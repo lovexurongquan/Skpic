@@ -14,7 +14,7 @@ using System.Linq.Expressions;
 
 namespace Skpic.IDataAccessLayer
 {
-    public interface IBasicData<TSource> : IUnitWork
+    public interface IQueryator<TSource> : IUnitWork where TSource : class
     {
         /// <summary>
         /// query by primary key.
@@ -43,7 +43,7 @@ namespace Skpic.IDataAccessLayer
         /// <typeparam name="TSource">The type of the elements of source.</typeparam>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns></returns>
-        IBasicData<TSource> Where(Expression<Func<TSource, bool>> predicate);
+        IQueryator<TSource> Where(Expression<Func<TSource, bool>> predicate);
 
         /// <summary>
         /// Sorts the elements of a sequence in ascending order by using a specified comparer
@@ -52,7 +52,7 @@ namespace Skpic.IDataAccessLayer
         /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <returns></returns>
-        IBasicData<TSource> OrderBy<TKey>(Expression<Func<TSource, TKey>> keySelector);
+        IQueryator<TSource> OrderBy<TKey>(Expression<Func<TSource, TKey>> keySelector);
 
         /// <summary>
         /// Sorts the elements of a sequence in descending order according to a key.
@@ -61,7 +61,7 @@ namespace Skpic.IDataAccessLayer
         /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <returns></returns>
-        IBasicData<TSource> OrderByDescending<TKey>(Expression<Func<TSource, TKey>> keySelector);
+        IQueryator<TSource> OrderByDescending<TKey>(Expression<Func<TSource, TKey>> keySelector);
 
         /// <summary>
         /// Groups the elements of a sequence according to a specified key selector function.
@@ -70,28 +70,28 @@ namespace Skpic.IDataAccessLayer
         /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract the key for each element.</param>
         /// <returns></returns>
-        IBasicData<TSource> GroupBy<TKey>(Expression<Func<TSource, TKey>> keySelector);
+        IQueryator<IGrouping<TKey, TSource>> GroupBy<TKey>(Expression<Func<TSource, TKey>> keySelector);
 
         /// <summary>
         /// Bypasses a specified number of elements in a sequence and then returns the remaining elements.
         /// </summary>
         /// <param name="count">The number of elements to skip before returning the remaining elements.</param>
         /// <returns></returns>
-        IBasicData<TSource> Skip(int count);
+        IQueryator<TSource> Skip(int count);
 
         /// <summary>
         /// Returns a specified number of contiguous elements from the start of a sequence.
         /// </summary>
         /// <param name="count">The number of elements to return.</param>
         /// <returns></returns>
-        IBasicData<TSource> Take(int count);
+        IQueryator<TSource> Take(int count);
 
         /// <summary>
         ///  Returns distinct elements from a sequence by using the default equality comparer to compare values.
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of source.</typeparam>
         /// <returns></returns>
-        IBasicData<TSource> Distinct();
+        IQueryator<TSource> Distinct();
 
         /// <summary>
         /// Projects each element of a sequence into a new form.

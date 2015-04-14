@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq.Expressions;
-using System.Text;
 using Skpic.Async;
 using Skpic.Common;
 using Skpic.Factory;
@@ -20,9 +19,9 @@ using Skpic.IDataAccessLayer;
 
 namespace Skpic.DataAccessLayer
 {
-    public class BasicData<TSource> : UnitWork, IBasicData<TSource> where TSource : class
+    public class Queryator<TSource> : UnitWork, IQueryator<TSource> where TSource : class
     {
-        public BasicData(string connStringName = "ConnectionString")
+        public Queryator(string connStringName = "ConnectionString")
             : base(connStringName)
         {
             _sqlDictionary = new Dictionary<SqlType, string>();
@@ -99,7 +98,7 @@ namespace Skpic.DataAccessLayer
         /// <typeparam name="TSource">The type of the elements of source.</typeparam>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns></returns>
-        public IBasicData<TSource> Where(Expression<Func<TSource, bool>> predicate)
+        public IQueryator<TSource> Where(Expression<Func<TSource, bool>> predicate)
         {
             _helper.Init(predicate);
             var whereSql = _helper.GetWhereSql();
@@ -124,7 +123,7 @@ namespace Skpic.DataAccessLayer
         /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <returns></returns>
-        public IBasicData<TSource> OrderBy<TKey>(Expression<Func<TSource, TKey>> keySelector)
+        public IQueryator<TSource> OrderBy<TKey>(Expression<Func<TSource, TKey>> keySelector)
         {
             _helper.Init(keySelector, false);
             if (_sqlDictionary.ContainsKey(SqlType.Order))
@@ -146,7 +145,7 @@ namespace Skpic.DataAccessLayer
         /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <returns></returns>
-        public IBasicData<TSource> OrderByDescending<TKey>(Expression<Func<TSource, TKey>> keySelector)
+        public IQueryator<TSource> OrderByDescending<TKey>(Expression<Func<TSource, TKey>> keySelector)
         {
             _helper.Init(keySelector, true);
             if (_sqlDictionary.ContainsKey(SqlType.Order))
@@ -168,7 +167,7 @@ namespace Skpic.DataAccessLayer
         /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract the key for each element.</param>
         /// <returns></returns>
-        public IBasicData<TSource> GroupBy<TKey>(Expression<Func<TSource, TKey>> keySelector)
+        public IQueryator<IGrouping<TKey, TSource>> GroupBy<TKey>(Expression<Func<TSource, TKey>> keySelector)
         {
             _helper.Init(keySelector, SqlType.Group);
             if (_sqlDictionary.ContainsKey(SqlType.Group))
@@ -188,7 +187,7 @@ namespace Skpic.DataAccessLayer
         /// </summary>
         /// <param name="count">The number of elements to skip before returning the remaining elements.</param>
         /// <returns></returns>
-        public IBasicData<TSource> Skip(int count)
+        public IQueryator<TSource> Skip(int count)
         {
             _sqlDictionary.Add(SqlType.Skip, count.ToString(CultureInfo.InvariantCulture));
             return this;
@@ -199,7 +198,7 @@ namespace Skpic.DataAccessLayer
         /// </summary>
         /// <param name="count">The number of elements to return.</param>
         /// <returns></returns>
-        public IBasicData<TSource> Take(int count)
+        public IQueryator<TSource> Take(int count)
         {
             _sqlDictionary.Add(SqlType.Take, count.ToString(CultureInfo.InvariantCulture));
             return this;
@@ -210,7 +209,7 @@ namespace Skpic.DataAccessLayer
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of source.</typeparam>
         /// <returns></returns>
-        public IBasicData<TSource> Distinct()
+        public IQueryator<TSource> Distinct()
         {
             _sqlDictionary.Add(SqlType.Distinct, SqlType.Distinct.ToString());
             return this;
