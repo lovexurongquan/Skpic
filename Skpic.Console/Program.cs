@@ -183,21 +183,27 @@ namespace Skpic.Console
 
             #region TestBasicData
 
-            IBasicData<DoctorLoginInfo> basicData = new BasicData<DoctorLoginInfo>();
+            //IBasicData<DoctorLoginInfo> basicData = new BasicData<DoctorLoginInfo>();
 
-            var ss = basicData
-                .Where(d => true)
-                .Where(d => d.DoctorInfo_ID == "xxxx")
-                .Where(d => d.DoctorLoginInfo_LoginName == "aaaa")
-                .OrderBy(d => d.DoctorLoginInfo_ID)
-                .OrderBy(d => d.DoctorLoginInfo_Remark)
-                .OrderByDescending(d => d.DoctorLoginInfo_CreateTime)
-                //.GroupBy(d => new { d.DoctorLoginInfo_Pwd, d.DoctorLoginInfo_LoginName, d.DoctorLoginInfo_Pwd_Temp_Time })
-                //.GroupBy(d => d.DoctorLoginInfo_Remark)
-                .Skip(1)
-                .Take(10)
-                .Distinct().Select(d=>d.DoctorLoginInfo_Pwd);
-            System.Console.WriteLine(ss);
+            //var ss = basicData
+            //    .Where(d => true)
+            //    .Where(d => d.DoctorInfo_ID == "xxxx")
+            //    .Where(d => d.DoctorLoginInfo_LoginName == "aaaa")
+            //    .OrderBy(d => d.DoctorLoginInfo_ID)
+            //    .OrderBy(d => d.DoctorLoginInfo_Remark)
+            //    .OrderByDescending(d => d.DoctorLoginInfo_CreateTime)
+            //    //.GroupBy(d => new { d.DoctorLoginInfo_Pwd, d.DoctorLoginInfo_LoginName, d.DoctorLoginInfo_Pwd_Temp_Time })
+            //    //.GroupBy(d => d.DoctorLoginInfo_Remark)
+            //    .Skip(1)
+            //    .Take(10)
+            //    .Distinct().Select(d=>d.DoctorLoginInfo_Pwd);
+            //System.Console.WriteLine(ss);
+
+            #endregion
+
+            #region TestUnitWork
+
+
 
             #endregion
 
