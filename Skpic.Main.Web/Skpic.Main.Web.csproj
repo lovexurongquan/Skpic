@@ -159,6 +159,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -172,44 +173,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\angular\angular-animate.js" />
-    <Content Include="Scripts\angular\angular-animate.min.js" />
-    <Content Include="Scripts\angular\angular-aria.js" />
-    <Content Include="Scripts\angular\angular-aria.min.js" />
-    <Content Include="Scripts\angular\angular-cookies.js" />
-    <Content Include="Scripts\angular\angular-cookies.min.js" />
-    <Content Include="Scripts\angular\angular-csp.css" />
-    <Content Include="Scripts\angular\angular-loader.js" />
-    <Content Include="Scripts\angular\angular-loader.min.js" />
-    <Content Include="Scripts\angular\angular-messages.js" />
-    <Content Include="Scripts\angular\angular-messages.min.js" />
-    <Content Include="Scripts\angular\angular-mocks.js" />
-    <Content Include="Scripts\angular\angular-resource.js" />
-    <Content Include="Scripts\angular\angular-resource.min.js" />
-    <Content Include="Scripts\angular\angular-route.js" />
-    <Content Include="Scripts\angular\angular-route.min.js" />
-    <Content Include="Scripts\angular\angular-sanitize.js" />
-    <Content Include="Scripts\angular\angular-sanitize.min.js" />
-    <Content Include="Scripts\angular\angular-scenario.js" />
-    <Content Include="Scripts\angular\angular-touch.js" />
-    <Content Include="Scripts\angular\angular-touch.min.js" />
-    <Content Include="Scripts\angular\angular.js" />
-    <Content Include="Scripts\angular\angular.min.js" />
-    <Content Include="Scripts\angular\version.txt" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\angular\angular-animate.min.js.map" />
-    <Content Include="Scripts\angular\angular-aria.min.js.map" />
-    <Content Include="Scripts\angular\angular-cookies.min.js.map" />
-    <Content Include="Scripts\angular\angular-loader.min.js.map" />
-    <Content Include="Scripts\angular\angular-messages.min.js.map" />
-    <Content Include="Scripts\angular\angular-resource.min.js.map" />
-    <Content Include="Scripts\angular\angular-route.min.js.map" />
-    <Content Include="Scripts\angular\angular-sanitize.min.js.map" />
-    <Content Include="Scripts\angular\angular-touch.min.js.map" />
-    <Content Include="Scripts\angular\angular.min.js.map" />
-    <Content Include="Scripts\angular\errors.json" />
-    <Content Include="Scripts\angular\version.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -234,10 +201,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
