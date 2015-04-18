@@ -24,7 +24,12 @@ namespace Skpic.Main.Web
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                      "~/Scripts/angular/angular.js"));
+                      "~/Scripts/angular.js",
+                      "~/Scripts/angular-*")); 
+            
+            bundles.Add(new ScriptBundle("~/bundles/angular-ui").Include(
+                      "~/Scripts/angular-ui/ui-bootstrap.js",
+                      "~/Scripts/angular-ui/ui-bootstrap-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
