@@ -14,5 +14,10 @@ namespace Skpic.Main.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Login(string loginName, string loginPwd)
+        {
+            return null;
+        }
 	}
 }

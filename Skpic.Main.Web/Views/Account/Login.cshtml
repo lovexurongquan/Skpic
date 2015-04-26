@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html ng-app="LoginModule">
+<head>
+    <title>title</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/Controller/Account/Login.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" class="form-horizontal" role="form" ng-controller="LoginControler">
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-4">
+                            <h2 class="form-signin-heading">Please sign in</h2>
+                        </div>
+                    </div> <div class="form-group">
+                        <div class="col-md-offset-4 col-md-4">
+                            <input type="text" name="LoginName" id="LoginName" ng-model="loginModel.loginName" class="form-control" placeholder="请输入用户名" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-4">
+                            <input type="text" name="LoginPwd" id="LoginPwd" ng-model="loginModel.loginPwd" class="form-control" placeholder="请输入密码" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-4">
+                            <button class="btn btn-default btn-block" ng-click="login()"> 登录 </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

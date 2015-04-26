@@ -1,0 +1,211 @@
+/* Copyright (c) 2008 GoGoLet.com All rights reserved. */
+
+/* Built by YangZihui */
+
+/* MSN & Mail: cx-game@hotmail.com */
+
+/* ///////////////////////////////////////////// */
+
+* { margin: 0px; }
+
+html { min-width: 950px; }
+body { margin: 0px; background:#F2F2F2 url(../img/ezabay/bak.gif) repeat-x top;  }
+body,div,td,th { font-family: verdana, simsun, Lucida Grande, '宋体', sans-serif;  font-size: 12px; color: #333; line-height: 180%; }
+
+div,form,img { padding: 0px; border: 0px; margin: 0px; }
+dl,dt,dd,ul,ol,li { list-style-type: none; list-style-position: outside; padding: 0px; border: 0px; margin: 0px; }
+dl,ul { clear: left; text-align: left; }
+dt,dd,li { display: block; }
+h1,h2,h3,h4,h5 { margin: 0px; }
+select,input { font-size: 9pt; }
+/* td,p { text-align: left; } */
+
+em { font-style: normal; }
+
+a { text-decoration: none; }
+a:link    { color: #333; }
+a:visited { color: #333; }
+a:hover   { color: #F60; text-decoration: underline; }
+a:active  { color: #F60; }
+
+/* ///////////////////////////////////////////// */
+
+.center { margin: 0 auto; }
+.left   { margin: 0 auto 0 0; }
+.right  { margin: 0 0 0 auto; }
+.b { font-weight: bold; }
+
+.float-l { float: left; }
+.float-r { float: right; }
+
+.clear-both { clear: both; height: 0; overflow: hidden; }
+
+.white { color:#FFF; }
+.red { color:#F00; }
+.gray { color:#999; }
+.orange { color:#F60; }
+.blue { color:#014CCC; }
+
+.b-blue { background:#FFFDE2; }
+
+
+
+/* ///////////////////////////////////////////// */
+
+.space8 { clear:both; width:100%; height:0px; overflow: hidden; clear:both; }
+.space8 { clear:both; width:100%; height:8px; overflow: hidden; clear:both; }
+
+.bt { height:22px; line-height:22px; padding:0 3px; background:url(../img/ezabay/bt-bak.gif) repeat-x center; border:1px solid #9b9b9b; }
+
+/* ///////////////////////////////////////////// */
+
+#head { width:950px; height:396px; margin:0 auto; background:url(../img/ezabay/head-bak.jpg) no-repeat top center; }
+#head .logo { float:left; display:block; height:69px; }
+#head .link { clear:none; float:right; width:320px; text-align:right; margin:13px 0 0 0; color: #888888; font-size:11px; }
+#head .link a { margin:0 5px; text-decoration: none; }
+#head .link a:link    { color: #888888; }
+#head .link a:visited { color: #888888; }
+#head .link a:hover   { color: #0878C0; text-decoration: underline; }
+#head .link a:active  { color: #0878C0; }
+
+#head .text { width:240px; height:40px; float:left; margin:23px 0 0 0; }
+
+#head .menu { clear:both; float:left; width:600px; height:33px; line-height:33px; }
+#head .menu a { clear:none; float:left; margin:0 14px; display:block; width:auto; height:33px; line-height:33px; text-align:center; font-weight:bold; font-size:14px; }
+#head .menu a:link    { color: #FFFFFF; }
+#head .menu a:visited { color: #FFFFFF; }
+#head .menu a:hover   { color: #FFFF00; text-decoration: underline; }
+#head .menu a:active  { color: #FFFF00; }
+
+#head .search { clear:none; float:right; margin:5px 5px 0 0; }
+#head .search input { vertical-align:middle; } 
+#head .search select { vertical-align:bottom; }
+
+#head dl { float:left; width:205px; height:auto; margin:13px 0 0 6px !important; margin:17px 0 0 2px;  }
+#head dl dt { font-weight:bold; color:#FFFFFF; text-indent:34px; margin:0 0 30px 0; }
+#head dl table td { color:#FFFFFF; padding:2px 0; }
+#head dl .input { width:120px; }
+#head dl .bt { width:60px; font-weight:bold; }
+#head dl table td a         { text-decoration:none; }
+#head dl table td a:link    { color: #FFFFFF; }
+#head dl table td a:visited { color: #FFFFFF; }
+#head dl table td a:hover   { color: #FFFFFF; text-decoration: underline; }
+#head dl table td a:active  { color: #FFFFFF; }
+#head dl dd .sq { display:block; margin:7px 0 0 20px !important; margin:3px 0 0 22px; text-indent:22px; width:177px; height:52px; line-height:52px; text-align:center; font-size:14px; font-weight:bold;  }
+#head dl dd .sq:link    { color: #FFFFFF; }
+#head dl dd .sq:visited { color: #FFFFFF; }
+#head dl dd .sq:hover   { color: #FFFF00; text-decoration: none; }
+
+#head dl dd .sq:active  { color: #FFFF00; }
+
+#head .flash { margin:15px 0 0 0; width:722px; height:258px; clear:none; float:right; text-align:center; }
+#head .flash span { display:block; width:480px; margin:10px auto; text-align:left; font-size:11px; }
+#head .flash span a { font-weight:bold; text-decoration:underline; }
+
+
+/* ///////////////////////////////////////////// */
+
+#body { width:948px; height:auto; margin:0 auto; padding:14px 0 0 0; background:#F2F2F2; overflow:hidden; }
+#left { width:212px; height:auto; float:left; margin:0 0 0 8px !important; margin:0 0 0 4px; }
+#right { width:712px; height:auto; clear:none; float:right; margin:0 8px 0 0 !important; margin:0 4px 0 0; }
+
+h3 { width:100%; height:50px; line-height:37px; text-indent:40px; background:url(../img/ezabay/title-s-bak.jpg) no-repeat center; color:#FFFFFF; font-size:14px; }
+h4 { width:100%; height:50px; line-height:37px; text-indent:40px; background:url(../img/ezabay/title-s-bak2.jpg) no-repeat center; color:#FFFFFF; font-size:14px; }
+h5 { width:100%; height:51px; line-height:37px; text-indent:40px; background:url(../img/ezabay/title-s-bak3.jpg) no-repeat center; color:#FFFFFF; font-size:14px; }
+
+
+#left .new-shop { width:100%; height:auto; background:#FFFFFF; padding:4px 0 8px 0; }
+#left .new-shop li { margin:0 auto; width:94%; line-height:26px; text-indent:17px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; background:url(../img/ezabay/li-ico.gif) no-repeat 7px 10px; }
+#left .new-shop li.alt { background:#f5fbff url(../img/ezabay/li-ico.gif) no-repeat 7px 10px;  /*这行将给所有的li加上背景色*/ }
+#left .new-shop li.over { background:#d6e5eb url(../img/ezabay/li-ico.gif) no-repeat 7px 10px;  /*这个将是鼠标高亮行的背景色*/ }
+#left .new-shop li a         { text-decoration:none; }
+#left .new-shop li a:link    { color: #3090CA; }
+#left .new-shop li a:visited { color: #3090CA; }
+#left .new-shop li a:hover   { color: #3090CA; text-decoration: underline; }
+#left .new-shop li a:active  { color: #3090CA; }
+#left .new-shop li.more { text-align:right; background-image:none; }
+#left .new-shop .more a         { text-decoration:none; }
+#left .new-shop .more a:link    { color: #333333; }
+#left .new-shop .more a:visited { color: #333333; }
+#left .new-shop .more a:hover   { color: #333333; text-decoration: underline; }
+#left .new-shop .more a:active  { color: #333333; }
+
+#left .link { width:100%; margin: 5px auto; }
+#left .link li { margin:3px 0; }
+
+#right .index-right1 { width:492px; clear:none; float:left; }
+
+.index-goods-list { padding:5px 0 12px 0; width:492px; height:auto; display:table; background:#FFFFFF; }
+.index-goods-list li { clear:none; float:left; margin:0 0 3px 0; padding:3px 0; width:164px; text-align:center; line-height:100%; }
+.index-goods-list li img { width:130px; height:130px; border:1px solid #DDDDDD; padding:1px; }
+.index-goods-list li a { font-weight:bold; display:block; margin:0 auto -5px auto; width:150px; line-height:16px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.index-goods-list li a:link    { color: #3090CA; }
+.index-goods-list li a:visited { color: #3090CA; }
+.index-goods-list li a:hover   { color: #3090CA; text-decoration: underline; }
+.index-goods-list li a:active  { color: #3090CA; }
+.index-goods-list li.over { background:#d6e5eb;  /*这个将是鼠标高亮行的背景色*/ }
+
+#right .index-right1 .zq { width:100%; height:auto; display:table; background:#FFFFFF; }
+.zq dl { clear:none; float:left; width:50%; height:90px; padding:8px 0 0 0; border-bottom:1px dashed #DDDDDD; }
+.zq dl dt { width:95%; margin:0 auto; color:#3090CA; font-weight:bold; }
+.zq dl dd { width:95%; margin:0 auto;  background:url(../img/ezabay/li-ico2.gif) no-repeat 7px 7px; text-indent:18px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+
+
+.index-right2 dl { width:100%; clear:both; height:auto; display:table; padding:6px 0 4px 0; border-bottom:1px dashed #DDD; background:#FFFFFF; }
+.index-right2 dl.alt { background:#F5FBFF; }
+.index-right2 dl.over { }
+.index-right2 dl dt { float:left; width:84px; margin:0 0 0 5px; }
+.index-right2 dl dt img { width:80px; height:80px; border:1px solid #DDDDDD; padding:1px; }
+.index-right2 dl dd { clear:none; float:right; width:117px; line-height:20px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.index-right2 dl .b { color:#FF0000; }
+
+
+ 
+#right .index-right2 { width:212px; clear:none; float:right; }
+
+
+
+
+#right .con { width:682px; height:auto !important; height:470px; min-height:470px; display:table; background:#FFFFFF; padding:5px 15px 10px 15px; font-size:14px; line-height:200%; }
+#right .con p { margin: 15px auto; }
+
+#right .con dl {}
+#right .con dt { font-size:14px; font-weight:bold; }
+#right .con dd { padding:10px 20px; border-bottom:1px dashed #DDDDDD; }
+
+
+
+#right .temp { width:712px; height:auto; display:table; background:#FFFFFF; }
+#right .temp ul { width:auto; }
+#right .temp li { clear:none; float:left; margin:3px 0; padding:7px 0 4px 0; width:33%; height:200px; text-align:center; }
+#right .temp li img { border:1px solid #DDDDDD; padding:1px; }
+#right .temp li.over { background:#d6e5eb; }
+#right .temp strong { color:#156FDB; }
+
+.news-list { width:auto; }
+.news-list li.over { background:#F5FBFF url(../img/new_list.gif) no-repeat 7px 10px;; }
+.news-list li.alt { background:#F3F7FC url(../img/new_list.gif) no-repeat 7px 10px;; }
+.news-list li { height:25px; line-height:25px; border-bottom:1px dashed #EFEFEF; vertical-align:middle; background:url(../img/new_list.gif) no-repeat 7px 10px; }
+.news-list li a { clear:none; float:left; margin:0 0 0 22px; font-size:14px; }
+.news-list li span { clear:none; float:right; margin:0 10px 0 0; font-size:11px; color:#999999; }
+
+
+.page { margin:10px auto; text-align:center; }
+.page a { margin:0 5px; font-size:12px; text-align:center; }
+
+
+.reg-table th { height:30px; line-height:30px; text-align:left; background:#F4FBFF; border-top:1px solid #CAE1FF; font-size:14px; }
+.reg-table th img { margin:0 0 0 0; vertical-align:middle; }
+.reg-table td { padding:4px 0; }
+.reg-table .bt-clew { width:100px; height:35px; line-height:100%; font-size:14px; font-weight:bold; }
+
+#foot { clear:both; margin:10px 0 0 0; width:100%; height:130px; background:url(../img/ezabay/footerbg.gif) repeat-x top; }
+#foot .foot { width:950px; height:130px; margin:0 auto; }
+#foot .foot img { clear:none; float:right; margin-top:0; }
+#foot .foot p { float:left; color:#999999; margin:18px 0 0 0; line-height:25px; }
+#foot .foot p a { margin:0 4px; }
+#foot .foot p a:link    { color: #999999; }
+#foot .foot p a:visited { color: #999999; }
+#foot .foot p a:hover   { color: #999999; text-decoration: underline; }
+#foot .foot p a:active  { color: #999999; }

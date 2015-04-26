@@ -1,0 +1,18 @@
+/* Copyright (c) 2008 All rights reserved. */
+/* Built by chen wanshen */
+/* MSN & Mail: xide314@hotmail.com */
+
+#left { float:right; width:99%; height:auto; display:table; }
+#left li { clear:both; margin:0 auto; cursor:hand; }
+
+#left li a { display:block; width:100%; height:40px; line-height:40px; border-bottom:1px solid #C0D4DB;  }
+#left li a p { float:left; width:80%; margin:0 !important; margin:13px 0 0 0;; text-indent:30px; font-size:13px; cursor:hand; }
+#left li a p img { margin:0 8px -3px 0; }
+#left li a span    { float:right; width:15%; margin:16px 0 0 0; cursor:hand; }
+#left li a:link    { color: #333333; }
+#left li a:visited { color: #333333; }
+#left li a:hover   { color: #157C10; text-decoration: none; background: url(../img/left_hover_bak.gif) repeat-x bottom; }
+#left li a:active  { color: #157C10; }
+#left .select a, #left .select a:link,  #left .select a:visited, #left .select a:hover, #left .select a:active { background:url(../img/left_hover_bak.gif) repeat-x bottom; }
+
+

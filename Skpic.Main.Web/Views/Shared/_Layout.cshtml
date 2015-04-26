@@ -7,16 +7,14 @@
     @Styles.Render("~/Content/css")
     @*浏览器兼容插件*@
     @Scripts.Render("~/bundles/modernizr")
-
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </head>
 <body>
 
     @RenderBody()
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/angular")
-    @Scripts.Render("~/bundles/bootstrap")
-
-    @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,35 @@
+/* Copyright (c) 2008 All rights reserved. */
+/* Built by yzh */
+/* ///////////////////////////////////////////// */
+
+#nav { width:100%; height:57px; background:url(../img/head-bak.gif) repeat-x; }
+
+.nav_top { width:100%; height:56px; }
+.nav_top .logo { float:left; width:140px; height:56px; line-height:56px; text-align:center; }
+.nav_top .logo img { margin:5px 0 0 0; }
+.nav_top .info { float:right; width:550px; height:26px; line-height:26px; padding:30px 15px 0 0; font-family:'ËÎÌו', 'Times New Roman'; text-align:right; }
+.nav_top .info img { margin:0 6px -2px 0; }
+.nav_top .language { clear:none; float:left; margin:33px 0 0 0;  }
+.nav_top .language img { float:left; vertical-align:middle; margin:5px 6px 0 0; }
+.nav_top .language a { float:left; }
+
+#nav .menu { width:100%; height:43px; }
+#nav .menu li { float:left; height:43px; margin:1px 0 0 0; }
+#nav .menu li a { display:block; width:120px; height:41px; line-height:41px; border-left:1px solid #FFFFFF; border-right:1px solid #C0D4DB; font-size:14px; text-align:center; }
+#nav .menu li a img { margin:0 !important; margin:10px 0 14px 0; vertical-align:middle; } 
+#nav .menu li a:link    { color: #333333; }
+#nav .menu li a:visited { color: #333333; }
+#nav .menu li a:hover   { color: #157C10; text-decoration: none; background:url(../img/head-menu-hover.gif) repeat-x; }
+#nav .menu li a:active  { color: #157C10; }
+#nav .menu .select a, #nav .menu .select a:link, #nav .menu .select a:visited, #nav .menu .select a:hover, #nav .menu .select a:active { color: #157C10; background:url(../img/head-menu-check.gif) repeat-x; font-weight:bold; }
+
+
+
+
+
+
+
+
+
+
+
