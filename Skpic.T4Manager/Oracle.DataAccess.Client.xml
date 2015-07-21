@@ -9,25 +9,18 @@
   </sql>
   <!--字段列表,&lt;有传意字符-->
   <sql name="FieldObjectSql">
-    SELECT  column_id AS colorder,t.table_name AS TableName,t.column_name AS columnname,
-    data_type AS typename, data_length AS LENGTH,
-    data_precision AS preci, data_scale AS scale, '' AS isidentity,
-    (SELECT DECODE (COUNT (*), 0, 'N', 'Y')
-    FROM user_constraints a, user_cons_columns b
-    WHERE a.constraint_name = b.constraint_name
-    AND a.table_name = t.table_name AND b.column_name = t.column_name
-    AND a.constraint_type = 'P') AS ispk,nullable AS cisnull,
-    data_default AS defaultval, col.comments AS detext,rf.rftable, rf.rfcolumn
-    FROM user_tab_columns t,user_col_comments col,
-    (SELECT fc.column_name, cc.table_name rftable,cc.column_name rfcolumn
-    FROM user_cons_columns fc,user_constraints ft,user_cons_columns cc,user_constraints ct
-    WHERE  ft.constraint_type = 'R'
-    AND fc.constraint_name = ft.constraint_name
-    AND ct.constraint_name = ft.r_constraint_name
-    AND ct.constraint_name = cc.constraint_name
-    AND cc.POSITION = fc.POSITION) rf
-    WHERE t.table_name = col.table_name AND t.column_name = col.column_name
-    AND t.column_name = rf.column_name(+) ORDER BY column_id
+    SELECT COLUMN_ID AS COLORDER, T.TABLE_NAME AS TABLENAME, T.COLUMN_NAME AS COLUMNNAME, DATA_TYPE AS TYPENAME,
+    DATA_LENGTH AS LENGTH, DATA_PRECISION AS PRECI, DATA_SCALE AS SCALE, '' AS ISIDENTITY, (SELECT DECODE(COUNT(*), 0, 'N', 'Y')
+    FROM USER_CONSTRAINTS A, USER_CONS_COLUMNS B WHERE A.CONSTRAINT_NAME = B.CONSTRAINT_NAME AND A.TABLE_NAME = T.TABLE_NAME
+    AND B.COLUMN_NAME = T.COLUMN_NAME AND A.CONSTRAINT_TYPE = 'P') AS ISPK, NULLABLE AS CISNULL, DATA_DEFAULT AS DEFAULTVAL,
+    COL.COMMENTS AS DETEXT, RF.RFTABLE, RF.RFCOLUMN
+    FROM USER_TAB_COLUMNS T,
+    USER_COL_COMMENTS COL,
+    (SELECT FC.COLUMN_NAME, CC.TABLE_NAME  RFTABLE, CC.COLUMN_NAME RFCOLUMN FROM USER_CONS_COLUMNS FC, USER_CONSTRAINTS  FT,
+    USER_CONS_COLUMNS CC,USER_CONSTRAINTS  CT WHERE FT.CONSTRAINT_TYPE = 'R' AND FC.CONSTRAINT_NAME = FT.CONSTRAINT_NAME
+    AND CT.CONSTRAINT_NAME = FT.R_CONSTRAINT_NAME AND CT.CONSTRAINT_NAME = CC.CONSTRAINT_NAME AND CC.POSITION = FC.POSITION) RF
+    WHERE T.TABLE_NAME = COL.TABLE_NAME AND T.COLUMN_NAME = COL.COLUMN_NAME AND T.COLUMN_NAME = RF.COLUMN_NAME(+)
+    ORDER BY COLUMN_ID
   </sql>
   <!--过程列表-->
   <sql name="ProObjectSql">

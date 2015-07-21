@@ -162,12 +162,13 @@ namespace Skpic.DataAccessLayer
 
         /// <summary>
         /// Groups the elements of a sequence according to a specified key selector function.
+        /// There has something wrong. Please don't use.
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of source.</typeparam>
         /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract the key for each element.</param>
         /// <returns></returns>
-        public IQueryator<IGrouping<TKey, TSource>> GroupBy<TKey>(Expression<Func<TSource, TKey>> keySelector)
+        public IQueryator<TSource> GroupBy<TKey>(Expression<Func<TSource, TKey>> keySelector)
         {
             _helper.Init(keySelector, SqlType.Group);
             if (_sqlDictionary.ContainsKey(SqlType.Group))

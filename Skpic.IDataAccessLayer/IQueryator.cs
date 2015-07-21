@@ -70,7 +70,7 @@ namespace Skpic.IDataAccessLayer
         /// <typeparam name="TKey">The type of the key returned by keySelector.</typeparam>
         /// <param name="keySelector">A function to extract the key for each element.</param>
         /// <returns></returns>
-        IQueryator<IGrouping<TKey, TSource>> GroupBy<TKey>(Expression<Func<TSource, TKey>> keySelector);
+        IQueryator<TSource> GroupBy<TKey>(Expression<Func<TSource, TKey>> keySelector);
 
         /// <summary>
         /// Bypasses a specified number of elements in a sequence and then returns the remaining elements.

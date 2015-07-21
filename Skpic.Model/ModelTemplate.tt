@@ -8,7 +8,7 @@
 <#@ output extension=".cs" encoding="utf-8" #>
 <#
 	//this use with debug, the template debug must be set True.
-   Debugger.Launch(); 
+   //Debugger.Launch(); 
 	 
 	//template manager class. connString can set your own.
     var t4 = new T4Manager(this.Host.TemplateFile,"OracleConnString");

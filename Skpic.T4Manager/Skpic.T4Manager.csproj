@@ -65,11 +65,15 @@
   <ItemGroup>
     <EmbeddedResource Include="System.Data.SqlClient.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="MySql.Data.MySqlClient.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Oracle.DataAccess.Client.xml" />
+    <EmbeddedResource Include="Oracle.DataAccess.Client.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Skpic.Async\Skpic.Async.csproj">

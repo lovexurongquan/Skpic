@@ -1,20 +1,47 @@
 ﻿<!DOCTYPE html>
-<html class="no-js" ng-app>
+<html ng-app>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @*浏览器兼容插件*@
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/angular")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/angular-ui/ui-router/angular-ui-router.min.js"></script>
+    <script src="~/Scripts/Views/Shared/_Layout.js"></script>
 </head>
 <body>
+    <!-- 顶部导航 -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="menu-nav">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">现代浏览器博物馆</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#ad-carousel">综述</a></li>
+                    <li><a href="#summary-container">简述</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">特点 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#feature-tab" data-tab="tab-chrome">Chrome</a></li>
+                            <li><a href="#feature-tab" data-tab="tab-firefox">Firefox</a></li>
+                            <li><a href="#feature-tab" data-tab="tab-safari">Safari</a></li>
+                            <li><a href="#feature-tab" data-tab="tab-opera">Opera</a></li>
+                            <li><a href="#feature-tab" data-tab="tab-ie">IE</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" data-toggle="modal" data-target="#about-modal">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="">
 
-    @RenderBody()
+        @RenderBody()
+    </div>
+    <div class="footer"></div>
 
 </body>
 </html>
